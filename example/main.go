@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"github.com/vodolaz095/go-investAPI/investapi"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
 	"log"
+	"time"
 )
 
 type tokenAuth struct {
@@ -24,7 +26,9 @@ func (tokenAuth) RequireTransportSecurity() bool {
 
 func main() {
 	conn, err := grpc.Dial("invest-public-api.tinkoff.ru:443",
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
+			ServerName: "invest-public-api.tinkoff.ru",
+		})), // по умолчанию проверяет сертификат
 		grpc.WithPerRPCCredentials(tokenAuth{
 			Token: "тутДолженБытьТокен", // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
 		}),
@@ -41,5 +45,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("%s : while getting last prices", err)
 	}
-	log.Println("Response", res)
+	for _, p := range res.LastPrices {
+		log.Printf("%s - %s %s\n", p.Figi, p.Price.String(), p.Time.AsTime().Format(time.Stamp))
+	}
 }
