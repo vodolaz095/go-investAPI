@@ -3,7 +3,7 @@ Go-InvestAPI
 [![PkgGoDev](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi)](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi?tab=doc)
 
 Библиотека для работы с [https://tinkoff.github.io/investAPI/](https://tinkoff.github.io/investAPI/) платформы
-[https://www.tinkoff.ru/sl/AugaFvDlqEP](Тинькофф Инвестиции)
+[Тинькофф Инвестиции](https://www.tinkoff.ru/sl/AugaFvDlqEP)
 
 Предупреждение
 ===============================
