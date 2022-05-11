@@ -52,7 +52,7 @@ func (tokenAuth) RequireTransportSecurity() bool {
 
 func main() {
 	// соединяемся с API
-	conn, err := grpc.Dial("invest-public-api.tinkoff.ru:443",
+      conn, err := grpc.Dial("invest-public-api.tinkoff.ru:443",
       grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
          ServerName: "invest-public-api.tinkoff.ru",
       })), // по умолчанию проверяет сертификат
@@ -77,7 +77,7 @@ func main() {
    if err != nil {
       log.Fatalf("%s : при поиске инструмента", err)
    }
-   log.Printf("Инструмент %s найден!", res.Instrument.Name) // надеюсь, что и
+   log.Printf("Инструмент %s найден!", res.Instrument.Name)
 }
 
 ```
@@ -87,7 +87,7 @@ func main() {
 ===============================
 Официальное описание протокола взаимодействия опубликовано тут [https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts](https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts).
 Код в моём репозитории генерирует клиент для Golang на основе этих `proto` файлов.
-Код проверялся на дистрибутиве Fedora 34 с docker версии 20.10.15, podman версии 3.4.4 и Golang версии 1.16.15
+Код проверялся на дистрибутиве `Fedora 34` с `docker` версии 20.10.15, `podman` версии 3.4.4 и `Golang` версии 1.16.15
 
 1. Удалите все файлы из под директории `investapi/`
 
