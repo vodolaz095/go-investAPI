@@ -1,10 +1,9 @@
 Go-InvestAPI
 =============================
+[![PkgGoDev](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi)](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi?tab=doc)
 
-Библиотека для работы с [https://tinkoff.github.io/investAPI/](https://tinkoff.github.io/investAPI/).
-
-Находится в разработке, так как официальной документации и примеров для Go пока ещё нет
-https://github.com/Tinkoff/investAPI/issues/129
+Библиотека для работы с [https://tinkoff.github.io/investAPI/](https://tinkoff.github.io/investAPI/) платформы
+[https://www.tinkoff.ru/sl/AugaFvDlqEP](Тинькофф Инвестиции)
 
 Предупреждение
 ===============================
@@ -12,9 +11,83 @@ https://github.com/Tinkoff/investAPI/issues/129
 Используйте этот код на свой страх и риск.
 
 
+Пример использования
+===============================
+
+1. Устанавливаем зависимости
+
+```shell
+
+$ go get -u github.com/vodolaz095/go-investAPI/investapi 
+
+```
+
+2. Запускаем код
+```go
+
+package main
+
+import (
+   "context"
+   "crypto/tls"
+   "github.com/vodolaz095/go-investAPI/investapi"
+   "google.golang.org/grpc"
+   "google.golang.org/grpc/credentials"
+   "log"
+)
+
+type tokenAuth struct {
+   Token string
+}
+
+func (t tokenAuth) GetRequestMetadata(ctx context.Context, in ...string) (map[string]string, error) {
+   return map[string]string{
+      "Authorization": "Bearer " + t.Token,
+   }, nil
+}
+
+func (tokenAuth) RequireTransportSecurity() bool {
+   return true
+}
+
+func main() {
+	// соединяемся с API
+	conn, err := grpc.Dial("invest-public-api.tinkoff.ru:443",
+      grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
+         ServerName: "invest-public-api.tinkoff.ru",
+      })), // по умолчанию проверяет сертификат
+      grpc.WithPerRPCCredentials(tokenAuth{
+         Token: "тутДолженБытьТокен", // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+      }),
+   )
+   if err != nil {
+      log.Fatalf("%s : при попытке соединения с API", err)
+   }
+   defer conn.Close()
+	
+   // Получаем клиент для работы с каталогом инструментов 
+   instrumentsAPI := investapi.NewInstrumentsServiceClient(conn)
+   
+   // пытаемся найти ОФЗ 25084
+   req := investapi.InstrumentRequest{
+      IdType: investapi.InstrumentIdType_INSTRUMENT_ID_TYPE_FIGI,
+      Id:     "BBG00RRT3TX4",
+   }
+   res, err := instrumentsAPI.GetInstrumentBy(context.TODO(), &req)
+   if err != nil {
+      log.Fatalf("%s : при поиске инструмента", err)
+   }
+   log.Printf("Инструмент %s найден!", res.Instrument.Name) // надеюсь, что и
+}
+
+```
+
+
 Как сгенерировать код клиента из proto файлов?
 ===============================
-Код проверялся на дистрибутиве Fedora 34 с podman версии 3.4.4 и Golang версии 1.16.15
+Официальное описание протокола взаимодействия опубликовано тут [https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts](https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts).
+Код в моём репозитории генерирует клиент для Golang на основе этих `proto` файлов.
+Код проверялся на дистрибутиве Fedora 34 с docker версии 20.10.15, podman версии 3.4.4 и Golang версии 1.16.15
 
 1. Удалите все файлы из под директории `investapi/`
 
@@ -36,76 +109,22 @@ https://github.com/Tinkoff/investAPI/issues/129
 
 investapi/common.pb.go
 investapi/instruments.pb.go
+investapi/instruments_grpc.pb.go
 investapi/marketdata.pb.go
+investapi/marketdata_grpc.pb.go
 investapi/operations.pb.go
+investapi/operations_grpc.pb.go
 investapi/orders.pb.go
+investapi/orders_grpc.pb.go
 investapi/sandbox.pb.go
+investapi/sandbox_grpc.pb.go
 investapi/stoporders.pb.go
+investapi/stoporders_grpc.pb.go
 investapi/users.pb.go
+investapi/users_grpc.pb.go
 
 ```
 
-На данный момент файлы включены в код репозитория
+На данный момент файлы включены в код репозитория.
 
 
-Пример использования
-===============================
-Внимание - я не уверен, что сгенерированный код модуля надо использовать именно 
-так, но, на данный момент (8 апреля 2022 года) никакой официальной документации и примеров для Go не существует!
-
-```go
-
-package main
-
-import (
-   "context"
-   "crypto/tls"
-   "github.com/vodolaz095/go-investAPI/investapi"
-   "google.golang.org/grpc"
-   "google.golang.org/grpc/credentials"
-   "log"
-   "time"
-)
-
-type tokenAuth struct {
-   Token string
-}
-
-func (t tokenAuth) GetRequestMetadata(ctx context.Context, in ...string) (map[string]string, error) {
-   return map[string]string{
-      "Authorization": "Bearer " + t.Token,
-   }, nil
-}
-
-func (tokenAuth) RequireTransportSecurity() bool {
-   return true
-}
-
-func main() {
-   conn, err := grpc.Dial("invest-public-api.tinkoff.ru:443",
-      grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
-         ServerName: "invest-public-api.tinkoff.ru",
-      })), // по умолчанию проверяет сертификат
-      grpc.WithPerRPCCredentials(tokenAuth{
-         Token: "тутДолженБытьТокен", // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
-      }),
-   )
-   if err != nil {
-      log.Fatalf("%s : while connecting to api", err)
-   }
-   defer conn.Close()
-
-   req := investapi.GetLastPricesRequest{Figi: []string{"SU25084RMFS3"}}
-   res := investapi.GetLastPricesResponse{}
-
-   err = conn.Invoke(context.TODO(), "GetLastPrices", &req, &res)
-   if err != nil {
-      log.Fatalf("%s : while getting last prices", err)
-   }
-   for _, p := range res.LastPrices {
-      log.Printf("%s - %s %s\n", p.Figi, p.Price.String(), p.Time.AsTime().Format(time.Stamp))
-   }
-}
-
-
-```

@@ -76,8 +76,8 @@ type OperationType int32
 
 const (
 	OperationType_OPERATION_TYPE_UNSPECIFIED                 OperationType = 0  //Тип операции не определён.
-	OperationType_OPERATION_TYPE_INPUT                       OperationType = 1  //Завод денежных средств.
-	OperationType_OPERATION_TYPE_BOND_TAX                    OperationType = 2  //Удержание налога по купонам.
+	OperationType_OPERATION_TYPE_INPUT                       OperationType = 1  //Пополнение брокерского счёта.
+	OperationType_OPERATION_TYPE_BOND_TAX                    OperationType = 2  //Удержание НДФЛ по купонам.
 	OperationType_OPERATION_TYPE_OUTPUT_SECURITIES           OperationType = 3  //Вывод ЦБ.
 	OperationType_OPERATION_TYPE_OVERNIGHT                   OperationType = 4  //Доход по сделке РЕПО овернайт.
 	OperationType_OPERATION_TYPE_TAX                         OperationType = 5  //Удержание налога.
@@ -92,7 +92,7 @@ const (
 	OperationType_OPERATION_TYPE_MARGIN_FEE                  OperationType = 14 //Удержание комиссии за непокрытую позицию.
 	OperationType_OPERATION_TYPE_BUY                         OperationType = 15 //Покупка ЦБ.
 	OperationType_OPERATION_TYPE_BUY_CARD                    OperationType = 16 //Покупка ЦБ с карты.
-	OperationType_OPERATION_TYPE_INPUT_SECURITIES            OperationType = 17 //Завод ЦБ.
+	OperationType_OPERATION_TYPE_INPUT_SECURITIES            OperationType = 17 //Завод ценных бумаг из другого депозитария.
 	OperationType_OPERATION_TYPE_SELL_MARGIN                 OperationType = 18 //Продажа в результате Margin-call.
 	OperationType_OPERATION_TYPE_BROKER_FEE                  OperationType = 19 //Удержание комиссии за операцию.
 	OperationType_OPERATION_TYPE_BUY_MARGIN                  OperationType = 20 //Покупка в результате Margin-call.

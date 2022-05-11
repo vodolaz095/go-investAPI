@@ -7,7 +7,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"log"
-	"time"
 )
 
 type tokenAuth struct {
@@ -34,18 +33,20 @@ func main() {
 		}),
 	)
 	if err != nil {
-		log.Fatalf("%s : while connecting to api", err)
+		log.Fatalf("%s : при соединениии с api", err)
 	}
 	defer conn.Close()
 
-	req := investapi.GetLastPricesRequest{Figi: []string{"SU25084RMFS3"}}
-	res := investapi.GetLastPricesResponse{}
+	instrumentsAPI := investapi.NewInstrumentsServiceClient(conn)
 
-	err = conn.Invoke(context.TODO(), "GetLastPrices", &req, &res)
+	req := investapi.InstrumentRequest{
+		IdType: investapi.InstrumentIdType_INSTRUMENT_ID_TYPE_FIGI,
+		Id:     "BBG00RRT3TX4",
+	}
+
+	res, err := instrumentsAPI.GetInstrumentBy(context.TODO(), &req)
 	if err != nil {
-		log.Fatalf("%s : while getting last prices", err)
+		log.Fatalf("%s : при поиске инструмента", err)
 	}
-	for _, p := range res.LastPrices {
-		log.Printf("%s - %s %s\n", p.Figi, p.Price.String(), p.Time.AsTime().Format(time.Stamp))
-	}
+	log.Printf("Инструмент %s найден!", res.Instrument.Name)
 }

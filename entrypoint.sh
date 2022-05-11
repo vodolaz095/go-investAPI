@@ -17,7 +17,15 @@ ls -l /opt/investAPI/
 
 # Генерируем код модуля
 cd /opt/investAPI/src/docs/contracts
-/usr/bin/protoc --proto_path=/usr/bin/include/google/ --proto_path=/opt/investAPI/src/docs/contracts --go_out=/opt/client *.proto
+protoc \
+  --proto_path=/usr/bin/include/google/ \
+  --proto_path=/opt/investAPI/src/docs/contracts \
+  --go_out=/opt/client \
+  --go_opt=paths=source_relative \
+  --go-grpc_opt=paths=source_relative \
+  --go-grpc_out=/opt/client \
+  *.proto
+
 
 # Смотрим, что получилось
 ls -l /opt/client/
