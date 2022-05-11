@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
+# Данный скрипт клонирует репозиторий c официальными proto файлами,
+# и на их основе генерирует исходных код клиента для Golang
+# в директории /opt/client
+
 set -e
 
+# Убедимся, что компилятор Golang установлен
 which go
 go version
-
 go env
 
+# Убедимся, что утилита protoc установлена
 which protoc
 protoc --version
 
@@ -14,6 +19,10 @@ protoc --version
 cd /opt/
 git clone https://github.com/Tinkoff/investAPI.git
 ls -l /opt/investAPI/
+
+# Смотрим, крайний коммит, на основе которого мы будет генерировать исходный код клиента
+cd /opt/investAPI
+git log -1
 
 # Генерируем код модуля
 cd /opt/investAPI/src/docs/contracts

@@ -32,4 +32,5 @@ RUN mkdir -p /opt/client
 ADD entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod a+x /usr/bin/entrypoint.sh
 
+# При каждом запуске образа, будет выполнен скрипт entrypoint.sh
 ENTRYPOINT /usr/bin/entrypoint.sh
