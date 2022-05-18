@@ -28,6 +28,11 @@ RUN chown root:root /usr/bin/include/google/ -R
 # Создаём директории для вывода кода
 RUN mkdir -p /opt/client
 
+# Добавляем файлы
+ADD investapi/client.go /opt/client
+ADD investapi/helpers.go /opt/client
+ADD investapi/helpers_test.go /opt/client
+
 # Добавляем скрипт точки входа
 ADD entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod a+x /usr/bin/entrypoint.sh
