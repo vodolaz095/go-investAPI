@@ -759,7 +759,7 @@ type GetInfoResponse struct {
 
 	PremStatus           bool     `protobuf:"varint,1,opt,name=prem_status,json=premStatus,proto3" json:"prem_status,omitempty"`                                  //Признак премиум клиента.
 	QualStatus           bool     `protobuf:"varint,2,opt,name=qual_status,json=qualStatus,proto3" json:"qual_status,omitempty"`                                  //Признак квалифицированного инвестора.
-	QualifiedForWorkWith []string `protobuf:"bytes,3,rep,name=qualified_for_work_with,json=qualifiedForWorkWith,proto3" json:"qualified_for_work_with,omitempty"` //Набор требующих тестирования инструментов и возможностей, с которыми может работать пользователь.
+	QualifiedForWorkWith []string `protobuf:"bytes,3,rep,name=qualified_for_work_with,json=qualifiedForWorkWith,proto3" json:"qualified_for_work_with,omitempty"` //Набор требующих тестирования инструментов и возможностей, с которыми может работать пользователь. [Подробнее](https://tinkoff.github.io/investAPI/faq_users/).
 	Tariff               string   `protobuf:"bytes,4,opt,name=tariff,proto3" json:"tariff,omitempty"`                                                             //Наименование тарифа пользователя.
 }
 

@@ -92,7 +92,7 @@ const (
 	OperationType_OPERATION_TYPE_MARGIN_FEE                  OperationType = 14 //Удержание комиссии за непокрытую позицию.
 	OperationType_OPERATION_TYPE_BUY                         OperationType = 15 //Покупка ЦБ.
 	OperationType_OPERATION_TYPE_BUY_CARD                    OperationType = 16 //Покупка ЦБ с карты.
-	OperationType_OPERATION_TYPE_INPUT_SECURITIES            OperationType = 17 //Завод ценных бумаг из другого депозитария.
+	OperationType_OPERATION_TYPE_INPUT_SECURITIES            OperationType = 17 //Перевод ценных бумаг из другого депозитария.
 	OperationType_OPERATION_TYPE_SELL_MARGIN                 OperationType = 18 //Продажа в результате Margin-call.
 	OperationType_OPERATION_TYPE_BROKER_FEE                  OperationType = 19 //Удержание комиссии за операцию.
 	OperationType_OPERATION_TYPE_BUY_MARGIN                  OperationType = 20 //Покупка в результате Margin-call.
@@ -387,7 +387,7 @@ type Operation struct {
 	Payment           *MoneyValue            `protobuf:"bytes,4,opt,name=payment,proto3" json:"payment,omitempty"`                                                                                             //Сумма операции.
 	Price             *MoneyValue            `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`                                                                                                 //Цена операции за 1 инструмент. Для получения стоимости лота требуется умножить на лотность инструмента.
 	State             OperationState         `protobuf:"varint,6,opt,name=state,proto3,enum=tinkoff.public.invest.api.contract.v1.OperationState" json:"state,omitempty"`                                      //Статус операции.
-	Quantity          int64                  `protobuf:"varint,7,opt,name=quantity,proto3" json:"quantity,omitempty"`                                                                                          //Количество лотов инструмента.
+	Quantity          int64                  `protobuf:"varint,7,opt,name=quantity,proto3" json:"quantity,omitempty"`                                                                                          //Количество единиц инструмента.
 	QuantityRest      int64                  `protobuf:"varint,8,opt,name=quantity_rest,json=quantityRest,proto3" json:"quantity_rest,omitempty"`                                                              //Неисполненный остаток по сделке.
 	Figi              string                 `protobuf:"bytes,9,opt,name=figi,proto3" json:"figi,omitempty"`                                                                                                   //Figi-идентификатор инструмента, связанного с операцией.
 	InstrumentType    string                 `protobuf:"bytes,10,opt,name=instrument_type,json=instrumentType,proto3" json:"instrument_type,omitempty"`                                                        //Тип инструмента. Возможные значения: </br>**bond** — облигация; </br>**share** — акция; </br>**currency** — валюта; </br>**etf** — фонд; </br>**futures** — фьючерс.
@@ -993,7 +993,7 @@ type PortfolioPosition struct {
 	InstrumentType           string      `protobuf:"bytes,2,opt,name=instrument_type,json=instrumentType,proto3" json:"instrument_type,omitempty"`                                   //Тип инструмента.
 	Quantity                 *Quotation  `protobuf:"bytes,3,opt,name=quantity,proto3" json:"quantity,omitempty"`                                                                     //Количество инструмента в портфеле в штуках.
 	AveragePositionPrice     *MoneyValue `protobuf:"bytes,4,opt,name=average_position_price,json=averagePositionPrice,proto3" json:"average_position_price,omitempty"`               //Средневзвешенная цена позиции. **Возможна задержка до секунды для пересчёта**.
-	ExpectedYield            *Quotation  `protobuf:"bytes,5,opt,name=expected_yield,json=expectedYield,proto3" json:"expected_yield,omitempty"`                                      //Текущая рассчитанная относительная доходность позиции, в %.
+	ExpectedYield            *Quotation  `protobuf:"bytes,5,opt,name=expected_yield,json=expectedYield,proto3" json:"expected_yield,omitempty"`                                      //Текущая рассчитанная доходность позиции.
 	CurrentNkd               *MoneyValue `protobuf:"bytes,6,opt,name=current_nkd,json=currentNkd,proto3" json:"current_nkd,omitempty"`                                               // Текущий НКД.
 	AveragePositionPricePt   *Quotation  `protobuf:"bytes,7,opt,name=average_position_price_pt,json=averagePositionPricePt,proto3" json:"average_position_price_pt,omitempty"`       //Средняя цена лота в позиции в пунктах (для фьючерсов). **Возможна задержка до секунды для пересчёта**.
 	CurrentPrice             *MoneyValue `protobuf:"bytes,8,opt,name=current_price,json=currentPrice,proto3" json:"current_price,omitempty"`                                         //Текущая цена за 1 инструмент. Для получения стоимости лота требуется умножить на лотность инструмента..
