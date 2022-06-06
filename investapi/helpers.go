@@ -13,12 +13,22 @@ func (x *Quotation) ToFloat64() (output float64) {
 	return float64(x.Units) + float64(x.Nano)/nano
 }
 
-// Float64ToQuotation преобразует float64 ссылку на тип Quotation
+// MoneyValueFromFloat64 создаёт MoneyValue c пустой валютой из числа типа float64
+func MoneyValueFromFloat64(a float64) *MoneyValue {
+	i, f := math.Modf(a)
+	return &MoneyValue{
+		Units:    int64(i),
+		Nano:     int32(math.Round(f * nano)),
+		Currency: "",
+	}
+}
+
+// Float64ToQuotation преобразует float64 в ссылку на тип Quotation
 func Float64ToQuotation(input float64) (output *Quotation) {
 	integerPart, floatPart := math.Modf(input)
 	output = new(Quotation)
 	output.Units = int64(integerPart)
-	output.Nano = int32(nano * floatPart)
+	output.Nano = int32(math.Round(nano * floatPart))
 	return
 }
 
