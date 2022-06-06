@@ -469,7 +469,7 @@ type PostOrderRequest struct {
 
 	Figi      string         `protobuf:"bytes,1,opt,name=figi,proto3" json:"figi,omitempty"`                                                                                  //Figi-идентификатор инструмента.
 	Quantity  int64          `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`                                                                         //Количество лотов.
-	Price     *Quotation     `protobuf:"bytes,3,opt,name=price,proto3" json:"price,omitempty"`                                                                                //Цена одного инструмента. Для получения стоимости лота требуется умножить на лотность инструмента.
+	Price     *Quotation     `protobuf:"bytes,3,opt,name=price,proto3" json:"price,omitempty"`                                                                                //Цена одного инструмента. Для получения стоимости лота требуется умножить на лотность инструмента. Игнорируется для рыночных поручений.
 	Direction OrderDirection `protobuf:"varint,4,opt,name=direction,proto3,enum=tinkoff.public.invest.api.contract.v1.OrderDirection" json:"direction,omitempty"`             //Направление операции.
 	AccountId string         `protobuf:"bytes,5,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`                                                       //Номер счёта.
 	OrderType OrderType      `protobuf:"varint,6,opt,name=order_type,json=orderType,proto3,enum=tinkoff.public.invest.api.contract.v1.OrderType" json:"order_type,omitempty"` //Тип заявки.

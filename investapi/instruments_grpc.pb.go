@@ -58,6 +58,14 @@ type InstrumentsServiceClient interface {
 	GetFavorites(ctx context.Context, in *GetFavoritesRequest, opts ...grpc.CallOption) (*GetFavoritesResponse, error)
 	//Метод редактирования избранных инструментов.
 	EditFavorites(ctx context.Context, in *EditFavoritesRequest, opts ...grpc.CallOption) (*EditFavoritesResponse, error)
+	//Метод получения списка стран.
+	GetCountries(ctx context.Context, in *GetCountriesRequest, opts ...grpc.CallOption) (*GetCountriesResponse, error)
+	//Метод поиска инструмента.
+	FindInstrument(ctx context.Context, in *FindInstrumentRequest, opts ...grpc.CallOption) (*FindInstrumentResponse, error)
+	//Метод получения списка брендов.
+	GetBrands(ctx context.Context, in *GetBrandsRequest, opts ...grpc.CallOption) (*GetBrandsResponse, error)
+	//Метод получения бренда по его идентификатору.
+	GetBrandBy(ctx context.Context, in *GetBrandRequest, opts ...grpc.CallOption) (*Brand, error)
 }
 
 type instrumentsServiceClient struct {
@@ -248,6 +256,42 @@ func (c *instrumentsServiceClient) EditFavorites(ctx context.Context, in *EditFa
 	return out, nil
 }
 
+func (c *instrumentsServiceClient) GetCountries(ctx context.Context, in *GetCountriesRequest, opts ...grpc.CallOption) (*GetCountriesResponse, error) {
+	out := new(GetCountriesResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetCountries", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *instrumentsServiceClient) FindInstrument(ctx context.Context, in *FindInstrumentRequest, opts ...grpc.CallOption) (*FindInstrumentResponse, error) {
+	out := new(FindInstrumentResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/FindInstrument", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *instrumentsServiceClient) GetBrands(ctx context.Context, in *GetBrandsRequest, opts ...grpc.CallOption) (*GetBrandsResponse, error) {
+	out := new(GetBrandsResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetBrands", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *instrumentsServiceClient) GetBrandBy(ctx context.Context, in *GetBrandRequest, opts ...grpc.CallOption) (*Brand, error) {
+	out := new(Brand)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetBrandBy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InstrumentsServiceServer is the server API for InstrumentsService service.
 // All implementations must embed UnimplementedInstrumentsServiceServer
 // for forward compatibility
@@ -292,6 +336,14 @@ type InstrumentsServiceServer interface {
 	GetFavorites(context.Context, *GetFavoritesRequest) (*GetFavoritesResponse, error)
 	//Метод редактирования избранных инструментов.
 	EditFavorites(context.Context, *EditFavoritesRequest) (*EditFavoritesResponse, error)
+	//Метод получения списка стран.
+	GetCountries(context.Context, *GetCountriesRequest) (*GetCountriesResponse, error)
+	//Метод поиска инструмента.
+	FindInstrument(context.Context, *FindInstrumentRequest) (*FindInstrumentResponse, error)
+	//Метод получения списка брендов.
+	GetBrands(context.Context, *GetBrandsRequest) (*GetBrandsResponse, error)
+	//Метод получения бренда по его идентификатору.
+	GetBrandBy(context.Context, *GetBrandRequest) (*Brand, error)
 	mustEmbedUnimplementedInstrumentsServiceServer()
 }
 
@@ -358,6 +410,18 @@ func (UnimplementedInstrumentsServiceServer) GetFavorites(context.Context, *GetF
 }
 func (UnimplementedInstrumentsServiceServer) EditFavorites(context.Context, *EditFavoritesRequest) (*EditFavoritesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditFavorites not implemented")
+}
+func (UnimplementedInstrumentsServiceServer) GetCountries(context.Context, *GetCountriesRequest) (*GetCountriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCountries not implemented")
+}
+func (UnimplementedInstrumentsServiceServer) FindInstrument(context.Context, *FindInstrumentRequest) (*FindInstrumentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindInstrument not implemented")
+}
+func (UnimplementedInstrumentsServiceServer) GetBrands(context.Context, *GetBrandsRequest) (*GetBrandsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBrands not implemented")
+}
+func (UnimplementedInstrumentsServiceServer) GetBrandBy(context.Context, *GetBrandRequest) (*Brand, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBrandBy not implemented")
 }
 func (UnimplementedInstrumentsServiceServer) mustEmbedUnimplementedInstrumentsServiceServer() {}
 
@@ -732,6 +796,78 @@ func _InstrumentsService_EditFavorites_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InstrumentsService_GetCountries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCountriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InstrumentsServiceServer).GetCountries(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetCountries",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InstrumentsServiceServer).GetCountries(ctx, req.(*GetCountriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InstrumentsService_FindInstrument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindInstrumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InstrumentsServiceServer).FindInstrument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.InstrumentsService/FindInstrument",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InstrumentsServiceServer).FindInstrument(ctx, req.(*FindInstrumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InstrumentsService_GetBrands_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBrandsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InstrumentsServiceServer).GetBrands(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetBrands",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InstrumentsServiceServer).GetBrands(ctx, req.(*GetBrandsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InstrumentsService_GetBrandBy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBrandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InstrumentsServiceServer).GetBrandBy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetBrandBy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InstrumentsServiceServer).GetBrandBy(ctx, req.(*GetBrandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InstrumentsService_ServiceDesc is the grpc.ServiceDesc for InstrumentsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -818,6 +954,22 @@ var InstrumentsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EditFavorites",
 			Handler:    _InstrumentsService_EditFavorites_Handler,
+		},
+		{
+			MethodName: "GetCountries",
+			Handler:    _InstrumentsService_GetCountries_Handler,
+		},
+		{
+			MethodName: "FindInstrument",
+			Handler:    _InstrumentsService_FindInstrument_Handler,
+		},
+		{
+			MethodName: "GetBrands",
+			Handler:    _InstrumentsService_GetBrands_Handler,
+		},
+		{
+			MethodName: "GetBrandBy",
+			Handler:    _InstrumentsService_GetBrandBy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

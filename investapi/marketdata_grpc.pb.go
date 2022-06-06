@@ -26,7 +26,7 @@ type MarketDataServiceClient interface {
 	GetOrderBook(ctx context.Context, in *GetOrderBookRequest, opts ...grpc.CallOption) (*GetOrderBookResponse, error)
 	//Метод запроса статуса торгов по инструментам.
 	GetTradingStatus(ctx context.Context, in *GetTradingStatusRequest, opts ...grpc.CallOption) (*GetTradingStatusResponse, error)
-	//Метод запроса последних обезличенных сделок по инструменту.
+	//Метод запроса последних обезличенных сделок по инструменту на текущий торговый день с максимальным интервалом в 1 час.
 	GetLastTrades(ctx context.Context, in *GetLastTradesRequest, opts ...grpc.CallOption) (*GetLastTradesResponse, error)
 }
 
@@ -95,7 +95,7 @@ type MarketDataServiceServer interface {
 	GetOrderBook(context.Context, *GetOrderBookRequest) (*GetOrderBookResponse, error)
 	//Метод запроса статуса торгов по инструментам.
 	GetTradingStatus(context.Context, *GetTradingStatusRequest) (*GetTradingStatusResponse, error)
-	//Метод запроса последних обезличенных сделок по инструменту.
+	//Метод запроса последних обезличенных сделок по инструменту на текущий торговый день с максимальным интервалом в 1 час.
 	GetLastTrades(context.Context, *GetLastTradesRequest) (*GetLastTradesResponse, error)
 	mustEmbedUnimplementedMarketDataServiceServer()
 }
@@ -260,6 +260,8 @@ var MarketDataService_ServiceDesc = grpc.ServiceDesc{
 type MarketDataStreamServiceClient interface {
 	//Bi-directional стрим предоставления биржевой информации.
 	MarketDataStream(ctx context.Context, opts ...grpc.CallOption) (MarketDataStreamService_MarketDataStreamClient, error)
+	//Server-side стрим предоставления биржевой информации.
+	MarketDataServerSideStream(ctx context.Context, in *MarketDataServerSideStreamRequest, opts ...grpc.CallOption) (MarketDataStreamService_MarketDataServerSideStreamClient, error)
 }
 
 type marketDataStreamServiceClient struct {
@@ -301,12 +303,46 @@ func (x *marketDataStreamServiceMarketDataStreamClient) Recv() (*MarketDataRespo
 	return m, nil
 }
 
+func (c *marketDataStreamServiceClient) MarketDataServerSideStream(ctx context.Context, in *MarketDataServerSideStreamRequest, opts ...grpc.CallOption) (MarketDataStreamService_MarketDataServerSideStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &MarketDataStreamService_ServiceDesc.Streams[1], "/tinkoff.public.invest.api.contract.v1.MarketDataStreamService/MarketDataServerSideStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &marketDataStreamServiceMarketDataServerSideStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type MarketDataStreamService_MarketDataServerSideStreamClient interface {
+	Recv() (*MarketDataResponse, error)
+	grpc.ClientStream
+}
+
+type marketDataStreamServiceMarketDataServerSideStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *marketDataStreamServiceMarketDataServerSideStreamClient) Recv() (*MarketDataResponse, error) {
+	m := new(MarketDataResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // MarketDataStreamServiceServer is the server API for MarketDataStreamService service.
 // All implementations must embed UnimplementedMarketDataStreamServiceServer
 // for forward compatibility
 type MarketDataStreamServiceServer interface {
 	//Bi-directional стрим предоставления биржевой информации.
 	MarketDataStream(MarketDataStreamService_MarketDataStreamServer) error
+	//Server-side стрим предоставления биржевой информации.
+	MarketDataServerSideStream(*MarketDataServerSideStreamRequest, MarketDataStreamService_MarketDataServerSideStreamServer) error
 	mustEmbedUnimplementedMarketDataStreamServiceServer()
 }
 
@@ -316,6 +352,9 @@ type UnimplementedMarketDataStreamServiceServer struct {
 
 func (UnimplementedMarketDataStreamServiceServer) MarketDataStream(MarketDataStreamService_MarketDataStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method MarketDataStream not implemented")
+}
+func (UnimplementedMarketDataStreamServiceServer) MarketDataServerSideStream(*MarketDataServerSideStreamRequest, MarketDataStreamService_MarketDataServerSideStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method MarketDataServerSideStream not implemented")
 }
 func (UnimplementedMarketDataStreamServiceServer) mustEmbedUnimplementedMarketDataStreamServiceServer() {
 }
@@ -357,6 +396,27 @@ func (x *marketDataStreamServiceMarketDataStreamServer) Recv() (*MarketDataReque
 	return m, nil
 }
 
+func _MarketDataStreamService_MarketDataServerSideStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(MarketDataServerSideStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(MarketDataStreamServiceServer).MarketDataServerSideStream(m, &marketDataStreamServiceMarketDataServerSideStreamServer{stream})
+}
+
+type MarketDataStreamService_MarketDataServerSideStreamServer interface {
+	Send(*MarketDataResponse) error
+	grpc.ServerStream
+}
+
+type marketDataStreamServiceMarketDataServerSideStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *marketDataStreamServiceMarketDataServerSideStreamServer) Send(m *MarketDataResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // MarketDataStreamService_ServiceDesc is the grpc.ServiceDesc for MarketDataStreamService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -370,6 +430,11 @@ var MarketDataStreamService_ServiceDesc = grpc.ServiceDesc{
 			Handler:       _MarketDataStreamService_MarketDataStream_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
+		},
+		{
+			StreamName:    "MarketDataServerSideStream",
+			Handler:       _MarketDataStreamService_MarketDataServerSideStream_Handler,
+			ServerStreams: true,
 		},
 	},
 	Metadata: "marketdata.proto",
