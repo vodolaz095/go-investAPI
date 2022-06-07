@@ -28,6 +28,12 @@ func main() {
 		// которые сервер посылает вместе с ответом на запрос GetLastPrices
 		grpc.Header(&header),
 	)
+
+	// так мы вызываем метод для получения крайней цены сделки, если хедеры нам не нужны
+	//res, err := client.MarketDataServiceClient.GetLastPrices(context.Background(),
+	//		&investapi.GetLastPricesRequest{Figi: []string{"BBG00RRT3TX4"}},
+	//)
+
 	for k, v := range header {
 		log.Printf("Получен хедер %s : %s", k, v)
 		//		2022/06/07 10:58:40 Получен хедер date : [Tue, 07 Jun 2022 07:58:39 GMT]
