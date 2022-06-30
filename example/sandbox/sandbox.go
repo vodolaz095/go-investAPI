@@ -30,15 +30,18 @@ func main() {
 		log.Fatalf("%s : while getting sandbox accounts", err)
 	}
 	var howMuch investapi.MoneyValue
+	howMuch = *investapi.MoneyValueFromFloat64(100)
 	howMuch.Currency = "RUB"
 	for _, account := range sandboxAccounts.GetAccounts() {
-		howMuch = *investapi.MoneyValueFromFloat64(100)
-		_, err = sandboxService.SandboxPayIn(context.Background(), &investapi.SandboxPayInRequest{
-			AccountId: account.Id,
-			Amount:    &howMuch,
-		})
-		if err != nil {
-			log.Fatalf("%s : при попытке пополнить тестовый счёт %s", err, account.Id)
+		if resp.AccountId == account.Id {
+			_, err = sandboxService.SandboxPayIn(context.Background(), &investapi.SandboxPayInRequest{
+				AccountId: account.Id,
+				Amount:    &howMuch,
+			})
+			if err != nil {
+				log.Fatalf("%s : при попытке пополнить тестовый счёт %s", err, account.Id)
+			}
+			log.Printf("Тестовый аккаунт %s пополнен на 100 рублей", account.Id)
 		}
 	}
 }
