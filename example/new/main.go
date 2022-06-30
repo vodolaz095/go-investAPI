@@ -10,6 +10,14 @@ import (
 	"github.com/vodolaz095/go-investAPI/investapi"
 )
 
+/*
+В этом примере мы создаём GRPC клиент с помощью встроенного конструктора,
+потом этим клиентом мы соединяемся с API Тинькофф Инвестициями
+и получаем цену крайней сделки по облигации федерального займа 25084
+https://www.tinkoff.ru/invest/bonds/SU25084RMFS3.
+Мы отображаем все хедеры, которые передал сервер.
+*/
+
 const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
 
 func main() {
