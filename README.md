@@ -65,6 +65,8 @@ func main() {
 
 ```
 
+3. В директории [example](https://github.com/vodolaz095/go-investAPI/tree/master/example) лежат примеры использования
+
 
 Как сгенерировать код клиента из proto файлов?
 ===============================
