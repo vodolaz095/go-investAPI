@@ -1,16 +1,12 @@
-FROM centos:8
+FROM golang:1.16.15
 
-# Установить зависимости
-WORKDIR /etc/yum.repos.d/
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-RUN dnf clean all && dnf upgrade -y && dnf install golang wget unzip git -y && dnf clean all
+# устанавливаем unzip
+RUN apt-get update && apt-get install unzip -y
 
-RUN go version
+# устанавливаем плагины для protoc
 ENV GOBIN=/usr/bin/
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
 RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
-
 
 # Загружаем protoc и встроенные протоколы
 WORKDIR /tmp
