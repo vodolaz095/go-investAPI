@@ -92,24 +92,21 @@ func main() {
 5. Как результат выполнения предыдущей команды, в поддиректории `investapi/` появятся файлы
 
 ```
-client.go
-helpers.go
-helpers_test.go
-investapi/common.pb.go
-investapi/instruments.pb.go
-investapi/instruments_grpc.pb.go
-investapi/marketdata.pb.go
-investapi/marketdata_grpc.pb.go
-investapi/operations.pb.go
-investapi/operations_grpc.pb.go
-investapi/orders.pb.go
-investapi/orders_grpc.pb.go
-investapi/sandbox.pb.go
-investapi/sandbox_grpc.pb.go
-investapi/stoporders.pb.go
-investapi/stoporders_grpc.pb.go
-investapi/users.pb.go
-investapi/users_grpc.pb.go
+common.pb.go
+instruments.pb.go
+instruments_grpc.pb.go
+marketdata.pb.go
+marketdata_grpc.pb.go
+operations.pb.go
+operations_grpc.pb.go
+orders.pb.go
+orders_grpc.pb.go
+sandbox.pb.go
+sandbox_grpc.pb.go
+stoporders.pb.go
+stoporders_grpc.pb.go
+users.pb.go
+users_grpc.pb.go
 
 ```
 
