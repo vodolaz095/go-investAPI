@@ -291,3 +291,119 @@ var OperationsService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "operations.proto",
 }
+
+// OperationsStreamServiceClient is the client API for OperationsStreamService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type OperationsStreamServiceClient interface {
+	//Server-side stream обновлений портфеля
+	PortfolioStream(ctx context.Context, in *PortfolioStreamRequest, opts ...grpc.CallOption) (OperationsStreamService_PortfolioStreamClient, error)
+}
+
+type operationsStreamServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewOperationsStreamServiceClient(cc grpc.ClientConnInterface) OperationsStreamServiceClient {
+	return &operationsStreamServiceClient{cc}
+}
+
+func (c *operationsStreamServiceClient) PortfolioStream(ctx context.Context, in *PortfolioStreamRequest, opts ...grpc.CallOption) (OperationsStreamService_PortfolioStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &OperationsStreamService_ServiceDesc.Streams[0], "/tinkoff.public.invest.api.contract.v1.OperationsStreamService/PortfolioStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &operationsStreamServicePortfolioStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type OperationsStreamService_PortfolioStreamClient interface {
+	Recv() (*PortfolioStreamResponse, error)
+	grpc.ClientStream
+}
+
+type operationsStreamServicePortfolioStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *operationsStreamServicePortfolioStreamClient) Recv() (*PortfolioStreamResponse, error) {
+	m := new(PortfolioStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// OperationsStreamServiceServer is the server API for OperationsStreamService service.
+// All implementations must embed UnimplementedOperationsStreamServiceServer
+// for forward compatibility
+type OperationsStreamServiceServer interface {
+	//Server-side stream обновлений портфеля
+	PortfolioStream(*PortfolioStreamRequest, OperationsStreamService_PortfolioStreamServer) error
+	mustEmbedUnimplementedOperationsStreamServiceServer()
+}
+
+// UnimplementedOperationsStreamServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedOperationsStreamServiceServer struct {
+}
+
+func (UnimplementedOperationsStreamServiceServer) PortfolioStream(*PortfolioStreamRequest, OperationsStreamService_PortfolioStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method PortfolioStream not implemented")
+}
+func (UnimplementedOperationsStreamServiceServer) mustEmbedUnimplementedOperationsStreamServiceServer() {
+}
+
+// UnsafeOperationsStreamServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to OperationsStreamServiceServer will
+// result in compilation errors.
+type UnsafeOperationsStreamServiceServer interface {
+	mustEmbedUnimplementedOperationsStreamServiceServer()
+}
+
+func RegisterOperationsStreamServiceServer(s grpc.ServiceRegistrar, srv OperationsStreamServiceServer) {
+	s.RegisterService(&OperationsStreamService_ServiceDesc, srv)
+}
+
+func _OperationsStreamService_PortfolioStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(PortfolioStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(OperationsStreamServiceServer).PortfolioStream(m, &operationsStreamServicePortfolioStreamServer{stream})
+}
+
+type OperationsStreamService_PortfolioStreamServer interface {
+	Send(*PortfolioStreamResponse) error
+	grpc.ServerStream
+}
+
+type operationsStreamServicePortfolioStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *operationsStreamServicePortfolioStreamServer) Send(m *PortfolioStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+// OperationsStreamService_ServiceDesc is the grpc.ServiceDesc for OperationsStreamService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var OperationsStreamService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "tinkoff.public.invest.api.contract.v1.OperationsStreamService",
+	HandlerType: (*OperationsStreamServiceServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "PortfolioStream",
+			Handler:       _OperationsStreamService_PortfolioStream_Handler,
+			ServerStreams: true,
+		},
+	},
+	Metadata: "operations.proto",
+}

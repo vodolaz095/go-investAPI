@@ -54,9 +54,9 @@ type InstrumentsServiceClient interface {
 	GetAssetBy(ctx context.Context, in *AssetRequest, opts ...grpc.CallOption) (*AssetResponse, error)
 	//Метод получения списка активов.
 	GetAssets(ctx context.Context, in *AssetsRequest, opts ...grpc.CallOption) (*AssetsResponse, error)
-	//Метод получения избранных инструментов.
+	//Метод получения списка избранных инструментов.
 	GetFavorites(ctx context.Context, in *GetFavoritesRequest, opts ...grpc.CallOption) (*GetFavoritesResponse, error)
-	//Метод редактирования избранных инструментов.
+	//Метод редактирования списка избранных инструментов.
 	EditFavorites(ctx context.Context, in *EditFavoritesRequest, opts ...grpc.CallOption) (*EditFavoritesResponse, error)
 	//Метод получения списка стран.
 	GetCountries(ctx context.Context, in *GetCountriesRequest, opts ...grpc.CallOption) (*GetCountriesResponse, error)
@@ -332,9 +332,9 @@ type InstrumentsServiceServer interface {
 	GetAssetBy(context.Context, *AssetRequest) (*AssetResponse, error)
 	//Метод получения списка активов.
 	GetAssets(context.Context, *AssetsRequest) (*AssetsResponse, error)
-	//Метод получения избранных инструментов.
+	//Метод получения списка избранных инструментов.
 	GetFavorites(context.Context, *GetFavoritesRequest) (*GetFavoritesResponse, error)
-	//Метод редактирования избранных инструментов.
+	//Метод редактирования списка избранных инструментов.
 	EditFavorites(context.Context, *EditFavoritesRequest) (*EditFavoritesResponse, error)
 	//Метод получения списка стран.
 	GetCountries(context.Context, *GetCountriesRequest) (*GetCountriesResponse, error)
