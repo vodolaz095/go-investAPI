@@ -141,6 +141,8 @@ type OrdersServiceClient interface {
 	GetOrderState(ctx context.Context, in *GetOrderStateRequest, opts ...grpc.CallOption) (*OrderState, error)
 	//Метод получения списка активных заявок по счёту.
 	GetOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
+	//Метод изменения выставленной заявки.
+	ReplaceOrder(ctx context.Context, in *ReplaceOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
 }
 
 type ordersServiceClient struct {
@@ -187,6 +189,15 @@ func (c *ordersServiceClient) GetOrders(ctx context.Context, in *GetOrdersReques
 	return out, nil
 }
 
+func (c *ordersServiceClient) ReplaceOrder(ctx context.Context, in *ReplaceOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error) {
+	out := new(PostOrderResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.OrdersService/ReplaceOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrdersServiceServer is the server API for OrdersService service.
 // All implementations must embed UnimplementedOrdersServiceServer
 // for forward compatibility
@@ -199,6 +210,8 @@ type OrdersServiceServer interface {
 	GetOrderState(context.Context, *GetOrderStateRequest) (*OrderState, error)
 	//Метод получения списка активных заявок по счёту.
 	GetOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
+	//Метод изменения выставленной заявки.
+	ReplaceOrder(context.Context, *ReplaceOrderRequest) (*PostOrderResponse, error)
 	mustEmbedUnimplementedOrdersServiceServer()
 }
 
@@ -217,6 +230,9 @@ func (UnimplementedOrdersServiceServer) GetOrderState(context.Context, *GetOrder
 }
 func (UnimplementedOrdersServiceServer) GetOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrders not implemented")
+}
+func (UnimplementedOrdersServiceServer) ReplaceOrder(context.Context, *ReplaceOrderRequest) (*PostOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReplaceOrder not implemented")
 }
 func (UnimplementedOrdersServiceServer) mustEmbedUnimplementedOrdersServiceServer() {}
 
@@ -303,6 +319,24 @@ func _OrdersService_GetOrders_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrdersService_ReplaceOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReplaceOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrdersServiceServer).ReplaceOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.OrdersService/ReplaceOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrdersServiceServer).ReplaceOrder(ctx, req.(*ReplaceOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrdersService_ServiceDesc is the grpc.ServiceDesc for OrdersService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -325,6 +359,10 @@ var OrdersService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrders",
 			Handler:    _OrdersService_GetOrders_Handler,
+		},
+		{
+			MethodName: "ReplaceOrder",
+			Handler:    _OrdersService_ReplaceOrder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

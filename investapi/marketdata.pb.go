@@ -2937,7 +2937,7 @@ func (x *GetTradingStatusResponse) GetApiTradeAvailableFlag() bool {
 	return false
 }
 
-//Запрос последних обезличенных сделок по инструменту на текущий торговый день с максимальным интервалом в 1 час.
+//Запрос обезличенных сделок за последний час.
 type GetLastTradesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3001,7 +3001,7 @@ func (x *GetLastTradesRequest) GetTo() *timestamppb.Timestamp {
 	return nil
 }
 
-//Последние обезличенные сделки по инструменту на текущий торговый день с максимальным интервалом в 1 час.
+//Обезличенных сделок за последний час.
 type GetLastTradesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

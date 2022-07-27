@@ -24,7 +24,7 @@ type InstrumentsServiceClient interface {
 	BondBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*BondResponse, error)
 	//Метод получения списка облигаций.
 	Bonds(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*BondsResponse, error)
-	//Метод получения графика выплат купонов по облигации
+	//Метод получения графика выплат купонов по облигации.
 	GetBondCoupons(ctx context.Context, in *GetBondCouponsRequest, opts ...grpc.CallOption) (*GetBondCouponsResponse, error)
 	//Метод получения валюты по её идентификатору.
 	CurrencyBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*CurrencyResponse, error)
@@ -302,7 +302,7 @@ type InstrumentsServiceServer interface {
 	BondBy(context.Context, *InstrumentRequest) (*BondResponse, error)
 	//Метод получения списка облигаций.
 	Bonds(context.Context, *InstrumentsRequest) (*BondsResponse, error)
-	//Метод получения графика выплат купонов по облигации
+	//Метод получения графика выплат купонов по облигации.
 	GetBondCoupons(context.Context, *GetBondCouponsRequest) (*GetBondCouponsResponse, error)
 	//Метод получения валюты по её идентификатору.
 	CurrencyBy(context.Context, *InstrumentRequest) (*CurrencyResponse, error)

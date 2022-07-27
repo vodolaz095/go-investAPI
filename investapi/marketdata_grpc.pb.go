@@ -26,7 +26,7 @@ type MarketDataServiceClient interface {
 	GetOrderBook(ctx context.Context, in *GetOrderBookRequest, opts ...grpc.CallOption) (*GetOrderBookResponse, error)
 	//Метод запроса статуса торгов по инструментам.
 	GetTradingStatus(ctx context.Context, in *GetTradingStatusRequest, opts ...grpc.CallOption) (*GetTradingStatusResponse, error)
-	//Метод запроса последних обезличенных сделок по инструменту на текущий торговый день с максимальным интервалом в 1 час.
+	//Метод запроса обезличенных сделок за последний час.
 	GetLastTrades(ctx context.Context, in *GetLastTradesRequest, opts ...grpc.CallOption) (*GetLastTradesResponse, error)
 }
 
@@ -95,7 +95,7 @@ type MarketDataServiceServer interface {
 	GetOrderBook(context.Context, *GetOrderBookRequest) (*GetOrderBookResponse, error)
 	//Метод запроса статуса торгов по инструментам.
 	GetTradingStatus(context.Context, *GetTradingStatusRequest) (*GetTradingStatusResponse, error)
-	//Метод запроса последних обезличенных сделок по инструменту на текущий торговый день с максимальным интервалом в 1 час.
+	//Метод запроса обезличенных сделок за последний час.
 	GetLastTrades(context.Context, *GetLastTradesRequest) (*GetLastTradesResponse, error)
 	mustEmbedUnimplementedMarketDataServiceServer()
 }

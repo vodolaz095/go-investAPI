@@ -30,6 +30,8 @@ type OperationsServiceClient interface {
 	GetBrokerReport(ctx context.Context, in *BrokerReportRequest, opts ...grpc.CallOption) (*BrokerReportResponse, error)
 	//Метод получения отчёта "Справка о доходах за пределами РФ".
 	GetDividendsForeignIssuer(ctx context.Context, in *GetDividendsForeignIssuerRequest, opts ...grpc.CallOption) (*GetDividendsForeignIssuerResponse, error)
+	//Метод получения списка операций по счёту с пагинацией.
+	GetOperationsByCursor(ctx context.Context, in *GetOperationsByCursorRequest, opts ...grpc.CallOption) (*GetOperationsByCursorResponse, error)
 }
 
 type operationsServiceClient struct {
@@ -94,6 +96,15 @@ func (c *operationsServiceClient) GetDividendsForeignIssuer(ctx context.Context,
 	return out, nil
 }
 
+func (c *operationsServiceClient) GetOperationsByCursor(ctx context.Context, in *GetOperationsByCursorRequest, opts ...grpc.CallOption) (*GetOperationsByCursorResponse, error) {
+	out := new(GetOperationsByCursorResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.OperationsService/GetOperationsByCursor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OperationsServiceServer is the server API for OperationsService service.
 // All implementations must embed UnimplementedOperationsServiceServer
 // for forward compatibility
@@ -110,6 +121,8 @@ type OperationsServiceServer interface {
 	GetBrokerReport(context.Context, *BrokerReportRequest) (*BrokerReportResponse, error)
 	//Метод получения отчёта "Справка о доходах за пределами РФ".
 	GetDividendsForeignIssuer(context.Context, *GetDividendsForeignIssuerRequest) (*GetDividendsForeignIssuerResponse, error)
+	//Метод получения списка операций по счёту с пагинацией.
+	GetOperationsByCursor(context.Context, *GetOperationsByCursorRequest) (*GetOperationsByCursorResponse, error)
 	mustEmbedUnimplementedOperationsServiceServer()
 }
 
@@ -134,6 +147,9 @@ func (UnimplementedOperationsServiceServer) GetBrokerReport(context.Context, *Br
 }
 func (UnimplementedOperationsServiceServer) GetDividendsForeignIssuer(context.Context, *GetDividendsForeignIssuerRequest) (*GetDividendsForeignIssuerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDividendsForeignIssuer not implemented")
+}
+func (UnimplementedOperationsServiceServer) GetOperationsByCursor(context.Context, *GetOperationsByCursorRequest) (*GetOperationsByCursorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOperationsByCursor not implemented")
 }
 func (UnimplementedOperationsServiceServer) mustEmbedUnimplementedOperationsServiceServer() {}
 
@@ -256,6 +272,24 @@ func _OperationsService_GetDividendsForeignIssuer_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OperationsService_GetOperationsByCursor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOperationsByCursorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OperationsServiceServer).GetOperationsByCursor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.OperationsService/GetOperationsByCursor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OperationsServiceServer).GetOperationsByCursor(ctx, req.(*GetOperationsByCursorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OperationsService_ServiceDesc is the grpc.ServiceDesc for OperationsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -286,6 +320,10 @@ var OperationsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDividendsForeignIssuer",
 			Handler:    _OperationsService_GetDividendsForeignIssuer_Handler,
+		},
+		{
+			MethodName: "GetOperationsByCursor",
+			Handler:    _OperationsService_GetOperationsByCursor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
