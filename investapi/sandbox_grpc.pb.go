@@ -26,6 +26,8 @@ type SandboxServiceClient interface {
 	CloseSandboxAccount(ctx context.Context, in *CloseSandboxAccountRequest, opts ...grpc.CallOption) (*CloseSandboxAccountResponse, error)
 	//Метод выставления торгового поручения в песочнице.
 	PostSandboxOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
+	//Метод изменения выставленной заявки.
+	ReplaceSandboxOrder(ctx context.Context, in *ReplaceOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
 	//Метод получения списка активных заявок по счёту в песочнице.
 	GetSandboxOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
 	//Метод отмены торгового поручения в песочнице.
@@ -40,6 +42,8 @@ type SandboxServiceClient interface {
 	GetSandboxPortfolio(ctx context.Context, in *PortfolioRequest, opts ...grpc.CallOption) (*PortfolioResponse, error)
 	//Метод пополнения счёта в песочнице.
 	SandboxPayIn(ctx context.Context, in *SandboxPayInRequest, opts ...grpc.CallOption) (*SandboxPayInResponse, error)
+	//Метод получения доступного остатка для вывода средств в песочнице.
+	GetSandboxWithdrawLimits(ctx context.Context, in *WithdrawLimitsRequest, opts ...grpc.CallOption) (*WithdrawLimitsResponse, error)
 }
 
 type sandboxServiceClient struct {
@@ -80,6 +84,15 @@ func (c *sandboxServiceClient) CloseSandboxAccount(ctx context.Context, in *Clos
 func (c *sandboxServiceClient) PostSandboxOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error) {
 	out := new(PostOrderResponse)
 	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.SandboxService/PostSandboxOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sandboxServiceClient) ReplaceSandboxOrder(ctx context.Context, in *ReplaceOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error) {
+	out := new(PostOrderResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.SandboxService/ReplaceSandboxOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -149,6 +162,15 @@ func (c *sandboxServiceClient) SandboxPayIn(ctx context.Context, in *SandboxPayI
 	return out, nil
 }
 
+func (c *sandboxServiceClient) GetSandboxWithdrawLimits(ctx context.Context, in *WithdrawLimitsRequest, opts ...grpc.CallOption) (*WithdrawLimitsResponse, error) {
+	out := new(WithdrawLimitsResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxWithdrawLimits", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SandboxServiceServer is the server API for SandboxService service.
 // All implementations must embed UnimplementedSandboxServiceServer
 // for forward compatibility
@@ -161,6 +183,8 @@ type SandboxServiceServer interface {
 	CloseSandboxAccount(context.Context, *CloseSandboxAccountRequest) (*CloseSandboxAccountResponse, error)
 	//Метод выставления торгового поручения в песочнице.
 	PostSandboxOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error)
+	//Метод изменения выставленной заявки.
+	ReplaceSandboxOrder(context.Context, *ReplaceOrderRequest) (*PostOrderResponse, error)
 	//Метод получения списка активных заявок по счёту в песочнице.
 	GetSandboxOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
 	//Метод отмены торгового поручения в песочнице.
@@ -175,6 +199,8 @@ type SandboxServiceServer interface {
 	GetSandboxPortfolio(context.Context, *PortfolioRequest) (*PortfolioResponse, error)
 	//Метод пополнения счёта в песочнице.
 	SandboxPayIn(context.Context, *SandboxPayInRequest) (*SandboxPayInResponse, error)
+	//Метод получения доступного остатка для вывода средств в песочнице.
+	GetSandboxWithdrawLimits(context.Context, *WithdrawLimitsRequest) (*WithdrawLimitsResponse, error)
 	mustEmbedUnimplementedSandboxServiceServer()
 }
 
@@ -193,6 +219,9 @@ func (UnimplementedSandboxServiceServer) CloseSandboxAccount(context.Context, *C
 }
 func (UnimplementedSandboxServiceServer) PostSandboxOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostSandboxOrder not implemented")
+}
+func (UnimplementedSandboxServiceServer) ReplaceSandboxOrder(context.Context, *ReplaceOrderRequest) (*PostOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReplaceSandboxOrder not implemented")
 }
 func (UnimplementedSandboxServiceServer) GetSandboxOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSandboxOrders not implemented")
@@ -214,6 +243,9 @@ func (UnimplementedSandboxServiceServer) GetSandboxPortfolio(context.Context, *P
 }
 func (UnimplementedSandboxServiceServer) SandboxPayIn(context.Context, *SandboxPayInRequest) (*SandboxPayInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SandboxPayIn not implemented")
+}
+func (UnimplementedSandboxServiceServer) GetSandboxWithdrawLimits(context.Context, *WithdrawLimitsRequest) (*WithdrawLimitsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSandboxWithdrawLimits not implemented")
 }
 func (UnimplementedSandboxServiceServer) mustEmbedUnimplementedSandboxServiceServer() {}
 
@@ -296,6 +328,24 @@ func _SandboxService_PostSandboxOrder_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SandboxServiceServer).PostSandboxOrder(ctx, req.(*PostOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SandboxService_ReplaceSandboxOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReplaceOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SandboxServiceServer).ReplaceSandboxOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.SandboxService/ReplaceSandboxOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SandboxServiceServer).ReplaceSandboxOrder(ctx, req.(*ReplaceOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -426,6 +476,24 @@ func _SandboxService_SandboxPayIn_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SandboxService_GetSandboxWithdrawLimits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WithdrawLimitsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SandboxServiceServer).GetSandboxWithdrawLimits(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxWithdrawLimits",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SandboxServiceServer).GetSandboxWithdrawLimits(ctx, req.(*WithdrawLimitsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SandboxService_ServiceDesc is the grpc.ServiceDesc for SandboxService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -448,6 +516,10 @@ var SandboxService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PostSandboxOrder",
 			Handler:    _SandboxService_PostSandboxOrder_Handler,
+		},
+		{
+			MethodName: "ReplaceSandboxOrder",
+			Handler:    _SandboxService_ReplaceSandboxOrder_Handler,
 		},
 		{
 			MethodName: "GetSandboxOrders",
@@ -476,6 +548,10 @@ var SandboxService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SandboxPayIn",
 			Handler:    _SandboxService_SandboxPayIn_Handler,
+		},
+		{
+			MethodName: "GetSandboxWithdrawLimits",
+			Handler:    _SandboxService_GetSandboxWithdrawLimits_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

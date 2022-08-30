@@ -336,6 +336,8 @@ var OperationsService_ServiceDesc = grpc.ServiceDesc{
 type OperationsStreamServiceClient interface {
 	//Server-side stream обновлений портфеля
 	PortfolioStream(ctx context.Context, in *PortfolioStreamRequest, opts ...grpc.CallOption) (OperationsStreamService_PortfolioStreamClient, error)
+	//Server-side stream обновлений информации по изменению позиций портфеля
+	PositionsStream(ctx context.Context, in *PositionsStreamRequest, opts ...grpc.CallOption) (OperationsStreamService_PositionsStreamClient, error)
 }
 
 type operationsStreamServiceClient struct {
@@ -378,12 +380,46 @@ func (x *operationsStreamServicePortfolioStreamClient) Recv() (*PortfolioStreamR
 	return m, nil
 }
 
+func (c *operationsStreamServiceClient) PositionsStream(ctx context.Context, in *PositionsStreamRequest, opts ...grpc.CallOption) (OperationsStreamService_PositionsStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &OperationsStreamService_ServiceDesc.Streams[1], "/tinkoff.public.invest.api.contract.v1.OperationsStreamService/PositionsStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &operationsStreamServicePositionsStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type OperationsStreamService_PositionsStreamClient interface {
+	Recv() (*PositionsStreamResponse, error)
+	grpc.ClientStream
+}
+
+type operationsStreamServicePositionsStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *operationsStreamServicePositionsStreamClient) Recv() (*PositionsStreamResponse, error) {
+	m := new(PositionsStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // OperationsStreamServiceServer is the server API for OperationsStreamService service.
 // All implementations must embed UnimplementedOperationsStreamServiceServer
 // for forward compatibility
 type OperationsStreamServiceServer interface {
 	//Server-side stream обновлений портфеля
 	PortfolioStream(*PortfolioStreamRequest, OperationsStreamService_PortfolioStreamServer) error
+	//Server-side stream обновлений информации по изменению позиций портфеля
+	PositionsStream(*PositionsStreamRequest, OperationsStreamService_PositionsStreamServer) error
 	mustEmbedUnimplementedOperationsStreamServiceServer()
 }
 
@@ -393,6 +429,9 @@ type UnimplementedOperationsStreamServiceServer struct {
 
 func (UnimplementedOperationsStreamServiceServer) PortfolioStream(*PortfolioStreamRequest, OperationsStreamService_PortfolioStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method PortfolioStream not implemented")
+}
+func (UnimplementedOperationsStreamServiceServer) PositionsStream(*PositionsStreamRequest, OperationsStreamService_PositionsStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method PositionsStream not implemented")
 }
 func (UnimplementedOperationsStreamServiceServer) mustEmbedUnimplementedOperationsStreamServiceServer() {
 }
@@ -429,6 +468,27 @@ func (x *operationsStreamServicePortfolioStreamServer) Send(m *PortfolioStreamRe
 	return x.ServerStream.SendMsg(m)
 }
 
+func _OperationsStreamService_PositionsStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(PositionsStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(OperationsStreamServiceServer).PositionsStream(m, &operationsStreamServicePositionsStreamServer{stream})
+}
+
+type OperationsStreamService_PositionsStreamServer interface {
+	Send(*PositionsStreamResponse) error
+	grpc.ServerStream
+}
+
+type operationsStreamServicePositionsStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *operationsStreamServicePositionsStreamServer) Send(m *PositionsStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // OperationsStreamService_ServiceDesc is the grpc.ServiceDesc for OperationsStreamService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -440,6 +500,11 @@ var OperationsStreamService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "PortfolioStream",
 			Handler:       _OperationsStreamService_PortfolioStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "PositionsStream",
+			Handler:       _OperationsStreamService_PositionsStream_Handler,
 			ServerStreams: true,
 		},
 	},

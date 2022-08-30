@@ -38,6 +38,10 @@ type InstrumentsServiceClient interface {
 	FutureBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*FutureResponse, error)
 	//Метод получения списка фьючерсов.
 	Futures(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*FuturesResponse, error)
+	//Метод получения опциона по его идентификатору.
+	OptionBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*OptionResponse, error)
+	//Метод получения списка опционов.
+	Options(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*OptionsResponse, error)
 	//Метод получения акции по её идентификатору.
 	ShareBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*ShareResponse, error)
 	//Метод получения списка акций.
@@ -160,6 +164,24 @@ func (c *instrumentsServiceClient) FutureBy(ctx context.Context, in *InstrumentR
 func (c *instrumentsServiceClient) Futures(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*FuturesResponse, error) {
 	out := new(FuturesResponse)
 	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/Futures", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *instrumentsServiceClient) OptionBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*OptionResponse, error) {
+	out := new(OptionResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/OptionBy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *instrumentsServiceClient) Options(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*OptionsResponse, error) {
+	out := new(OptionsResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/Options", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -316,6 +338,10 @@ type InstrumentsServiceServer interface {
 	FutureBy(context.Context, *InstrumentRequest) (*FutureResponse, error)
 	//Метод получения списка фьючерсов.
 	Futures(context.Context, *InstrumentsRequest) (*FuturesResponse, error)
+	//Метод получения опциона по его идентификатору.
+	OptionBy(context.Context, *InstrumentRequest) (*OptionResponse, error)
+	//Метод получения списка опционов.
+	Options(context.Context, *InstrumentsRequest) (*OptionsResponse, error)
 	//Метод получения акции по её идентификатору.
 	ShareBy(context.Context, *InstrumentRequest) (*ShareResponse, error)
 	//Метод получения списка акций.
@@ -380,6 +406,12 @@ func (UnimplementedInstrumentsServiceServer) FutureBy(context.Context, *Instrume
 }
 func (UnimplementedInstrumentsServiceServer) Futures(context.Context, *InstrumentsRequest) (*FuturesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Futures not implemented")
+}
+func (UnimplementedInstrumentsServiceServer) OptionBy(context.Context, *InstrumentRequest) (*OptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OptionBy not implemented")
+}
+func (UnimplementedInstrumentsServiceServer) Options(context.Context, *InstrumentsRequest) (*OptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Options not implemented")
 }
 func (UnimplementedInstrumentsServiceServer) ShareBy(context.Context, *InstrumentRequest) (*ShareResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShareBy not implemented")
@@ -612,6 +644,42 @@ func _InstrumentsService_Futures_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InstrumentsServiceServer).Futures(ctx, req.(*InstrumentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InstrumentsService_OptionBy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InstrumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InstrumentsServiceServer).OptionBy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.InstrumentsService/OptionBy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InstrumentsServiceServer).OptionBy(ctx, req.(*InstrumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InstrumentsService_Options_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InstrumentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InstrumentsServiceServer).Options(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.InstrumentsService/Options",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InstrumentsServiceServer).Options(ctx, req.(*InstrumentsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -914,6 +982,14 @@ var InstrumentsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Futures",
 			Handler:    _InstrumentsService_Futures_Handler,
+		},
+		{
+			MethodName: "OptionBy",
+			Handler:    _InstrumentsService_OptionBy_Handler,
+		},
+		{
+			MethodName: "Options",
+			Handler:    _InstrumentsService_Options_Handler,
 		},
 		{
 			MethodName: "ShareBy",
