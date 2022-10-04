@@ -15,4 +15,4 @@ containerEngine=docker
 "$containerEngine" run -v `pwd`/investapi:/opt/client/ localhost/go-invest-api
 
 # делаем go.sum файл
-go mod tidy
+# go mod tidy

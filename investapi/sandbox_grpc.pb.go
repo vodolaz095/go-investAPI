@@ -38,6 +38,8 @@ type SandboxServiceClient interface {
 	GetSandboxPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error)
 	//Метод получения операций в песочнице по номеру счёта.
 	GetSandboxOperations(ctx context.Context, in *OperationsRequest, opts ...grpc.CallOption) (*OperationsResponse, error)
+	//Метод получения операций в песочнице по номеру счета с пагинацией.
+	GetSandboxOperationsByCursor(ctx context.Context, in *GetOperationsByCursorRequest, opts ...grpc.CallOption) (*GetOperationsByCursorResponse, error)
 	//Метод получения портфолио в песочнице.
 	GetSandboxPortfolio(ctx context.Context, in *PortfolioRequest, opts ...grpc.CallOption) (*PortfolioResponse, error)
 	//Метод пополнения счёта в песочнице.
@@ -144,6 +146,15 @@ func (c *sandboxServiceClient) GetSandboxOperations(ctx context.Context, in *Ope
 	return out, nil
 }
 
+func (c *sandboxServiceClient) GetSandboxOperationsByCursor(ctx context.Context, in *GetOperationsByCursorRequest, opts ...grpc.CallOption) (*GetOperationsByCursorResponse, error) {
+	out := new(GetOperationsByCursorResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOperationsByCursor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *sandboxServiceClient) GetSandboxPortfolio(ctx context.Context, in *PortfolioRequest, opts ...grpc.CallOption) (*PortfolioResponse, error) {
 	out := new(PortfolioResponse)
 	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxPortfolio", in, out, opts...)
@@ -195,6 +206,8 @@ type SandboxServiceServer interface {
 	GetSandboxPositions(context.Context, *PositionsRequest) (*PositionsResponse, error)
 	//Метод получения операций в песочнице по номеру счёта.
 	GetSandboxOperations(context.Context, *OperationsRequest) (*OperationsResponse, error)
+	//Метод получения операций в песочнице по номеру счета с пагинацией.
+	GetSandboxOperationsByCursor(context.Context, *GetOperationsByCursorRequest) (*GetOperationsByCursorResponse, error)
 	//Метод получения портфолио в песочнице.
 	GetSandboxPortfolio(context.Context, *PortfolioRequest) (*PortfolioResponse, error)
 	//Метод пополнения счёта в песочнице.
@@ -237,6 +250,9 @@ func (UnimplementedSandboxServiceServer) GetSandboxPositions(context.Context, *P
 }
 func (UnimplementedSandboxServiceServer) GetSandboxOperations(context.Context, *OperationsRequest) (*OperationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSandboxOperations not implemented")
+}
+func (UnimplementedSandboxServiceServer) GetSandboxOperationsByCursor(context.Context, *GetOperationsByCursorRequest) (*GetOperationsByCursorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSandboxOperationsByCursor not implemented")
 }
 func (UnimplementedSandboxServiceServer) GetSandboxPortfolio(context.Context, *PortfolioRequest) (*PortfolioResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSandboxPortfolio not implemented")
@@ -440,6 +456,24 @@ func _SandboxService_GetSandboxOperations_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SandboxService_GetSandboxOperationsByCursor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOperationsByCursorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SandboxServiceServer).GetSandboxOperationsByCursor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.SandboxService/GetSandboxOperationsByCursor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SandboxServiceServer).GetSandboxOperationsByCursor(ctx, req.(*GetOperationsByCursorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SandboxService_GetSandboxPortfolio_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PortfolioRequest)
 	if err := dec(in); err != nil {
@@ -540,6 +574,10 @@ var SandboxService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSandboxOperations",
 			Handler:    _SandboxService_GetSandboxOperations_Handler,
+		},
+		{
+			MethodName: "GetSandboxOperationsByCursor",
+			Handler:    _SandboxService_GetSandboxOperationsByCursor_Handler,
 		},
 		{
 			MethodName: "GetSandboxPortfolio",
