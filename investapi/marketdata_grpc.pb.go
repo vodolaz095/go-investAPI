@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type MarketDataServiceClient interface {
 	//Метод запроса исторических свечей по инструменту.
 	GetCandles(ctx context.Context, in *GetCandlesRequest, opts ...grpc.CallOption) (*GetCandlesResponse, error)
-	//Метод запроса последних цен по инструментам.
+	//Метод запроса цен последних сделок по инструментам.
 	GetLastPrices(ctx context.Context, in *GetLastPricesRequest, opts ...grpc.CallOption) (*GetLastPricesResponse, error)
 	//Метод получения стакана по инструменту.
 	GetOrderBook(ctx context.Context, in *GetOrderBookRequest, opts ...grpc.CallOption) (*GetOrderBookResponse, error)
@@ -100,7 +100,7 @@ func (c *marketDataServiceClient) GetClosePrices(ctx context.Context, in *GetClo
 type MarketDataServiceServer interface {
 	//Метод запроса исторических свечей по инструменту.
 	GetCandles(context.Context, *GetCandlesRequest) (*GetCandlesResponse, error)
-	//Метод запроса последних цен по инструментам.
+	//Метод запроса цен последних сделок по инструментам.
 	GetLastPrices(context.Context, *GetLastPricesRequest) (*GetLastPricesResponse, error)
 	//Метод получения стакана по инструменту.
 	GetOrderBook(context.Context, *GetOrderBookRequest) (*GetOrderBookResponse, error)

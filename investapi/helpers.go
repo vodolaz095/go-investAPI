@@ -10,7 +10,10 @@ const nano = 1000000000
 
 // ToFloat64 возвращает значения Quotation как число типа float64
 func (x *Quotation) ToFloat64() (output float64) {
-	return float64(x.Units) + float64(x.Nano)/nano
+	if x != nil {
+		return float64(x.Units) + float64(x.Nano)/nano
+	}
+	return 0
 }
 
 // MoneyValueFromFloat64 создаёт MoneyValue c пустой валютой из числа типа float64

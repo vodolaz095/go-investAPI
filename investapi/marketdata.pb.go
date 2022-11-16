@@ -416,7 +416,7 @@ type MarketDataRequest_SubscribeInfoRequest struct {
 }
 
 type MarketDataRequest_SubscribeLastPriceRequest struct {
-	SubscribeLastPriceRequest *SubscribeLastPriceRequest `protobuf:"bytes,5,opt,name=subscribe_last_price_request,json=subscribeLastPriceRequest,proto3,oneof"` //Запрос подписки на последние цены.
+	SubscribeLastPriceRequest *SubscribeLastPriceRequest `protobuf:"bytes,5,opt,name=subscribe_last_price_request,json=subscribeLastPriceRequest,proto3,oneof"` //Запрос подписки на цены последних сделок.
 }
 
 type MarketDataRequest_GetMySubscriptions struct {
@@ -444,7 +444,7 @@ type MarketDataServerSideStreamRequest struct {
 	SubscribeOrderBookRequest *SubscribeOrderBookRequest `protobuf:"bytes,2,opt,name=subscribe_order_book_request,json=subscribeOrderBookRequest,proto3" json:"subscribe_order_book_request,omitempty"` //Запрос подписки на стаканы.
 	SubscribeTradesRequest    *SubscribeTradesRequest    `protobuf:"bytes,3,opt,name=subscribe_trades_request,json=subscribeTradesRequest,proto3" json:"subscribe_trades_request,omitempty"`            //Запрос подписки на ленту обезличенных сделок.
 	SubscribeInfoRequest      *SubscribeInfoRequest      `protobuf:"bytes,4,opt,name=subscribe_info_request,json=subscribeInfoRequest,proto3" json:"subscribe_info_request,omitempty"`                  //Запрос подписки на торговые статусы инструментов.
-	SubscribeLastPriceRequest *SubscribeLastPriceRequest `protobuf:"bytes,5,opt,name=subscribe_last_price_request,json=subscribeLastPriceRequest,proto3" json:"subscribe_last_price_request,omitempty"` //Запрос подписки на последние цены.
+	SubscribeLastPriceRequest *SubscribeLastPriceRequest `protobuf:"bytes,5,opt,name=subscribe_last_price_request,json=subscribeLastPriceRequest,proto3" json:"subscribe_last_price_request,omitempty"` //Запрос подписки на цены последних сделок.
 }
 
 func (x *MarketDataServerSideStreamRequest) Reset() {
@@ -692,11 +692,11 @@ type MarketDataResponse_Ping struct {
 }
 
 type MarketDataResponse_SubscribeLastPriceResponse struct {
-	SubscribeLastPriceResponse *SubscribeLastPriceResponse `protobuf:"bytes,10,opt,name=subscribe_last_price_response,json=subscribeLastPriceResponse,proto3,oneof"` //Результат подписки на последние цены инструментов.
+	SubscribeLastPriceResponse *SubscribeLastPriceResponse `protobuf:"bytes,10,opt,name=subscribe_last_price_response,json=subscribeLastPriceResponse,proto3,oneof"` //Результат подписки на цены последние сделок по инструментам.
 }
 
 type MarketDataResponse_LastPrice struct {
-	LastPrice *LastPrice `protobuf:"bytes,11,opt,name=last_price,json=lastPrice,proto3,oneof"` //Последняя цена.
+	LastPrice *LastPrice `protobuf:"bytes,11,opt,name=last_price,json=lastPrice,proto3,oneof"` //Цена последней сделки.
 }
 
 func (*MarketDataResponse_SubscribeCandlesResponse) isMarketDataResponse_Payload() {}
@@ -1689,14 +1689,14 @@ func (x *InfoSubscription) GetInstrumentUid() string {
 	return ""
 }
 
-//Изменение статуса подписки на последнюю цену инструмента.
+//Изменение статуса подписки на цену последней сделки по инструменту.
 type SubscribeLastPriceRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	SubscriptionAction SubscriptionAction     `protobuf:"varint,1,opt,name=subscription_action,json=subscriptionAction,proto3,enum=tinkoff.public.invest.api.contract.v1.SubscriptionAction" json:"subscription_action,omitempty"` //Изменение статуса подписки.
-	Instruments        []*LastPriceInstrument `protobuf:"bytes,2,rep,name=instruments,proto3" json:"instruments,omitempty"`                                                                                                        //Массив инструментов для подписки на последнюю цену.
+	Instruments        []*LastPriceInstrument `protobuf:"bytes,2,rep,name=instruments,proto3" json:"instruments,omitempty"`                                                                                                        //Массив инструментов для подписки на цену последней сделки.
 }
 
 func (x *SubscribeLastPriceRequest) Reset() {
@@ -1801,14 +1801,14 @@ func (x *LastPriceInstrument) GetInstrumentId() string {
 	return ""
 }
 
-//Результат изменения статуса подписки на последнюю цену.
+//Результат изменения статуса подписки на цену последней сделки.
 type SubscribeLastPriceResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	TrackingId             string                   `protobuf:"bytes,1,opt,name=tracking_id,json=trackingId,proto3" json:"tracking_id,omitempty"`                                       //Уникальный идентификатор запроса, подробнее: [tracking_id](https://tinkoff.github.io/investAPI/grpc#tracking-id).
-	LastPriceSubscriptions []*LastPriceSubscription `protobuf:"bytes,2,rep,name=last_price_subscriptions,json=lastPriceSubscriptions,proto3" json:"last_price_subscriptions,omitempty"` //Массив статусов подписки на последнюю цену.
+	LastPriceSubscriptions []*LastPriceSubscription `protobuf:"bytes,2,rep,name=last_price_subscriptions,json=lastPriceSubscriptions,proto3" json:"last_price_subscriptions,omitempty"` //Массив статусов подписки на цену последней сделки.
 }
 
 func (x *SubscribeLastPriceResponse) Reset() {
@@ -1857,7 +1857,7 @@ func (x *SubscribeLastPriceResponse) GetLastPriceSubscriptions() []*LastPriceSub
 	return nil
 }
 
-//Статус подписки на последнюю цену.
+//Статус подписки на цену последней сделки.
 type LastPriceSubscription struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2609,14 +2609,14 @@ func (x *HistoricCandle) GetIsComplete() bool {
 	return false
 }
 
-//Запрос получения последних цен.
+//Запрос получения цен последних сделок.
 type GetLastPricesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	Figi         []string `protobuf:"bytes,1,rep,name=figi,proto3" json:"figi,omitempty"`                                     //Массив figi-идентификаторов инструментов.
-	InstrumentId []string `protobuf:"bytes,2,rep,name=instrument_id,json=instrumentId,proto3" json:"instrument_id,omitempty"` //Идентификатор инструмента, принимает значение figi или instrument_uid
+	InstrumentId []string `protobuf:"bytes,2,rep,name=instrument_id,json=instrumentId,proto3" json:"instrument_id,omitempty"` //Массив идентификаторов инструмента, принимает значения figi или instrument_uid
 }
 
 func (x *GetLastPricesRequest) Reset() {
@@ -2665,13 +2665,13 @@ func (x *GetLastPricesRequest) GetInstrumentId() []string {
 	return nil
 }
 
-//Список последних цен.
+//Список цен последних сделок.
 type GetLastPricesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	LastPrices []*LastPrice `protobuf:"bytes,1,rep,name=last_prices,json=lastPrices,proto3" json:"last_prices,omitempty"` //Массив последних цен.
+	LastPrices []*LastPrice `protobuf:"bytes,1,rep,name=last_prices,json=lastPrices,proto3" json:"last_prices,omitempty"` //Массив цен последних сделок.
 }
 
 func (x *GetLastPricesResponse) Reset() {
@@ -2713,14 +2713,14 @@ func (x *GetLastPricesResponse) GetLastPrices() []*LastPrice {
 	return nil
 }
 
-//Информация о цене.
+//Информация о цене последней сделки.
 type LastPrice struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	Figi          string                 `protobuf:"bytes,1,opt,name=figi,proto3" json:"figi,omitempty"`                                         //Figi инструмента.
-	Price         *Quotation             `protobuf:"bytes,2,opt,name=price,proto3" json:"price,omitempty"`                                       //Последняя цена за 1 инструмент. Для получения стоимости лота требуется умножить на лотность инструмента. Для перевод цен в валюту рекомендуем использовать [информацию со страницы](https://tinkoff.github.io/investAPI/faq_marketdata/)
+	Price         *Quotation             `protobuf:"bytes,2,opt,name=price,proto3" json:"price,omitempty"`                                       //Цена последней сделки за 1 инструмент. Для получения стоимости лота требуется умножить на лотность инструмента. Для перевод цен в валюту рекомендуем использовать [информацию со страницы](https://tinkoff.github.io/investAPI/faq_marketdata/)
 	Time          *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=time,proto3" json:"time,omitempty"`                                         //Время получения последней цены в часовом поясе UTC по времени биржи.
 	InstrumentUid string                 `protobuf:"bytes,11,opt,name=instrument_uid,json=instrumentUid,proto3" json:"instrument_uid,omitempty"` //Uid инструмента
 }

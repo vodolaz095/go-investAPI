@@ -436,7 +436,7 @@ type GetMarginAttributesResponse struct {
 	FundsSufficiencyLevel *Quotation `protobuf:"bytes,4,opt,name=funds_sufficiency_level,json=fundsSufficiencyLevel,proto3" json:"funds_sufficiency_level,omitempty"`
 	// Объем недостающих средств. Разница между стартовой маржой и ликвидной стоимости портфеля.
 	AmountOfMissingFunds *MoneyValue `protobuf:"bytes,5,opt,name=amount_of_missing_funds,json=amountOfMissingFunds,proto3" json:"amount_of_missing_funds,omitempty"`
-	// Скорректированная маржа.
+	// Скорректированная маржа.Начальная маржа, в которой плановые позиции рассчитываются с учётом активных заявок на покупку позиций лонг или продажу позиций шорт.
 	CorrectedMargin *MoneyValue `protobuf:"bytes,6,opt,name=corrected_margin,json=correctedMargin,proto3" json:"corrected_margin,omitempty"`
 }
 
