@@ -1,4 +1,4 @@
-FROM golang:1.16.15
+FROM golang:1.18.9
 
 # устанавливаем unzip
 RUN apt-get update && apt-get install unzip -y
