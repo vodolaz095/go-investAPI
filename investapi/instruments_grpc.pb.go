@@ -40,8 +40,11 @@ type InstrumentsServiceClient interface {
 	Futures(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*FuturesResponse, error)
 	//Метод получения опциона по его идентификатору.
 	OptionBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*OptionResponse, error)
-	//Метод получения списка опционов.
+	// Deprecated: Do not use.
+	//Deprecated Метод получения списка опционов.
 	Options(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*OptionsResponse, error)
+	//Метод получения списка опционов.
+	OptionsBy(ctx context.Context, in *FilterOptionsRequest, opts ...grpc.CallOption) (*OptionsResponse, error)
 	//Метод получения акции по её идентификатору.
 	ShareBy(ctx context.Context, in *InstrumentRequest, opts ...grpc.CallOption) (*ShareResponse, error)
 	//Метод получения списка акций.
@@ -56,7 +59,7 @@ type InstrumentsServiceClient interface {
 	GetDividends(ctx context.Context, in *GetDividendsRequest, opts ...grpc.CallOption) (*GetDividendsResponse, error)
 	//Метод получения актива по его идентификатору.
 	GetAssetBy(ctx context.Context, in *AssetRequest, opts ...grpc.CallOption) (*AssetResponse, error)
-	//Метод получения списка активов.
+	//Метод получения списка активов. Метод работает для всех инструментов, за исключением срочных - опционов и фьючерсов.
 	GetAssets(ctx context.Context, in *AssetsRequest, opts ...grpc.CallOption) (*AssetsResponse, error)
 	//Метод получения списка избранных инструментов.
 	GetFavorites(ctx context.Context, in *GetFavoritesRequest, opts ...grpc.CallOption) (*GetFavoritesResponse, error)
@@ -179,9 +182,19 @@ func (c *instrumentsServiceClient) OptionBy(ctx context.Context, in *InstrumentR
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *instrumentsServiceClient) Options(ctx context.Context, in *InstrumentsRequest, opts ...grpc.CallOption) (*OptionsResponse, error) {
 	out := new(OptionsResponse)
 	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/Options", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *instrumentsServiceClient) OptionsBy(ctx context.Context, in *FilterOptionsRequest, opts ...grpc.CallOption) (*OptionsResponse, error) {
+	out := new(OptionsResponse)
+	err := c.cc.Invoke(ctx, "/tinkoff.public.invest.api.contract.v1.InstrumentsService/OptionsBy", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -340,8 +353,11 @@ type InstrumentsServiceServer interface {
 	Futures(context.Context, *InstrumentsRequest) (*FuturesResponse, error)
 	//Метод получения опциона по его идентификатору.
 	OptionBy(context.Context, *InstrumentRequest) (*OptionResponse, error)
-	//Метод получения списка опционов.
+	// Deprecated: Do not use.
+	//Deprecated Метод получения списка опционов.
 	Options(context.Context, *InstrumentsRequest) (*OptionsResponse, error)
+	//Метод получения списка опционов.
+	OptionsBy(context.Context, *FilterOptionsRequest) (*OptionsResponse, error)
 	//Метод получения акции по её идентификатору.
 	ShareBy(context.Context, *InstrumentRequest) (*ShareResponse, error)
 	//Метод получения списка акций.
@@ -356,7 +372,7 @@ type InstrumentsServiceServer interface {
 	GetDividends(context.Context, *GetDividendsRequest) (*GetDividendsResponse, error)
 	//Метод получения актива по его идентификатору.
 	GetAssetBy(context.Context, *AssetRequest) (*AssetResponse, error)
-	//Метод получения списка активов.
+	//Метод получения списка активов. Метод работает для всех инструментов, за исключением срочных - опционов и фьючерсов.
 	GetAssets(context.Context, *AssetsRequest) (*AssetsResponse, error)
 	//Метод получения списка избранных инструментов.
 	GetFavorites(context.Context, *GetFavoritesRequest) (*GetFavoritesResponse, error)
@@ -412,6 +428,9 @@ func (UnimplementedInstrumentsServiceServer) OptionBy(context.Context, *Instrume
 }
 func (UnimplementedInstrumentsServiceServer) Options(context.Context, *InstrumentsRequest) (*OptionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Options not implemented")
+}
+func (UnimplementedInstrumentsServiceServer) OptionsBy(context.Context, *FilterOptionsRequest) (*OptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OptionsBy not implemented")
 }
 func (UnimplementedInstrumentsServiceServer) ShareBy(context.Context, *InstrumentRequest) (*ShareResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShareBy not implemented")
@@ -680,6 +699,24 @@ func _InstrumentsService_Options_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InstrumentsServiceServer).Options(ctx, req.(*InstrumentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InstrumentsService_OptionsBy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FilterOptionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InstrumentsServiceServer).OptionsBy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tinkoff.public.invest.api.contract.v1.InstrumentsService/OptionsBy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InstrumentsServiceServer).OptionsBy(ctx, req.(*FilterOptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -990,6 +1027,10 @@ var InstrumentsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Options",
 			Handler:    _InstrumentsService_Options_Handler,
+		},
+		{
+			MethodName: "OptionsBy",
+			Handler:    _InstrumentsService_OptionsBy_Handler,
 		},
 		{
 			MethodName: "ShareBy",

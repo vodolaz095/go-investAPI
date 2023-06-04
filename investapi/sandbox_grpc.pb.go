@@ -32,7 +32,7 @@ type SandboxServiceClient interface {
 	GetSandboxOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
 	//Метод отмены торгового поручения в песочнице.
 	CancelSandboxOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error)
-	//Метод получения статуса заявки в песочнице.
+	//Метод получения статуса заявки в песочнице. Заявки хранятся в таблице 7 дней.
 	GetSandboxOrderState(ctx context.Context, in *GetOrderStateRequest, opts ...grpc.CallOption) (*OrderState, error)
 	//Метод получения позиций по виртуальному счёту песочницы.
 	GetSandboxPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error)
@@ -200,7 +200,7 @@ type SandboxServiceServer interface {
 	GetSandboxOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
 	//Метод отмены торгового поручения в песочнице.
 	CancelSandboxOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error)
-	//Метод получения статуса заявки в песочнице.
+	//Метод получения статуса заявки в песочнице. Заявки хранятся в таблице 7 дней.
 	GetSandboxOrderState(context.Context, *GetOrderStateRequest) (*OrderState, error)
 	//Метод получения позиций по виртуальному счёту песочницы.
 	GetSandboxPositions(context.Context, *PositionsRequest) (*PositionsResponse, error)
