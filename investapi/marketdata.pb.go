@@ -245,7 +245,7 @@ type CandleInterval int32
 const (
 	CandleInterval_CANDLE_INTERVAL_UNSPECIFIED CandleInterval = 0  //Интервал не определён.
 	CandleInterval_CANDLE_INTERVAL_1_MIN       CandleInterval = 1  //от 1 минуты до 1 дня.
-	CandleInterval_CANDLE_INTERVAL_5_MIN       CandleInterval = 2  //от 5 минуты до 1 дня.
+	CandleInterval_CANDLE_INTERVAL_5_MIN       CandleInterval = 2  //от 5 минут до 1 дня.
 	CandleInterval_CANDLE_INTERVAL_15_MIN      CandleInterval = 3  //от 15 минут до 1 дня.
 	CandleInterval_CANDLE_INTERVAL_HOUR        CandleInterval = 4  //от 1 часа до 1 недели.
 	CandleInterval_CANDLE_INTERVAL_DAY         CandleInterval = 5  //от 1 дня до 1 года.
