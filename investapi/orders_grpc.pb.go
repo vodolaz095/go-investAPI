@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrdersStreamServiceClient interface {
-	//Stream сделок пользователя
+	// Stream сделок пользователя
 	TradesStream(ctx context.Context, in *TradesStreamRequest, opts ...grpc.CallOption) (OrdersStreamService_TradesStreamClient, error)
 }
 
@@ -66,7 +66,7 @@ func (x *ordersStreamServiceTradesStreamClient) Recv() (*TradesStreamResponse, e
 // All implementations must embed UnimplementedOrdersStreamServiceServer
 // for forward compatibility
 type OrdersStreamServiceServer interface {
-	//Stream сделок пользователя
+	// Stream сделок пользователя
 	TradesStream(*TradesStreamRequest, OrdersStreamService_TradesStreamServer) error
 	mustEmbedUnimplementedOrdersStreamServiceServer()
 }
@@ -133,15 +133,15 @@ var OrdersStreamService_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrdersServiceClient interface {
-	//Метод выставления заявки.
+	// Метод выставления заявки.
 	PostOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
-	//Метод отмены биржевой заявки.
+	// Метод отмены биржевой заявки.
 	CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error)
-	//Метод получения статуса торгового поручения.
+	// Метод получения статуса торгового поручения.
 	GetOrderState(ctx context.Context, in *GetOrderStateRequest, opts ...grpc.CallOption) (*OrderState, error)
-	//Метод получения списка активных заявок по счёту.
+	// Метод получения списка активных заявок по счёту.
 	GetOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
-	//Метод изменения выставленной заявки.
+	// Метод изменения выставленной заявки.
 	ReplaceOrder(ctx context.Context, in *ReplaceOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
 }
 
@@ -202,15 +202,15 @@ func (c *ordersServiceClient) ReplaceOrder(ctx context.Context, in *ReplaceOrder
 // All implementations must embed UnimplementedOrdersServiceServer
 // for forward compatibility
 type OrdersServiceServer interface {
-	//Метод выставления заявки.
+	// Метод выставления заявки.
 	PostOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error)
-	//Метод отмены биржевой заявки.
+	// Метод отмены биржевой заявки.
 	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error)
-	//Метод получения статуса торгового поручения.
+	// Метод получения статуса торгового поручения.
 	GetOrderState(context.Context, *GetOrderStateRequest) (*OrderState, error)
-	//Метод получения списка активных заявок по счёту.
+	// Метод получения списка активных заявок по счёту.
 	GetOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
-	//Метод изменения выставленной заявки.
+	// Метод изменения выставленной заявки.
 	ReplaceOrder(context.Context, *ReplaceOrderRequest) (*PostOrderResponse, error)
 	mustEmbedUnimplementedOrdersServiceServer()
 }

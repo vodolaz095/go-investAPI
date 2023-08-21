@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//Направление операции.
+// Направление операции.
 type OrderDirection int32
 
 const (
@@ -71,7 +71,7 @@ func (OrderDirection) EnumDescriptor() ([]byte, []int) {
 	return file_orders_proto_rawDescGZIP(), []int{0}
 }
 
-//Тип заявки.
+// Тип заявки.
 type OrderType int32
 
 const (
@@ -124,7 +124,7 @@ func (OrderType) EnumDescriptor() ([]byte, []int) {
 	return file_orders_proto_rawDescGZIP(), []int{1}
 }
 
-//Текущий статус заявки (поручения)
+// Текущий статус заявки (поручения)
 type OrderExecutionReportStatus int32
 
 const (
@@ -183,7 +183,7 @@ func (OrderExecutionReportStatus) EnumDescriptor() ([]byte, []int) {
 	return file_orders_proto_rawDescGZIP(), []int{2}
 }
 
-//Тип цены.
+// Тип цены.
 type PriceType int32
 
 const (
@@ -233,7 +233,7 @@ func (PriceType) EnumDescriptor() ([]byte, []int) {
 	return file_orders_proto_rawDescGZIP(), []int{3}
 }
 
-//Запрос установки соединения.
+// Запрос установки соединения.
 type TradesStreamRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -281,13 +281,14 @@ func (x *TradesStreamRequest) GetAccounts() []string {
 	return nil
 }
 
-//Информация о торговых поручениях.
+// Информация о торговых поручениях.
 type TradesStreamResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*TradesStreamResponse_OrderTrades
 	//	*TradesStreamResponse_Ping
 	Payload isTradesStreamResponse_Payload `protobuf_oneof:"payload"`
@@ -362,7 +363,7 @@ func (*TradesStreamResponse_OrderTrades) isTradesStreamResponse_Payload() {}
 
 func (*TradesStreamResponse_Ping) isTradesStreamResponse_Payload() {}
 
-//Информация об исполнении торгового поручения.
+// Информация об исполнении торгового поручения.
 type OrderTrades struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -458,7 +459,7 @@ func (x *OrderTrades) GetInstrumentUid() string {
 	return ""
 }
 
-//Информация о сделке.
+// Информация о сделке.
 type OrderTrade struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -530,7 +531,7 @@ func (x *OrderTrade) GetTradeId() string {
 	return ""
 }
 
-//Запрос выставления торгового поручения.
+// Запрос выставления торгового поручения.
 type PostOrderRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -636,7 +637,7 @@ func (x *PostOrderRequest) GetInstrumentId() string {
 	return ""
 }
 
-//Информация о выставлении поручения.
+// Информация о выставлении поручения.
 type PostOrderResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -647,7 +648,7 @@ type PostOrderResponse struct {
 	LotsRequested         int64                      `protobuf:"varint,3,opt,name=lots_requested,json=lotsRequested,proto3" json:"lots_requested,omitempty"`                                                                                                 //Запрошено лотов.
 	LotsExecuted          int64                      `protobuf:"varint,4,opt,name=lots_executed,json=lotsExecuted,proto3" json:"lots_executed,omitempty"`                                                                                                    //Исполнено лотов.
 	InitialOrderPrice     *MoneyValue                `protobuf:"bytes,5,opt,name=initial_order_price,json=initialOrderPrice,proto3" json:"initial_order_price,omitempty"`                                                                                    //Начальная цена заявки. Произведение количества запрошенных лотов на цену.
-	ExecutedOrderPrice    *MoneyValue                `protobuf:"bytes,6,opt,name=executed_order_price,json=executedOrderPrice,proto3" json:"executed_order_price,omitempty"`                                                                                 //Исполненная средняя цена 1 одного инструмента в заявки.
+	ExecutedOrderPrice    *MoneyValue                `protobuf:"bytes,6,opt,name=executed_order_price,json=executedOrderPrice,proto3" json:"executed_order_price,omitempty"`                                                                                 //Исполненная средняя цена одного инструмента в заявке.
 	TotalOrderAmount      *MoneyValue                `protobuf:"bytes,7,opt,name=total_order_amount,json=totalOrderAmount,proto3" json:"total_order_amount,omitempty"`                                                                                       //Итоговая стоимость заявки, включающая все комиссии.
 	InitialCommission     *MoneyValue                `protobuf:"bytes,8,opt,name=initial_commission,json=initialCommission,proto3" json:"initial_commission,omitempty"`                                                                                      //Начальная комиссия. Комиссия рассчитанная при выставлении заявки.
 	ExecutedCommission    *MoneyValue                `protobuf:"bytes,9,opt,name=executed_commission,json=executedCommission,proto3" json:"executed_commission,omitempty"`                                                                                   //Фактическая комиссия по итогам исполнения заявки.
@@ -812,7 +813,7 @@ func (x *PostOrderResponse) GetInstrumentUid() string {
 	return ""
 }
 
-//Запрос отмены торгового поручения.
+// Запрос отмены торгового поручения.
 type CancelOrderRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -868,7 +869,7 @@ func (x *CancelOrderRequest) GetOrderId() string {
 	return ""
 }
 
-//Результат отмены торгового поручения.
+// Результат отмены торгового поручения.
 type CancelOrderResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -916,7 +917,7 @@ func (x *CancelOrderResponse) GetTime() *timestamppb.Timestamp {
 	return nil
 }
 
-//Запрос получения статуса торгового поручения.
+// Запрос получения статуса торгового поручения.
 type GetOrderStateRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -972,7 +973,7 @@ func (x *GetOrderStateRequest) GetOrderId() string {
 	return ""
 }
 
-//Запрос получения списка активных торговых поручений.
+// Запрос получения списка активных торговых поручений.
 type GetOrdersRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1020,7 +1021,7 @@ func (x *GetOrdersRequest) GetAccountId() string {
 	return ""
 }
 
-//Список активных торговых поручений.
+// Список активных торговых поручений.
 type GetOrdersResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1068,7 +1069,7 @@ func (x *GetOrdersResponse) GetOrders() []*OrderState {
 	return nil
 }
 
-//Информация о торговом поручении.
+// Информация о торговом поручении.
 type OrderState struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1268,7 +1269,7 @@ func (x *OrderState) GetOrderRequestId() string {
 	return ""
 }
 
-//Сделки в рамках торгового поручения.
+// Сделки в рамках торгового поручения.
 type OrderStage struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1332,7 +1333,7 @@ func (x *OrderStage) GetTradeId() string {
 	return ""
 }
 
-//Запрос изменения выставленной заявки.
+// Запрос изменения выставленной заявки.
 type ReplaceOrderRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

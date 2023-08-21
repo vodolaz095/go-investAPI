@@ -18,33 +18,33 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SandboxServiceClient interface {
-	//Метод регистрации счёта в песочнице.
+	// Метод регистрации счёта в песочнице.
 	OpenSandboxAccount(ctx context.Context, in *OpenSandboxAccountRequest, opts ...grpc.CallOption) (*OpenSandboxAccountResponse, error)
-	//Метод получения счетов в песочнице.
+	// Метод получения счетов в песочнице.
 	GetSandboxAccounts(ctx context.Context, in *GetAccountsRequest, opts ...grpc.CallOption) (*GetAccountsResponse, error)
-	//Метод закрытия счёта в песочнице.
+	// Метод закрытия счёта в песочнице.
 	CloseSandboxAccount(ctx context.Context, in *CloseSandboxAccountRequest, opts ...grpc.CallOption) (*CloseSandboxAccountResponse, error)
-	//Метод выставления торгового поручения в песочнице.
+	// Метод выставления торгового поручения в песочнице.
 	PostSandboxOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
-	//Метод изменения выставленной заявки.
+	// Метод изменения выставленной заявки.
 	ReplaceSandboxOrder(ctx context.Context, in *ReplaceOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
-	//Метод получения списка активных заявок по счёту в песочнице.
+	// Метод получения списка активных заявок по счёту в песочнице.
 	GetSandboxOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
-	//Метод отмены торгового поручения в песочнице.
+	// Метод отмены торгового поручения в песочнице.
 	CancelSandboxOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error)
-	//Метод получения статуса заявки в песочнице. Заявки хранятся в таблице 7 дней.
+	// Метод получения статуса заявки в песочнице. Заявки хранятся в таблице 7 дней.
 	GetSandboxOrderState(ctx context.Context, in *GetOrderStateRequest, opts ...grpc.CallOption) (*OrderState, error)
-	//Метод получения позиций по виртуальному счёту песочницы.
+	// Метод получения позиций по виртуальному счёту песочницы.
 	GetSandboxPositions(ctx context.Context, in *PositionsRequest, opts ...grpc.CallOption) (*PositionsResponse, error)
-	//Метод получения операций в песочнице по номеру счёта.
+	// Метод получения операций в песочнице по номеру счёта.
 	GetSandboxOperations(ctx context.Context, in *OperationsRequest, opts ...grpc.CallOption) (*OperationsResponse, error)
-	//Метод получения операций в песочнице по номеру счета с пагинацией.
+	// Метод получения операций в песочнице по номеру счета с пагинацией.
 	GetSandboxOperationsByCursor(ctx context.Context, in *GetOperationsByCursorRequest, opts ...grpc.CallOption) (*GetOperationsByCursorResponse, error)
-	//Метод получения портфолио в песочнице.
+	// Метод получения портфолио в песочнице.
 	GetSandboxPortfolio(ctx context.Context, in *PortfolioRequest, opts ...grpc.CallOption) (*PortfolioResponse, error)
-	//Метод пополнения счёта в песочнице.
+	// Метод пополнения счёта в песочнице.
 	SandboxPayIn(ctx context.Context, in *SandboxPayInRequest, opts ...grpc.CallOption) (*SandboxPayInResponse, error)
-	//Метод получения доступного остатка для вывода средств в песочнице.
+	// Метод получения доступного остатка для вывода средств в песочнице.
 	GetSandboxWithdrawLimits(ctx context.Context, in *WithdrawLimitsRequest, opts ...grpc.CallOption) (*WithdrawLimitsResponse, error)
 }
 
@@ -186,33 +186,33 @@ func (c *sandboxServiceClient) GetSandboxWithdrawLimits(ctx context.Context, in 
 // All implementations must embed UnimplementedSandboxServiceServer
 // for forward compatibility
 type SandboxServiceServer interface {
-	//Метод регистрации счёта в песочнице.
+	// Метод регистрации счёта в песочнице.
 	OpenSandboxAccount(context.Context, *OpenSandboxAccountRequest) (*OpenSandboxAccountResponse, error)
-	//Метод получения счетов в песочнице.
+	// Метод получения счетов в песочнице.
 	GetSandboxAccounts(context.Context, *GetAccountsRequest) (*GetAccountsResponse, error)
-	//Метод закрытия счёта в песочнице.
+	// Метод закрытия счёта в песочнице.
 	CloseSandboxAccount(context.Context, *CloseSandboxAccountRequest) (*CloseSandboxAccountResponse, error)
-	//Метод выставления торгового поручения в песочнице.
+	// Метод выставления торгового поручения в песочнице.
 	PostSandboxOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error)
-	//Метод изменения выставленной заявки.
+	// Метод изменения выставленной заявки.
 	ReplaceSandboxOrder(context.Context, *ReplaceOrderRequest) (*PostOrderResponse, error)
-	//Метод получения списка активных заявок по счёту в песочнице.
+	// Метод получения списка активных заявок по счёту в песочнице.
 	GetSandboxOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
-	//Метод отмены торгового поручения в песочнице.
+	// Метод отмены торгового поручения в песочнице.
 	CancelSandboxOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error)
-	//Метод получения статуса заявки в песочнице. Заявки хранятся в таблице 7 дней.
+	// Метод получения статуса заявки в песочнице. Заявки хранятся в таблице 7 дней.
 	GetSandboxOrderState(context.Context, *GetOrderStateRequest) (*OrderState, error)
-	//Метод получения позиций по виртуальному счёту песочницы.
+	// Метод получения позиций по виртуальному счёту песочницы.
 	GetSandboxPositions(context.Context, *PositionsRequest) (*PositionsResponse, error)
-	//Метод получения операций в песочнице по номеру счёта.
+	// Метод получения операций в песочнице по номеру счёта.
 	GetSandboxOperations(context.Context, *OperationsRequest) (*OperationsResponse, error)
-	//Метод получения операций в песочнице по номеру счета с пагинацией.
+	// Метод получения операций в песочнице по номеру счета с пагинацией.
 	GetSandboxOperationsByCursor(context.Context, *GetOperationsByCursorRequest) (*GetOperationsByCursorResponse, error)
-	//Метод получения портфолио в песочнице.
+	// Метод получения портфолио в песочнице.
 	GetSandboxPortfolio(context.Context, *PortfolioRequest) (*PortfolioResponse, error)
-	//Метод пополнения счёта в песочнице.
+	// Метод пополнения счёта в песочнице.
 	SandboxPayIn(context.Context, *SandboxPayInRequest) (*SandboxPayInResponse, error)
-	//Метод получения доступного остатка для вывода средств в песочнице.
+	// Метод получения доступного остатка для вывода средств в песочнице.
 	GetSandboxWithdrawLimits(context.Context, *WithdrawLimitsRequest) (*WithdrawLimitsResponse, error)
 	mustEmbedUnimplementedSandboxServiceServer()
 }

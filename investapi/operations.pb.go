@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//Статус запрашиваемых операций.
+// Статус запрашиваемых операций.
 type OperationState int32
 
 const (
@@ -74,7 +74,7 @@ func (OperationState) EnumDescriptor() ([]byte, []int) {
 	return file_operations_proto_rawDescGZIP(), []int{0}
 }
 
-//Тип операции.
+// Тип операции.
 type OperationType int32
 
 const (
@@ -301,7 +301,7 @@ func (OperationType) EnumDescriptor() ([]byte, []int) {
 	return file_operations_proto_rawDescGZIP(), []int{1}
 }
 
-//Результат подписки.
+// Результат подписки.
 type PortfolioSubscriptionStatus int32
 
 const (
@@ -354,7 +354,7 @@ func (PortfolioSubscriptionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_operations_proto_rawDescGZIP(), []int{2}
 }
 
-//Результат подписки.
+// Результат подписки.
 type PositionsAccountSubscriptionStatus int32
 
 const (
@@ -456,7 +456,7 @@ func (PortfolioRequest_CurrencyRequest) EnumDescriptor() ([]byte, []int) {
 	return file_operations_proto_rawDescGZIP(), []int{4, 0}
 }
 
-//Запрос получения списка операций по счёту.
+// Запрос получения списка операций по счёту.
 type OperationsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -536,7 +536,7 @@ func (x *OperationsRequest) GetFigi() string {
 	return ""
 }
 
-//Список операций.
+// Список операций.
 type OperationsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -584,7 +584,7 @@ func (x *OperationsResponse) GetOperations() []*Operation {
 	return nil
 }
 
-//Данные по операции.
+// Данные по операции.
 type Operation struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -760,7 +760,7 @@ func (x *Operation) GetInstrumentUid() string {
 	return ""
 }
 
-//Сделка по операции.
+// Сделка по операции.
 type OperationTrade struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -832,7 +832,7 @@ func (x *OperationTrade) GetPrice() *MoneyValue {
 	return nil
 }
 
-//Запрос получения текущего портфеля по счёту.
+// Запрос получения текущего портфеля по счёту.
 type PortfolioRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -888,7 +888,7 @@ func (x *PortfolioRequest) GetCurrency() PortfolioRequest_CurrencyRequest {
 	return PortfolioRequest_RUB
 }
 
-//Текущий портфель по счёту.
+// Текущий портфель по счёту.
 type PortfolioResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1024,7 +1024,7 @@ func (x *PortfolioResponse) GetVirtualPositions() []*VirtualPortfolioPosition {
 	return nil
 }
 
-//Запрос позиций портфеля по счёту.
+// Запрос позиций портфеля по счёту.
 type PositionsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1072,7 +1072,7 @@ func (x *PositionsRequest) GetAccountId() string {
 	return ""
 }
 
-//Список позиций по счёту.
+// Список позиций по счёту.
 type PositionsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1160,7 +1160,7 @@ func (x *PositionsResponse) GetOptions() []*PositionsOptions {
 	return nil
 }
 
-//Запрос доступного для вывода остатка.
+// Запрос доступного для вывода остатка.
 type WithdrawLimitsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1208,7 +1208,7 @@ func (x *WithdrawLimitsRequest) GetAccountId() string {
 	return ""
 }
 
-//Доступный для вывода остаток.
+// Доступный для вывода остаток.
 type WithdrawLimitsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1272,7 +1272,7 @@ func (x *WithdrawLimitsResponse) GetBlockedGuarantee() []*MoneyValue {
 	return nil
 }
 
-//Позиции портфеля.
+// Позиции портфеля.
 type PortfolioPosition struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1571,7 +1571,7 @@ func (x *VirtualPortfolioPosition) GetAveragePositionPriceFifo() *MoneyValue {
 	return nil
 }
 
-//Баланс позиции ценной бумаги.
+// Баланс позиции ценной бумаги.
 type PositionsSecurities struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1667,7 +1667,7 @@ func (x *PositionsSecurities) GetInstrumentType() string {
 	return ""
 }
 
-//Баланс фьючерса.
+// Баланс фьючерса.
 type PositionsFutures struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1747,7 +1747,7 @@ func (x *PositionsFutures) GetInstrumentUid() string {
 	return ""
 }
 
-//Баланс опциона.
+// Баланс опциона.
 type PositionsOptions struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1825,6 +1825,7 @@ type BrokerReportRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*BrokerReportRequest_GenerateBrokerReportRequest
 	//	*BrokerReportRequest_GetBrokerReportRequest
 	Payload isBrokerReportRequest_Payload `protobuf_oneof:"payload"`
@@ -1905,6 +1906,7 @@ type BrokerReportResponse struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*BrokerReportResponse_GenerateBrokerReportResponse
 	//	*BrokerReportResponse_GetBrokerReportResponse
 	Payload isBrokerReportResponse_Payload `protobuf_oneof:"payload"`
@@ -2476,6 +2478,7 @@ type GetDividendsForeignIssuerRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*GetDividendsForeignIssuerRequest_GenerateDivForeignIssuerReport
 	//	*GetDividendsForeignIssuerRequest_GetDivForeignIssuerReport
 	Payload isGetDividendsForeignIssuerRequest_Payload `protobuf_oneof:"payload"`
@@ -2558,6 +2561,7 @@ type GetDividendsForeignIssuerResponse struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*GetDividendsForeignIssuerResponse_GenerateDivForeignIssuerReportResponse
 	//	*GetDividendsForeignIssuerResponse_DivForeignIssuerReport
 	Payload isGetDividendsForeignIssuerResponse_Payload `protobuf_oneof:"payload"`
@@ -2634,7 +2638,7 @@ func (*GetDividendsForeignIssuerResponse_GenerateDivForeignIssuerReportResponse)
 func (*GetDividendsForeignIssuerResponse_DivForeignIssuerReport) isGetDividendsForeignIssuerResponse_Payload() {
 }
 
-//Объект запроса формирования отчёта "Справка о доходах за пределами РФ".
+// Объект запроса формирования отчёта "Справка о доходах за пределами РФ".
 type GenerateDividendsForeignIssuerReportRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3009,7 +3013,7 @@ func (x *DividendsForeignIssuerReport) GetCurrency() string {
 	return ""
 }
 
-//Запрос установки stream-соединения.
+// Запрос установки stream-соединения.
 type PortfolioStreamRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3057,13 +3061,14 @@ func (x *PortfolioStreamRequest) GetAccounts() []string {
 	return nil
 }
 
-//Информация по позициям и доходностям портфелей.
+// Информация по позициям и доходностям портфелей.
 type PortfolioStreamResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*PortfolioStreamResponse_Subscriptions
 	//	*PortfolioStreamResponse_Portfolio
 	//	*PortfolioStreamResponse_Ping
@@ -3152,7 +3157,7 @@ func (*PortfolioStreamResponse_Portfolio) isPortfolioStreamResponse_Payload() {}
 
 func (*PortfolioStreamResponse_Ping) isPortfolioStreamResponse_Payload() {}
 
-//Объект результата подписки.
+// Объект результата подписки.
 type PortfolioSubscriptionResult struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3200,7 +3205,7 @@ func (x *PortfolioSubscriptionResult) GetAccounts() []*AccountSubscriptionStatus
 	return nil
 }
 
-//Счет клиента.
+// Счет клиента.
 type AccountSubscriptionStatus struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3256,7 +3261,7 @@ func (x *AccountSubscriptionStatus) GetSubscriptionStatus() PortfolioSubscriptio
 	return PortfolioSubscriptionStatus_PORTFOLIO_SUBSCRIPTION_STATUS_UNSPECIFIED
 }
 
-//Запрос списка операций по счёту с пагинацией.
+// Запрос списка операций по счёту с пагинацией.
 type GetOperationsByCursorRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3384,7 +3389,7 @@ func (x *GetOperationsByCursorRequest) GetWithoutOvernights() bool {
 	return false
 }
 
-//Список операций по счёту с пагинацией.
+// Список операций по счёту с пагинацией.
 type GetOperationsByCursorResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3448,7 +3453,7 @@ func (x *GetOperationsByCursorResponse) GetItems() []*OperationItem {
 	return nil
 }
 
-//Данные об операции.
+// Данные об операции.
 type OperationItem struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3704,7 +3709,7 @@ func (x *OperationItem) GetAssetUid() string {
 	return ""
 }
 
-//Массив с информацией о сделках.
+// Массив с информацией о сделках.
 type OperationItemTrades struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3752,7 +3757,7 @@ func (x *OperationItemTrades) GetTrades() []*OperationItemTrade {
 	return nil
 }
 
-//Сделка по операции.
+// Сделка по операции.
 type OperationItemTrade struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3840,7 +3845,7 @@ func (x *OperationItemTrade) GetYieldRelative() *Quotation {
 	return nil
 }
 
-//Запрос установки stream-соединения позиций.
+// Запрос установки stream-соединения позиций.
 type PositionsStreamRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3888,13 +3893,14 @@ func (x *PositionsStreamRequest) GetAccounts() []string {
 	return nil
 }
 
-//Информация по изменению позиций портфеля.
+// Информация по изменению позиций портфеля.
 type PositionsStreamResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*PositionsStreamResponse_Subscriptions
 	//	*PositionsStreamResponse_Position
 	//	*PositionsStreamResponse_Ping
@@ -3983,7 +3989,7 @@ func (*PositionsStreamResponse_Position) isPositionsStreamResponse_Payload() {}
 
 func (*PositionsStreamResponse_Ping) isPositionsStreamResponse_Payload() {}
 
-//Объект результата подписки.
+// Объект результата подписки.
 type PositionsSubscriptionResult struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4031,7 +4037,7 @@ func (x *PositionsSubscriptionResult) GetAccounts() []*PositionsSubscriptionStat
 	return nil
 }
 
-//Счет клиента.
+// Счет клиента.
 type PositionsSubscriptionStatus struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4087,7 +4093,7 @@ func (x *PositionsSubscriptionStatus) GetSubscriptionStatus() PositionsAccountSu
 	return PositionsAccountSubscriptionStatus_POSITIONS_SUBSCRIPTION_STATUS_UNSPECIFIED
 }
 
-//Данные о позиции портфеля.
+// Данные о позиции портфеля.
 type PositionData struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4175,7 +4181,7 @@ func (x *PositionData) GetDate() *timestamppb.Timestamp {
 	return nil
 }
 
-//Валютная позиция портфеля.
+// Валютная позиция портфеля.
 type PositionsMoney struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

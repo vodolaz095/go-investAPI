@@ -18,19 +18,19 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MarketDataServiceClient interface {
-	//Метод запроса исторических свечей по инструменту.
+	// Метод запроса исторических свечей по инструменту.
 	GetCandles(ctx context.Context, in *GetCandlesRequest, opts ...grpc.CallOption) (*GetCandlesResponse, error)
-	//Метод запроса цен последних сделок по инструментам.
+	// Метод запроса цен последних сделок по инструментам.
 	GetLastPrices(ctx context.Context, in *GetLastPricesRequest, opts ...grpc.CallOption) (*GetLastPricesResponse, error)
-	//Метод получения стакана по инструменту.
+	// Метод получения стакана по инструменту.
 	GetOrderBook(ctx context.Context, in *GetOrderBookRequest, opts ...grpc.CallOption) (*GetOrderBookResponse, error)
-	//Метод запроса статуса торгов по инструментам.
+	// Метод запроса статуса торгов по инструментам.
 	GetTradingStatus(ctx context.Context, in *GetTradingStatusRequest, opts ...grpc.CallOption) (*GetTradingStatusResponse, error)
-	//Метод запроса статуса торгов по инструментам.
+	// Метод запроса статуса торгов по инструментам.
 	GetTradingStatuses(ctx context.Context, in *GetTradingStatusesRequest, opts ...grpc.CallOption) (*GetTradingStatusesResponse, error)
-	//Метод запроса обезличенных сделок за последний час.
+	// Метод запроса обезличенных сделок за последний час.
 	GetLastTrades(ctx context.Context, in *GetLastTradesRequest, opts ...grpc.CallOption) (*GetLastTradesResponse, error)
-	//Метод запроса цен закрытия торговой сессии по инструментам.
+	// Метод запроса цен закрытия торговой сессии по инструментам.
 	GetClosePrices(ctx context.Context, in *GetClosePricesRequest, opts ...grpc.CallOption) (*GetClosePricesResponse, error)
 }
 
@@ -109,19 +109,19 @@ func (c *marketDataServiceClient) GetClosePrices(ctx context.Context, in *GetClo
 // All implementations must embed UnimplementedMarketDataServiceServer
 // for forward compatibility
 type MarketDataServiceServer interface {
-	//Метод запроса исторических свечей по инструменту.
+	// Метод запроса исторических свечей по инструменту.
 	GetCandles(context.Context, *GetCandlesRequest) (*GetCandlesResponse, error)
-	//Метод запроса цен последних сделок по инструментам.
+	// Метод запроса цен последних сделок по инструментам.
 	GetLastPrices(context.Context, *GetLastPricesRequest) (*GetLastPricesResponse, error)
-	//Метод получения стакана по инструменту.
+	// Метод получения стакана по инструменту.
 	GetOrderBook(context.Context, *GetOrderBookRequest) (*GetOrderBookResponse, error)
-	//Метод запроса статуса торгов по инструментам.
+	// Метод запроса статуса торгов по инструментам.
 	GetTradingStatus(context.Context, *GetTradingStatusRequest) (*GetTradingStatusResponse, error)
-	//Метод запроса статуса торгов по инструментам.
+	// Метод запроса статуса торгов по инструментам.
 	GetTradingStatuses(context.Context, *GetTradingStatusesRequest) (*GetTradingStatusesResponse, error)
-	//Метод запроса обезличенных сделок за последний час.
+	// Метод запроса обезличенных сделок за последний час.
 	GetLastTrades(context.Context, *GetLastTradesRequest) (*GetLastTradesResponse, error)
-	//Метод запроса цен закрытия торговой сессии по инструментам.
+	// Метод запроса цен закрытия торговой сессии по инструментам.
 	GetClosePrices(context.Context, *GetClosePricesRequest) (*GetClosePricesResponse, error)
 	mustEmbedUnimplementedMarketDataServiceServer()
 }
@@ -334,9 +334,9 @@ var MarketDataService_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MarketDataStreamServiceClient interface {
-	//Bi-directional стрим предоставления биржевой информации.
+	// Bi-directional стрим предоставления биржевой информации.
 	MarketDataStream(ctx context.Context, opts ...grpc.CallOption) (MarketDataStreamService_MarketDataStreamClient, error)
-	//Server-side стрим предоставления биржевой информации.
+	// Server-side стрим предоставления биржевой информации.
 	MarketDataServerSideStream(ctx context.Context, in *MarketDataServerSideStreamRequest, opts ...grpc.CallOption) (MarketDataStreamService_MarketDataServerSideStreamClient, error)
 }
 
@@ -415,9 +415,9 @@ func (x *marketDataStreamServiceMarketDataServerSideStreamClient) Recv() (*Marke
 // All implementations must embed UnimplementedMarketDataStreamServiceServer
 // for forward compatibility
 type MarketDataStreamServiceServer interface {
-	//Bi-directional стрим предоставления биржевой информации.
+	// Bi-directional стрим предоставления биржевой информации.
 	MarketDataStream(MarketDataStreamService_MarketDataStreamServer) error
-	//Server-side стрим предоставления биржевой информации.
+	// Server-side стрим предоставления биржевой информации.
 	MarketDataServerSideStream(*MarketDataServerSideStreamRequest, MarketDataStreamService_MarketDataServerSideStreamServer) error
 	mustEmbedUnimplementedMarketDataStreamServiceServer()
 }

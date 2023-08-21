@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//Тип операции со списком подписок.
+// Тип операции со списком подписок.
 type SubscriptionAction int32
 
 const (
@@ -71,7 +71,7 @@ func (SubscriptionAction) EnumDescriptor() ([]byte, []int) {
 	return file_marketdata_proto_rawDescGZIP(), []int{0}
 }
 
-//Интервал свечи.
+// Интервал свечи.
 type SubscriptionInterval int32
 
 const (
@@ -121,7 +121,7 @@ func (SubscriptionInterval) EnumDescriptor() ([]byte, []int) {
 	return file_marketdata_proto_rawDescGZIP(), []int{1}
 }
 
-//Результат подписки.
+// Результат подписки.
 type SubscriptionStatus int32
 
 const (
@@ -134,6 +134,7 @@ const (
 	SubscriptionStatus_SUBSCRIPTION_STATUS_LIMIT_IS_EXCEEDED              SubscriptionStatus = 6 //Превышен лимит на общее количество подписок в рамках стрима, подробнее: [Лимитная политика](https://tinkoff.github.io/investAPI/limits/).
 	SubscriptionStatus_SUBSCRIPTION_STATUS_INTERNAL_ERROR                 SubscriptionStatus = 7 //Внутренняя ошибка сервиса.
 	SubscriptionStatus_SUBSCRIPTION_STATUS_TOO_MANY_REQUESTS              SubscriptionStatus = 8 //Превышен лимит на количество запросов на подписки в течение установленного отрезка времени
+	SubscriptionStatus_SUBSCRIPTION_STATUS_SUBSCRIPTION_NOT_FOUND         SubscriptionStatus = 9 // Активная подписка не найдена. Ошибка может возникнуть только при отписке от не существующей отписки
 )
 
 // Enum value maps for SubscriptionStatus.
@@ -148,6 +149,7 @@ var (
 		6: "SUBSCRIPTION_STATUS_LIMIT_IS_EXCEEDED",
 		7: "SUBSCRIPTION_STATUS_INTERNAL_ERROR",
 		8: "SUBSCRIPTION_STATUS_TOO_MANY_REQUESTS",
+		9: "SUBSCRIPTION_STATUS_SUBSCRIPTION_NOT_FOUND",
 	}
 	SubscriptionStatus_value = map[string]int32{
 		"SUBSCRIPTION_STATUS_UNSPECIFIED":                    0,
@@ -159,6 +161,7 @@ var (
 		"SUBSCRIPTION_STATUS_LIMIT_IS_EXCEEDED":              6,
 		"SUBSCRIPTION_STATUS_INTERNAL_ERROR":                 7,
 		"SUBSCRIPTION_STATUS_TOO_MANY_REQUESTS":              8,
+		"SUBSCRIPTION_STATUS_SUBSCRIPTION_NOT_FOUND":         9,
 	}
 )
 
@@ -189,7 +192,7 @@ func (SubscriptionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_marketdata_proto_rawDescGZIP(), []int{2}
 }
 
-//Направление сделки.
+// Направление сделки.
 type TradeDirection int32
 
 const (
@@ -239,7 +242,7 @@ func (TradeDirection) EnumDescriptor() ([]byte, []int) {
 	return file_marketdata_proto_rawDescGZIP(), []int{3}
 }
 
-//Интервал свечей.
+// Интервал свечей.
 type CandleInterval int32
 
 const (
@@ -322,13 +325,14 @@ func (CandleInterval) EnumDescriptor() ([]byte, []int) {
 	return file_marketdata_proto_rawDescGZIP(), []int{4}
 }
 
-//Запрос подписки или отписки на определённые биржевые данные.
+// Запрос подписки или отписки на определённые биржевые данные.
 type MarketDataRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*MarketDataRequest_SubscribeCandlesRequest
 	//	*MarketDataRequest_SubscribeOrderBookRequest
 	//	*MarketDataRequest_SubscribeTradesRequest
@@ -538,13 +542,14 @@ func (x *MarketDataServerSideStreamRequest) GetSubscribeLastPriceRequest() *Subs
 	return nil
 }
 
-//Пакет биржевой информации по подписке.
+// Пакет биржевой информации по подписке.
 type MarketDataResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Payload:
+	//
 	//	*MarketDataResponse_SubscribeCandlesResponse
 	//	*MarketDataResponse_SubscribeOrderBookResponse
 	//	*MarketDataResponse_SubscribeTradesResponse
@@ -809,7 +814,7 @@ func (x *SubscribeCandlesRequest) GetWaitingClose() bool {
 	return false
 }
 
-//Запрос изменения статус подписки на свечи.
+// Запрос изменения статус подписки на свечи.
 type CandleInstrument struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -875,7 +880,7 @@ func (x *CandleInstrument) GetInstrumentId() string {
 	return ""
 }
 
-//Результат изменения статус подписки на свечи.
+// Результат изменения статус подписки на свечи.
 type SubscribeCandlesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -931,7 +936,7 @@ func (x *SubscribeCandlesResponse) GetCandlesSubscriptions() []*CandleSubscripti
 	return nil
 }
 
-//Статус подписки на свечи.
+// Статус подписки на свечи.
 type CandleSubscription struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1003,7 +1008,7 @@ func (x *CandleSubscription) GetInstrumentUid() string {
 	return ""
 }
 
-//Запрос на изменение статуса подписки на стаканы.
+// Запрос на изменение статуса подписки на стаканы.
 type SubscribeOrderBookRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1059,7 +1064,7 @@ func (x *SubscribeOrderBookRequest) GetInstruments() []*OrderBookInstrument {
 	return nil
 }
 
-//Запрос подписки на стаканы.
+// Запрос подписки на стаканы.
 type OrderBookInstrument struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1125,7 +1130,7 @@ func (x *OrderBookInstrument) GetInstrumentId() string {
 	return ""
 }
 
-//Результат изменения статуса подписки на стаканы.
+// Результат изменения статуса подписки на стаканы.
 type SubscribeOrderBookResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1181,7 +1186,7 @@ func (x *SubscribeOrderBookResponse) GetOrderBookSubscriptions() []*OrderBookSub
 	return nil
 }
 
-//Статус подписки.
+// Статус подписки.
 type OrderBookSubscription struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1253,7 +1258,7 @@ func (x *OrderBookSubscription) GetInstrumentUid() string {
 	return ""
 }
 
-//Изменение статуса подписки на поток обезличенных сделок.
+// Изменение статуса подписки на поток обезличенных сделок.
 type SubscribeTradesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1309,7 +1314,7 @@ func (x *SubscribeTradesRequest) GetInstruments() []*TradeInstrument {
 	return nil
 }
 
-//Запрос подписки на поток обезличенных сделок.
+// Запрос подписки на поток обезличенных сделок.
 type TradeInstrument struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1367,7 +1372,7 @@ func (x *TradeInstrument) GetInstrumentId() string {
 	return ""
 }
 
-//Результат изменения статуса подписки на поток обезличенных сделок.
+// Результат изменения статуса подписки на поток обезличенных сделок.
 type SubscribeTradesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1423,7 +1428,7 @@ func (x *SubscribeTradesResponse) GetTradeSubscriptions() []*TradeSubscription {
 	return nil
 }
 
-//Статус подписки.
+// Статус подписки.
 type TradeSubscription struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1487,7 +1492,7 @@ func (x *TradeSubscription) GetInstrumentUid() string {
 	return ""
 }
 
-//Изменение статуса подписки на торговый статус инструмента.
+// Изменение статуса подписки на торговый статус инструмента.
 type SubscribeInfoRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1543,7 +1548,7 @@ func (x *SubscribeInfoRequest) GetInstruments() []*InfoInstrument {
 	return nil
 }
 
-//Запрос подписки на торговый статус.
+// Запрос подписки на торговый статус.
 type InfoInstrument struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1601,7 +1606,7 @@ func (x *InfoInstrument) GetInstrumentId() string {
 	return ""
 }
 
-//Результат изменения статуса подписки на торговый статус.
+// Результат изменения статуса подписки на торговый статус.
 type SubscribeInfoResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1657,7 +1662,7 @@ func (x *SubscribeInfoResponse) GetInfoSubscriptions() []*InfoSubscription {
 	return nil
 }
 
-//Статус подписки.
+// Статус подписки.
 type InfoSubscription struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1721,7 +1726,7 @@ func (x *InfoSubscription) GetInstrumentUid() string {
 	return ""
 }
 
-//Изменение статуса подписки на цену последней сделки по инструменту.
+// Изменение статуса подписки на цену последней сделки по инструменту.
 type SubscribeLastPriceRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1777,7 +1782,7 @@ func (x *SubscribeLastPriceRequest) GetInstruments() []*LastPriceInstrument {
 	return nil
 }
 
-//Запрос подписки на последнюю цену.
+// Запрос подписки на последнюю цену.
 type LastPriceInstrument struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1835,7 +1840,7 @@ func (x *LastPriceInstrument) GetInstrumentId() string {
 	return ""
 }
 
-//Результат изменения статуса подписки на цену последней сделки.
+// Результат изменения статуса подписки на цену последней сделки.
 type SubscribeLastPriceResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1891,7 +1896,7 @@ func (x *SubscribeLastPriceResponse) GetLastPriceSubscriptions() []*LastPriceSub
 	return nil
 }
 
-//Статус подписки на цену последней сделки.
+// Статус подписки на цену последней сделки.
 type LastPriceSubscription struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1955,7 +1960,7 @@ func (x *LastPriceSubscription) GetInstrumentUid() string {
 	return ""
 }
 
-//Пакет свечей в рамках стрима.
+// Пакет свечей в рамках стрима.
 type Candle struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2075,7 +2080,7 @@ func (x *Candle) GetInstrumentUid() string {
 	return ""
 }
 
-//Пакет стаканов в рамках стрима.
+// Пакет стаканов в рамках стрима.
 type OrderBook struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2187,7 +2192,7 @@ func (x *OrderBook) GetInstrumentUid() string {
 	return ""
 }
 
-//Массив предложений/спроса.
+// Массив предложений/спроса.
 type Order struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2243,7 +2248,7 @@ func (x *Order) GetQuantity() int64 {
 	return 0
 }
 
-//Информация о сделке.
+// Информация о сделке.
 type Trade struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2331,7 +2336,7 @@ func (x *Trade) GetInstrumentUid() string {
 	return ""
 }
 
-//Пакет изменения торгового статуса.
+// Пакет изменения торгового статуса.
 type TradingStatus struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2419,7 +2424,7 @@ func (x *TradingStatus) GetInstrumentUid() string {
 	return ""
 }
 
-//Запрос исторических свечей.
+// Запрос исторических свечей.
 type GetCandlesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2501,7 +2506,7 @@ func (x *GetCandlesRequest) GetInstrumentId() string {
 	return ""
 }
 
-//Список свечей.
+// Список свечей.
 type GetCandlesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2549,7 +2554,7 @@ func (x *GetCandlesResponse) GetCandles() []*HistoricCandle {
 	return nil
 }
 
-//Информация о свече.
+// Информация о свече.
 type HistoricCandle struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2645,7 +2650,7 @@ func (x *HistoricCandle) GetIsComplete() bool {
 	return false
 }
 
-//Запрос получения цен последних сделок.
+// Запрос получения цен последних сделок.
 type GetLastPricesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2703,7 +2708,7 @@ func (x *GetLastPricesRequest) GetInstrumentId() []string {
 	return nil
 }
 
-//Список цен последних сделок.
+// Список цен последних сделок.
 type GetLastPricesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2751,7 +2756,7 @@ func (x *GetLastPricesResponse) GetLastPrices() []*LastPrice {
 	return nil
 }
 
-//Информация о цене последней сделки.
+// Информация о цене последней сделки.
 type LastPrice struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2823,7 +2828,7 @@ func (x *LastPrice) GetInstrumentUid() string {
 	return ""
 }
 
-//Запрос стакана.
+// Запрос стакана.
 type GetOrderBookRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2889,7 +2894,7 @@ func (x *GetOrderBookRequest) GetInstrumentId() string {
 	return ""
 }
 
-//Информация о стакане.
+// Информация о стакане.
 type GetOrderBookResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3025,7 +3030,7 @@ func (x *GetOrderBookResponse) GetInstrumentUid() string {
 	return ""
 }
 
-//Запрос получения торгового статуса.
+// Запрос получения торгового статуса.
 type GetTradingStatusRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3083,7 +3088,7 @@ func (x *GetTradingStatusRequest) GetInstrumentId() string {
 	return ""
 }
 
-//Запрос получения торгового статуса.
+// Запрос получения торгового статуса.
 type GetTradingStatusesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3131,7 +3136,7 @@ func (x *GetTradingStatusesRequest) GetInstrumentId() []string {
 	return nil
 }
 
-//Информация о торговом статусе.
+// Информация о торговом статусе.
 type GetTradingStatusesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3179,7 +3184,7 @@ func (x *GetTradingStatusesResponse) GetTradingStatuses() []*GetTradingStatusRes
 	return nil
 }
 
-//Информация о торговом статусе.
+// Информация о торговом статусе.
 type GetTradingStatusResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3267,7 +3272,7 @@ func (x *GetTradingStatusResponse) GetInstrumentUid() string {
 	return ""
 }
 
-//Запрос обезличенных сделок за последний час.
+// Запрос обезличенных сделок за последний час.
 type GetLastTradesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3341,7 +3346,7 @@ func (x *GetLastTradesRequest) GetInstrumentId() string {
 	return ""
 }
 
-//Обезличенных сделок за последний час.
+// Обезличенных сделок за последний час.
 type GetLastTradesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3389,7 +3394,7 @@ func (x *GetLastTradesResponse) GetTrades() []*Trade {
 	return nil
 }
 
-//Запрос активных подписок.
+// Запрос активных подписок.
 type GetMySubscriptions struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3428,7 +3433,7 @@ func (*GetMySubscriptions) Descriptor() ([]byte, []int) {
 	return file_marketdata_proto_rawDescGZIP(), []int{42}
 }
 
-//Запрос цен закрытия торговой сессии по инструментам.
+// Запрос цен закрытия торговой сессии по инструментам.
 type GetClosePricesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3476,7 +3481,7 @@ func (x *GetClosePricesRequest) GetInstruments() []*InstrumentClosePriceRequest 
 	return nil
 }
 
-//Запрос цен закрытия торговой сессии по инструменту.
+// Запрос цен закрытия торговой сессии по инструменту.
 type InstrumentClosePriceRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3524,7 +3529,7 @@ func (x *InstrumentClosePriceRequest) GetInstrumentId() string {
 	return ""
 }
 
-//Цены закрытия торговой сессии по инструментам.
+// Цены закрытия торговой сессии по инструментам.
 type GetClosePricesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3572,7 +3577,7 @@ func (x *GetClosePricesResponse) GetClosePrices() []*InstrumentClosePriceRespons
 	return nil
 }
 
-//Цена закрытия торговой сессии по инструменту.
+// Цена закрытия торговой сессии по инструменту.
 type InstrumentClosePriceResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4391,7 +4396,7 @@ var file_marketdata_proto_rawDesc = []byte{
 	0x54, 0x45, 0x52, 0x56, 0x41, 0x4c, 0x5f, 0x4f, 0x4e, 0x45, 0x5f, 0x4d, 0x49, 0x4e, 0x55, 0x54,
 	0x45, 0x10, 0x01, 0x12, 0x26, 0x0a, 0x22, 0x53, 0x55, 0x42, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54,
 	0x49, 0x4f, 0x4e, 0x5f, 0x49, 0x4e, 0x54, 0x45, 0x52, 0x56, 0x41, 0x4c, 0x5f, 0x46, 0x49, 0x56,
-	0x45, 0x5f, 0x4d, 0x49, 0x4e, 0x55, 0x54, 0x45, 0x53, 0x10, 0x02, 0x2a, 0x95, 0x03, 0x0a, 0x12,
+	0x45, 0x5f, 0x4d, 0x49, 0x4e, 0x55, 0x54, 0x45, 0x53, 0x10, 0x02, 0x2a, 0xc5, 0x03, 0x0a, 0x12,
 	0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74,
 	0x75, 0x73, 0x12, 0x23, 0x0a, 0x1f, 0x53, 0x55, 0x42, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54, 0x49,
 	0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43,
@@ -4417,7 +4422,10 @@ var file_marketdata_proto_rawDesc = []byte{
 	0x5f, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x10, 0x07, 0x12, 0x29, 0x0a, 0x25, 0x53, 0x55, 0x42, 0x53,
 	0x43, 0x52, 0x49, 0x50, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
 	0x54, 0x4f, 0x4f, 0x5f, 0x4d, 0x41, 0x4e, 0x59, 0x5f, 0x52, 0x45, 0x51, 0x55, 0x45, 0x53, 0x54,
-	0x53, 0x10, 0x08, 0x2a, 0x64, 0x0a, 0x0e, 0x54, 0x72, 0x61, 0x64, 0x65, 0x44, 0x69, 0x72, 0x65,
+	0x53, 0x10, 0x08, 0x12, 0x2e, 0x0a, 0x2a, 0x53, 0x55, 0x42, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54,
+	0x49, 0x4f, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x53, 0x55, 0x42, 0x53, 0x43,
+	0x52, 0x49, 0x50, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x4e, 0x4f, 0x54, 0x5f, 0x46, 0x4f, 0x55, 0x4e,
+	0x44, 0x10, 0x09, 0x2a, 0x64, 0x0a, 0x0e, 0x54, 0x72, 0x61, 0x64, 0x65, 0x44, 0x69, 0x72, 0x65,
 	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1f, 0x0a, 0x1b, 0x54, 0x52, 0x41, 0x44, 0x45, 0x5f, 0x44,
 	0x49, 0x52, 0x45, 0x43, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49,
 	0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x17, 0x0a, 0x13, 0x54, 0x52, 0x41, 0x44, 0x45, 0x5f,

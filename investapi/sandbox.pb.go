@@ -20,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//Запрос открытия счёта в песочнице.
+// Запрос открытия счёта в песочнице.
 type OpenSandboxAccountRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -59,7 +59,7 @@ func (*OpenSandboxAccountRequest) Descriptor() ([]byte, []int) {
 	return file_sandbox_proto_rawDescGZIP(), []int{0}
 }
 
-//Номер открытого счёта в песочнице.
+// Номер открытого счёта в песочнице.
 type OpenSandboxAccountResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -107,7 +107,7 @@ func (x *OpenSandboxAccountResponse) GetAccountId() string {
 	return ""
 }
 
-//Запрос закрытия счёта в песочнице.
+// Запрос закрытия счёта в песочнице.
 type CloseSandboxAccountRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -155,7 +155,7 @@ func (x *CloseSandboxAccountRequest) GetAccountId() string {
 	return ""
 }
 
-//Результат закрытия счёта в песочнице.
+// Результат закрытия счёта в песочнице.
 type CloseSandboxAccountResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -194,7 +194,7 @@ func (*CloseSandboxAccountResponse) Descriptor() ([]byte, []int) {
 	return file_sandbox_proto_rawDescGZIP(), []int{3}
 }
 
-//Запрос пополнения счёта в песочнице.
+// Запрос пополнения счёта в песочнице.
 type SandboxPayInRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -250,7 +250,7 @@ func (x *SandboxPayInRequest) GetAmount() *MoneyValue {
 	return nil
 }
 
-//Результат пополнения счёта, текущий баланс.
+// Результат пополнения счёта, текущий баланс.
 type SandboxPayInResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

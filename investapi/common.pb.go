@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//Тип инструмента.
+// Тип инструмента.
 type InstrumentType int32
 
 const (
@@ -89,7 +89,7 @@ func (InstrumentType) EnumDescriptor() ([]byte, []int) {
 	return file_common_proto_rawDescGZIP(), []int{0}
 }
 
-//Режим торгов инструмента
+// Режим торгов инструмента
 type SecurityTradingStatus int32
 
 const (
@@ -181,7 +181,7 @@ func (SecurityTradingStatus) EnumDescriptor() ([]byte, []int) {
 	return file_common_proto_rawDescGZIP(), []int{1}
 }
 
-//Денежная сумма в определенной валюте
+// Денежная сумма в определенной валюте
 type MoneyValue struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -248,7 +248,7 @@ func (x *MoneyValue) GetNano() int32 {
 	return 0
 }
 
-//Котировка - денежная сумма без указания валюты
+// Котировка — денежная сумма без указания валюты
 type Quotation struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -306,13 +306,13 @@ func (x *Quotation) GetNano() int32 {
 	return 0
 }
 
-//Проверка активности стрима.
+// Проверка активности стрима.
 type Ping struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	//Время проверки.
+	// Время проверки.
 	Time *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=time,proto3" json:"time,omitempty"`
 }
 

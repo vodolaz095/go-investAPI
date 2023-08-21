@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//Направление сделки стоп-заявки.
+// Направление сделки стоп-заявки.
 type StopOrderDirection int32
 
 const (
@@ -71,7 +71,7 @@ func (StopOrderDirection) EnumDescriptor() ([]byte, []int) {
 	return file_stoporders_proto_rawDescGZIP(), []int{0}
 }
 
-//Тип экспирации стоп-заявке.
+// Тип экспирации стоп-заявке.
 type StopOrderExpirationType int32
 
 const (
@@ -121,7 +121,7 @@ func (StopOrderExpirationType) EnumDescriptor() ([]byte, []int) {
 	return file_stoporders_proto_rawDescGZIP(), []int{1}
 }
 
-//Тип стоп-заявки.
+// Тип стоп-заявки.
 type StopOrderType int32
 
 const (
@@ -174,7 +174,7 @@ func (StopOrderType) EnumDescriptor() ([]byte, []int) {
 	return file_stoporders_proto_rawDescGZIP(), []int{2}
 }
 
-//Запрос выставления стоп-заявки.
+// Запрос выставления стоп-заявки.
 type PostStopOrderRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -296,7 +296,7 @@ func (x *PostStopOrderRequest) GetInstrumentId() string {
 	return ""
 }
 
-//Результат выставления стоп-заявки.
+// Результат выставления стоп-заявки.
 type PostStopOrderResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -344,7 +344,7 @@ func (x *PostStopOrderResponse) GetStopOrderId() string {
 	return ""
 }
 
-//Запрос получения списка активных стоп-заявок.
+// Запрос получения списка активных стоп-заявок.
 type GetStopOrdersRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -392,7 +392,7 @@ func (x *GetStopOrdersRequest) GetAccountId() string {
 	return ""
 }
 
-//Список активных стоп-заявок.
+// Список активных стоп-заявок.
 type GetStopOrdersResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -440,7 +440,7 @@ func (x *GetStopOrdersResponse) GetStopOrders() []*StopOrder {
 	return nil
 }
 
-//Запрос отмены выставленной стоп-заявки.
+// Запрос отмены выставленной стоп-заявки.
 type CancelStopOrderRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -496,7 +496,7 @@ func (x *CancelStopOrderRequest) GetStopOrderId() string {
 	return ""
 }
 
-//Результат отмены выставленной стоп-заявки.
+// Результат отмены выставленной стоп-заявки.
 type CancelStopOrderResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -544,7 +544,7 @@ func (x *CancelStopOrderResponse) GetTime() *timestamppb.Timestamp {
 	return nil
 }
 
-//Информация о стоп-заявке.
+// Информация о стоп-заявке.
 type StopOrder struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

@@ -18,13 +18,13 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersServiceClient interface {
-	//Метод получения счетов пользователя.
+	// Метод получения счетов пользователя.
 	GetAccounts(ctx context.Context, in *GetAccountsRequest, opts ...grpc.CallOption) (*GetAccountsResponse, error)
-	//Расчёт маржинальных показателей по счёту.
+	// Расчёт маржинальных показателей по счёту.
 	GetMarginAttributes(ctx context.Context, in *GetMarginAttributesRequest, opts ...grpc.CallOption) (*GetMarginAttributesResponse, error)
-	//Запрос тарифа пользователя.
+	// Запрос тарифа пользователя.
 	GetUserTariff(ctx context.Context, in *GetUserTariffRequest, opts ...grpc.CallOption) (*GetUserTariffResponse, error)
-	//Метод получения информации о пользователе.
+	// Метод получения информации о пользователе.
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
 }
 
@@ -76,13 +76,13 @@ func (c *usersServiceClient) GetInfo(ctx context.Context, in *GetInfoRequest, op
 // All implementations must embed UnimplementedUsersServiceServer
 // for forward compatibility
 type UsersServiceServer interface {
-	//Метод получения счетов пользователя.
+	// Метод получения счетов пользователя.
 	GetAccounts(context.Context, *GetAccountsRequest) (*GetAccountsResponse, error)
-	//Расчёт маржинальных показателей по счёту.
+	// Расчёт маржинальных показателей по счёту.
 	GetMarginAttributes(context.Context, *GetMarginAttributesRequest) (*GetMarginAttributesResponse, error)
-	//Запрос тарифа пользователя.
+	// Запрос тарифа пользователя.
 	GetUserTariff(context.Context, *GetUserTariffRequest) (*GetUserTariffResponse, error)
-	//Метод получения информации о пользователе.
+	// Метод получения информации о пользователе.
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
 	mustEmbedUnimplementedUsersServiceServer()
 }

@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//Тип счёта.
+// Тип счёта.
 type AccountType int32
 
 const (
@@ -74,7 +74,7 @@ func (AccountType) EnumDescriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{0}
 }
 
-//Статус счёта.
+// Статус счёта.
 type AccountStatus int32
 
 const (
@@ -127,7 +127,7 @@ func (AccountStatus) EnumDescriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{1}
 }
 
-//Уровень доступа к счёту.
+// Уровень доступа к счёту.
 type AccessLevel int32
 
 const (
@@ -180,7 +180,7 @@ func (AccessLevel) EnumDescriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{2}
 }
 
-//Запрос получения счетов пользователя.
+// Запрос получения счетов пользователя.
 type GetAccountsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -219,7 +219,7 @@ func (*GetAccountsRequest) Descriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{0}
 }
 
-//Список счетов пользователя.
+// Список счетов пользователя.
 type GetAccountsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -268,7 +268,7 @@ func (x *GetAccountsResponse) GetAccounts() []*Account {
 	return nil
 }
 
-//Информация о счёте.
+// Информация о счёте.
 type Account struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -371,7 +371,7 @@ func (x *Account) GetAccessLevel() AccessLevel {
 	return AccessLevel_ACCOUNT_ACCESS_LEVEL_UNSPECIFIED
 }
 
-//Запрос маржинальных показателей по счёту
+// Запрос маржинальных показателей по счёту
 type GetMarginAttributesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -420,7 +420,7 @@ func (x *GetMarginAttributesRequest) GetAccountId() string {
 	return ""
 }
 
-//Маржинальные показатели по счёту.
+// Маржинальные показатели по счёту.
 type GetMarginAttributesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -514,7 +514,7 @@ func (x *GetMarginAttributesResponse) GetCorrectedMargin() *MoneyValue {
 	return nil
 }
 
-//Запрос текущих лимитов пользователя.
+// Запрос текущих лимитов пользователя.
 type GetUserTariffRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -553,7 +553,7 @@ func (*GetUserTariffRequest) Descriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{5}
 }
 
-//Текущие лимиты пользователя.
+// Текущие лимиты пользователя.
 type GetUserTariffResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -609,7 +609,7 @@ func (x *GetUserTariffResponse) GetStreamLimits() []*StreamLimit {
 	return nil
 }
 
-//Лимит unary-методов.
+// Лимит unary-методов.
 type UnaryLimit struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -665,7 +665,7 @@ func (x *UnaryLimit) GetMethods() []string {
 	return nil
 }
 
-//Лимит stream-соединений.
+// Лимит stream-соединений.
 type StreamLimit struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -729,7 +729,7 @@ func (x *StreamLimit) GetOpen() int32 {
 	return 0
 }
 
-//Запрос информации о пользователе.
+// Запрос информации о пользователе.
 type GetInfoRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -768,7 +768,7 @@ func (*GetInfoRequest) Descriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{9}
 }
 
-//Информация о пользователе.
+// Информация о пользователе.
 type GetInfoResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
