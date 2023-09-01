@@ -3,22 +3,27 @@ FROM golang:1.19.12
 # устанавливаем unzip
 RUN apt-get update && apt-get install unzip -y
 
+# Задаём версии инструментов
+ARG PROTOC_VERSION="3.20.3"
+ARG PROTOC_GEN_GO_VERSION="1.27.1"
+ARG PROTOC_GEN_GO_GPRC_VERSION="1.2.0"
+
 # устанавливаем плагины для protoc
 ENV GOBIN=/usr/bin/
-RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
-RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v${PROTOC_GEN_GO_VERSION}
+RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v${PROTOC_GEN_GO_GPRC_VERSION}
 
 # Загружаем protoc и встроенные протоколы
 WORKDIR /tmp
-RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v3.20.0/protoc-3.20.0-linux-x86_64.zip
+RUN wget "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip"
 
 # Устанавливаем protoc
-RUN unzip /tmp/protoc-3.20.0-linux-x86_64.zip bin/protoc -d /usr/
+RUN unzip /tmp/protoc-${PROTOC_VERSION}-linux-x86_64.zip bin/protoc -d /usr/
 RUN chown root:root /usr/bin/protoc
 RUN chmod 0755 /usr/bin/protoc
 
 # Устанавливаем встроенные протоколы
-RUN unzip protoc-3.20.0-linux-x86_64.zip include/* -d /usr/bin/
+RUN unzip protoc-${PROTOC_VERSION}-linux-x86_64.zip include/* -d /usr/bin/
 RUN chown root:root /usr/bin/include/google/ -R
 
 # Создаём директории для вывода кода

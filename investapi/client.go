@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -45,7 +46,7 @@ func New(token string) (client *Client, err error) {
 	return NewWithCustomEndpoint(token, "invest-public-api.tinkoff.ru")
 }
 
-// NewWithCustomEndpoint cоздаёт новый клиент для доступа к API, используя Ключ доступа и доменное имя адреса API как аргументы
+// NewWithCustomEndpoint создаёт новый клиент для доступа к API, используя Ключ доступа и доменное имя адреса API как аргументы
 func NewWithCustomEndpoint(token, endpoint string) (client *Client, err error) {
 	return NewWithOpts(token, endpoint, make([]grpc.DialOption, 0)...)
 }
@@ -58,6 +59,7 @@ func NewWithOpts(token, endpoint string, opts ...grpc.DialOption) (client *Clien
 	opts = append(opts, grpc.WithPerRPCCredentials(tokenAuth{
 		Token: token,
 	}))
+	opts = append(opts, grpc.WithUserAgent("https://github.com/vodolaz095/go-investAPI"))
 	conn, err := grpc.Dial(fmt.Sprintf("%s:443", endpoint), opts...)
 	if err != nil {
 		return

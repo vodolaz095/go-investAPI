@@ -38,3 +38,5 @@ protoc \
 
 # Смотрим, что получилось
 ls -l /opt/client/
+# Сообщаем, что получилось
+echo "Код сгенерирован из коммита https://github.com/Tinkoff/investAPI/commit/$(git log --format='%H' -1)"
