@@ -3,17 +3,16 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"log"
+
 	"github.com/vodolaz095/go-investAPI/investapi"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
-	"log"
 )
 
 /*
 В этом примере мы с нуля настраиваем GRPC клиент общепринятыми практиками,
 потом этим клиентом мы соединяемся с API Тинькофф Инвестициями
-и получаем цену крайней сделки по облигации федерального займа 25084
-https://www.tinkoff.ru/invest/bonds/SU25084RMFS3
 */
 
 type tokenAuth struct {

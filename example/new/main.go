@@ -2,10 +2,11 @@ package main
 
 import (
 	"context"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 	"log"
 	"time"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 
 	"github.com/vodolaz095/go-investAPI/investapi"
 )
@@ -62,7 +63,15 @@ func main() {
 			time.Now().Sub(price.Time.AsTime()).String(), price.GetPrice().ToFloat64(),
 		)
 	}
-	//		2022/06/07 10:58:40 1m52.663352891s назад цена сделки была 95.5830 рублей
+	// 2022/06/07 10:58:40 1m52.663352891s назад цена сделки была 95.5830 рублей
+
+	// проверяем состояние соединения с grpc сервером брокера
+	err = client.Ping(context.Background())
+	if err != nil {
+		log.Fatalf("%s : при проверке соединения с investAPI", err)
+	}
+
+	// закрываем соединение
 	err = client.Connection.Close()
 	if err != nil {
 		log.Fatalf("%s : при закрытии соединения", err)

@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials"
 )
 
@@ -39,6 +40,19 @@ type Client struct {
 	OperationsServiceClient  OperationsServiceClient
 	OrdersServiceClient      OrdersServiceClient
 	StopOrdersServiceClient  StopOrdersServiceClient
+}
+
+// Ping проверяет работоспособность соединения на основе получения состояния пула соединений
+func (c *Client) Ping(_ context.Context) (err error) {
+	// Полезная статья
+	// https://grpc.github.io/grpc/core/md_doc_keepalive.html
+	state := c.Connection.GetState()
+	switch state {
+	case connectivity.Ready, connectivity.Idle:
+		return nil
+	default:
+		return fmt.Errorf("некорректное состояние grpc соединения: %s", state)
+	}
 }
 
 // New создаёт новый клиент для доступа к API, используя Ключ доступа как аргумент
