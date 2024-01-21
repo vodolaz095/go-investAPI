@@ -17,7 +17,7 @@ protoc --version
 
 # Клонируем исходный код проекта
 cd /opt/
-git clone https://github.com/Tinkoff/investAPI.git
+git clone https://github.com/RussianInvestments/investAPI.git
 ls -l /opt/investAPI/
 
 # Смотрим, крайний коммит, на основе которого мы будет генерировать исходный код клиента

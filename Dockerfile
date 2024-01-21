@@ -1,12 +1,12 @@
-FROM golang:1.19.12
+FROM golang:1.21.0
 
 # устанавливаем unzip
 RUN apt-get update && apt-get install unzip -y
 
 # Задаём версии инструментов
-ARG PROTOC_VERSION="3.20.3"
-ARG PROTOC_GEN_GO_VERSION="1.27.1"
-ARG PROTOC_GEN_GO_GPRC_VERSION="1.2.0"
+ARG PROTOC_VERSION="25.2"
+ARG PROTOC_GEN_GO_VERSION="1.32.0"
+ARG PROTOC_GEN_GO_GPRC_VERSION="1.3.0"
 
 # устанавливаем плагины для protoc
 ENV GOBIN=/usr/bin/
