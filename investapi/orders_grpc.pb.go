@@ -220,6 +220,7 @@ const (
 type OrdersServiceClient interface {
 	// Метод выставления заявки.
 	PostOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
+	// Асинхронный метод выставления заявки.
 	PostOrderAsync(ctx context.Context, in *PostOrderAsyncRequest, opts ...grpc.CallOption) (*PostOrderAsyncResponse, error)
 	// Метод отмены биржевой заявки.
 	CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error)
@@ -321,6 +322,7 @@ func (c *ordersServiceClient) GetOrderPrice(ctx context.Context, in *GetOrderPri
 type OrdersServiceServer interface {
 	// Метод выставления заявки.
 	PostOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error)
+	// Асинхронный метод выставления заявки.
 	PostOrderAsync(context.Context, *PostOrderAsyncRequest) (*PostOrderAsyncResponse, error)
 	// Метод отмены биржевой заявки.
 	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error)

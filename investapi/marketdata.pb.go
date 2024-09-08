@@ -4261,7 +4261,7 @@ type InstrumentClosePriceResponse struct {
 	Figi                string                 `protobuf:"bytes,1,opt,name=figi,proto3" json:"figi,omitempty"`                                                             //FIGI инструмента.
 	InstrumentUid       string                 `protobuf:"bytes,2,opt,name=instrument_uid,json=instrumentUid,proto3" json:"instrument_uid,omitempty"`                      //UID инструмента.
 	Price               *Quotation             `protobuf:"bytes,11,opt,name=price,proto3" json:"price,omitempty"`                                                          //Цена закрытия торговой сессии.
-	EveningSessionPrice *Quotation             `protobuf:"bytes,12,opt,name=evening_session_price,json=eveningSessionPrice,proto3" json:"evening_session_price,omitempty"` //Цена последней сделки с вечерней сессии.
+	EveningSessionPrice *Quotation             `protobuf:"bytes,12,opt,name=evening_session_price,json=eveningSessionPrice,proto3" json:"evening_session_price,omitempty"` //Цена последней сделки с вечерней сессии. Цена публикуется биржей по торговым дням и в нерабочие дни не обновляется.
 	Time                *timestamppb.Timestamp `protobuf:"bytes,21,opt,name=time,proto3" json:"time,omitempty"`                                                            //Дата совершения торгов.
 }
 
