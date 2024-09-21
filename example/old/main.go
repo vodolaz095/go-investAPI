@@ -8,6 +8,7 @@ import (
 	"github.com/vodolaz095/go-investAPI/investapi"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/status"
 )
 
 /*
@@ -52,7 +53,25 @@ func main() {
 
 	res, err := instrumentsAPI.GetInstrumentBy(context.TODO(), &req)
 	if err != nil {
-		log.Fatalf("%s : при поиске инструмента", err)
+		if err != nil {
+			// обработка ошибок
+			st, parsed := status.FromError(err)
+			if !parsed {
+				log.Fatalf("неизвестная ошибка при получении котировок инструмента ОФЗ 25084: %s", err)
+			}
+			log.Printf("Ошибка получения котировок: %s", st.Err())
+			log.Printf("Код ошибки: %s", st.Message())
+			log.Printf("Объяснение стандартного кода ошибки: %s", st.Code().String())
+			details := st.Details()
+			if len(details) > 0 {
+				for i := range details {
+					log.Printf("Детализация ошибки %v: %q", i, details[i])
+				}
+			} else {
+				log.Printf("Детализации ошибки отсутствует")
+			}
+			return
+		}
 	}
 	log.Printf("Инструмент %s найден!", res.Instrument.Name)
 }
