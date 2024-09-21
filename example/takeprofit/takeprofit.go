@@ -17,7 +17,7 @@ import (
 
 const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
 const accountID = ""               // аккаунт, на который мы покупаем бумагу
-const figi = "BBG004730RP0"        // https://www.tinkoff.ru/invest/stocks/GAZP
+var figi = "BBG004730RP0"          // https://www.tinkoff.ru/invest/stocks/GAZP
 const minimumPrice = 209.50        // цена, при которой мы ставим лимитную заявку
 const wantedPrice = 209.29         // цена лимитной заявки
 
@@ -63,7 +63,7 @@ func main() {
 					if lastPrice.GetPrice().ToFloat64() < minimumPrice {
 						log.Println("Ставим лимитный заказ на покупку бумаги")
 						resp, errO := client.OrdersServiceClient.PostOrder(context.TODO(), &investapi.PostOrderRequest{
-							Figi:      figi,
+							Figi:      &figi,
 							Quantity:  1,
 							Price:     investapi.Float64ToQuotation(wantedPrice),
 							Direction: investapi.OrderDirection_ORDER_DIRECTION_BUY,
