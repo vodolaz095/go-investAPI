@@ -63,6 +63,7 @@ func main() {
 			log.Fatalf("неизвестная ошибка при получении котировок инструмента ОФЗ 25084: %s", err)
 		}
 		log.Printf("Ошибка получения котировок: %s", st.Err())
+		log.Printf("Неформатированное сообщение от сервера: %s", st.Proto().String())
 		log.Printf("Код ошибки: %s", st.Message())
 		log.Printf("Объяснение стандартного кода ошибки: %s", st.Code().String())
 		details := st.Details()
