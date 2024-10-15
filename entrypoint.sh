@@ -17,7 +17,7 @@ go env
 which protoc
 protoc --version
 
-# Клонируем исходный код проекта
+# Клонируем исходный код протофайлов
 cd "$output_dir"
 git clone https://github.com/RussianInvestments/investAPI.git
 ls -l "$output_dir/investAPI/"
@@ -31,22 +31,23 @@ githash=$(git log --format='%H' -1)
 
 # Генерируем код модуля
 cd "$output_dir/investAPI/src/docs/contracts"
- protoc \
-   --proto_path=/usr/bin/include/google/ \
-   --proto_path="$output_dir/investAPI/src/docs/contracts" \
-   --go_out="$output_dir/client" \
-   --go_opt=paths=source_relative \
-   --go-grpc_opt=paths=source_relative \
-   --go-grpc_out="$output_dir/client" \
-   *.proto
+protoc \
+  --proto_path=/usr/bin/include/google/ \
+  --proto_path="$output_dir/investAPI/src/docs/contracts" \
+  --go_out="$output_dir/client" \
+  --go_opt=paths=source_relative \
+  --go-grpc_opt=paths=source_relative \
+  --go-grpc_out="$output_dir/client" \
+  *.proto
 
+
+# Генерируем ленивку с хэшем коммита, из которого был сгенерирован клиент
+rm -f "$output_dir/client/version.go"
+cp "$output_dir/client/version.tpl" "$output_dir/client/version.go"
+sed -i "s/development/$githash/g" "$output_dir/client/version.go"
 
 # Смотрим, что получилось
 ls -l "$output_dir/client/"
-
-# Генерируем ленивку с хэшем коммита, из которого был сгенерирован клиент
-sed -i "s/development/$githash/g" "$output_dir/client/version.go"
-
 
 # Сообщаем, что получилось
 echo "Код сгенерирован из коммита https://github.com/RussianInvestments/investAPI/commit/$githash"
