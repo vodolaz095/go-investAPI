@@ -4,9 +4,9 @@ FROM golang:1.22.8
 RUN apt-get update && apt-get install unzip -y
 
 # Задаём версии инструментов
-ARG PROTOC_VERSION="25.2"
-ARG PROTOC_GEN_GO_VERSION="1.32.0"
-ARG PROTOC_GEN_GO_GPRC_VERSION="1.3.0"
+ARG PROTOC_VERSION="28.2"
+ARG PROTOC_GEN_GO_VERSION="1.35.1"
+ARG PROTOC_GEN_GO_GPRC_VERSION="1.5.1"
 
 # устанавливаем плагины для protoc
 ENV GOBIN=/usr/bin/
