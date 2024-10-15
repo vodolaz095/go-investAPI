@@ -90,7 +90,7 @@ func main() {
 ===============================
 Официальное описание протокола взаимодействия опубликовано тут [https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts](https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts).
 Код в моём репозитории генерирует клиент для Golang на основе этих `proto` файлов.
-Код проверялся на дистрибутиве `Fedora 34` с `docker` версии 20.10.15, `podman` версии 3.4.4 и `Golang` версии 1.16.15
+Код проверялся на дистрибутиве `Fedora 39+` с `docker` версии 20.10.15, `podman` версии 4.9.4 и `Golang` версии 1.22.8
 
 1. Удалите все файлы из поддиректории `investapi/`, кроме `client.go`, `helpers.go` и `helpers_test.go`!
 
