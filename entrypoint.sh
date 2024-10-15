@@ -6,6 +6,8 @@
 
 set -e
 
+output_dir=/opt
+
 # Убедимся, что компилятор Golang установлен
 which go
 go version
@@ -16,27 +18,35 @@ which protoc
 protoc --version
 
 # Клонируем исходный код проекта
-cd /opt/
+cd "$output_dir"
 git clone https://github.com/RussianInvestments/investAPI.git
-ls -l /opt/investAPI/
+ls -l "$output_dir/investAPI/"
 
 # Смотрим, крайний коммит, на основе которого мы будет генерировать исходный код клиента
-cd /opt/investAPI
+cd "$output_dir/investAPI"
 git log -1
 
+# Сохраняем хэш коммита
+githash=$(git log --format='%H' -1)
+
 # Генерируем код модуля
-cd /opt/investAPI/src/docs/contracts
-protoc \
-  --proto_path=/usr/bin/include/google/ \
-  --proto_path=/opt/investAPI/src/docs/contracts \
-  --go_out=/opt/client \
-  --go_opt=paths=source_relative \
-  --go-grpc_opt=paths=source_relative \
-  --go-grpc_out=/opt/client \
-  *.proto
+cd "$output_dir/investAPI/src/docs/contracts"
+ protoc \
+   --proto_path=/usr/bin/include/google/ \
+   --proto_path="$output_dir/investAPI/src/docs/contracts" \
+   --go_out="$output_dir/client" \
+   --go_opt=paths=source_relative \
+   --go-grpc_opt=paths=source_relative \
+   --go-grpc_out="$output_dir/client" \
+   *.proto
 
 
 # Смотрим, что получилось
-ls -l /opt/client/
+ls -l "$output_dir/client/"
+
+# Генерируем ленивку с хэшем коммита, из которого был сгенерирован клиент
+sed -i "s/development/$githash/g" "$output_dir/client/version.go"
+
+
 # Сообщаем, что получилось
-echo "Код сгенерирован из коммита https://github.com/RussianInvestments/investAPI/commit/$(git log --format='%H' -1)"
+echo "Код сгенерирован из коммита https://github.com/RussianInvestments/investAPI/commit/$githash"
