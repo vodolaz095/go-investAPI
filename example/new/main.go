@@ -20,7 +20,7 @@ https://www.tinkoff.ru/invest/bonds/SU25084RMFS3.
 Мы отображаем все хедеры, которые передал сервер.
 */
 
-const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+const token = "тутДолженБытьТокен" // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 
 func main() {
 	client, err := investapi.New(token)

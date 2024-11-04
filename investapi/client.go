@@ -21,7 +21,7 @@ const SandboxEndpoint = "sandbox-invest-public-api.tinkoff.ru:443"
 
 // tokenAuth используется для описания стратегии авторизации GRPC клиента
 type tokenAuth struct {
-	// Token - это ключ доступа, который можно получить отсюда - // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+	// Token - это ключ доступа, который можно получить отсюда - // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 	Token string
 	// Secure - флаг, включающий требование шифрования соединения
 	Secure bool

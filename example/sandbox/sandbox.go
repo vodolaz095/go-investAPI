@@ -11,7 +11,7 @@ import (
 Данный пример создаёт тестовый аккаунт и пополняет его 100 рублями
 */
 
-const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+const token = "тутДолженБытьТокен" // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 
 func main() {
 	client, err := investapi.NewWithCustomEndpoint(token, investapi.SandboxEndpoint)
