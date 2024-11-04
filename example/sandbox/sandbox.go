@@ -2,8 +2,9 @@ package main
 
 import (
 	"context"
-	"github.com/vodolaz095/go-investAPI/investapi"
 	"log"
+
+	"github.com/vodolaz095/go-investAPI/investapi"
 )
 
 /*
@@ -13,7 +14,7 @@ import (
 const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
 
 func main() {
-	client, err := investapi.New(token)
+	client, err := investapi.NewWithCustomEndpoint(token, investapi.SandboxEndpoint)
 	if err != nil {
 		log.Fatalf("%s : при соединении с investAPI", err)
 	}
