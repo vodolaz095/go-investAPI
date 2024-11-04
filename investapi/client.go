@@ -3,12 +3,14 @@ package investapi
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"strings"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 // DefaultEndpoint - это адрес, на котором работает продукционное окружение InvestAPI
@@ -84,15 +86,15 @@ func NewWithOpts(token, endpoint string, opts ...grpc.DialOption) (client *Clien
 	return makeClient(endpoint, opts...)
 }
 
-// NewInsecure создаёт новый клиент с ВЫКЛЮЧЕННОЙ проверкой подлинности TLS сертификатов для доступа к API, используя
+// NewInsecure создаёт новый клиент с ВЫКЛЮЧЕНЫМ TLS шифрованием для доступа к API, используя
 // Ключ доступа как аргумент, доменное имя и вариадическую переменную opts с параметрами вида grpc.DialOption для настройки соединения
-// Этот клиент лучше не использовать за пределами тестовых окружений!
+// Этот клиент лучше не использовать за пределами тестовых окружений! Рекомендуется использовать с mock API инвестиций в тестовых сценариях
 func NewInsecure(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error) {
+	if endpoint == DefaultEndpoint {
+		return nil, errors.New("non encrypted connection to production endpoint is not allowed")
+	}
 	opts = append(opts,
-		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
-			ServerName:         strings.Split(endpoint, ":")[0],
-			InsecureSkipVerify: true, // ВАЖНО
-		})),
+		grpc.WithTransportCredentials(insecure.NewCredentials()), // никогда так не делайте!
 		grpc.WithPerRPCCredentials(tokenAuth{Token: token, Secure: false}),
 		grpc.WithUserAgent("https://github.com/vodolaz095/go-investAPI"),
 	)
