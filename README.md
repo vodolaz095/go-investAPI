@@ -2,18 +2,21 @@ Go-InvestAPI
 =============================
 [![PkgGoDev](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi)](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi?tab=doc)
 
-Библиотека для работы с [https://tinkoff.github.io/investAPI/](https://tinkoff.github.io/investAPI/) платформы
-[Тинькофф Инвестиции](https://www.tinkoff.ru/sl/AugaFvDlqEP)
+Неофициальный минималистичный grpc клиент для работы с [investAPI](https://russianinvestments.github.io/investAPI/) платформы
+[Т-Банк Инвестиции](https://www.tbank.ru/sl/AugaFvDlqEP)
 
 Предупреждение
 ===============================
-Это не официальная библиотека (хотя, она упомянута в документации к [API Tinkoff Инвестиций](https://tinkoff.github.io/investAPI/faq_golang/)), 
+Это не официальная библиотека (хотя, она упомянута в документации к [API T-Банк Инвестиций](https://russianinvestments.github.io/investAPI/faq_golang/)), 
 её работоспособность и безопасность не гарантирована автором! Несмотря на то, что большая часть кода библиотеки сгенерирована из официальных 
-[определений протокола взаимодействия investAPI в виде proto файлов](https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts),
+[определений протокола взаимодействия investAPI в виде proto файлов](https://github.com/RussianInvestments/investAPI/tree/main/src/docs/contracts),
 код не проходил независимый аудит безопасности, и не был протестирован представителями банка.
 Код может содержать уязвимости и логические ошибки, из-за которых Вы можете потерять деньги.
 Используйте этот код на свой страх и риск.
 
+
+Ссылка на официальный клиент - https://github.com/RussianInvestments/invest-api-go-sdk.
+Мой клиент был опубликован раньше, и он субъективно проще.
 
 Пример использования
 ===============================
@@ -41,7 +44,7 @@ import (
    "github.com/vodolaz095/go-investAPI/investapi"
 )
 
-const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+const token = "тутДолженБытьТокен" // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 
 func main() {
    client, err := investapi.New(token)
@@ -88,7 +91,7 @@ func main() {
 
 Как сгенерировать код клиента из proto файлов?
 ===============================
-Официальное описание протокола взаимодействия опубликовано тут [https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts](https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts).
+Официальное описание протокола взаимодействия опубликовано тут [https://github.com/RussianInvestments/investAPI/tree/main/src/docs/contracts](https://github.com/RussianInvestments/investAPI/tree/main/src/docs/contracts).
 Код в моём репозитории генерирует клиент для Golang на основе этих `proto` файлов.
 Код проверялся на дистрибутиве `Fedora 39+` с `docker` версии 20.10.15, `podman` версии 4.9.4 и `Golang` версии 1.22.8
 
@@ -102,9 +105,9 @@ func main() {
 
 ```
 3. Команда должна создать локальный докер образ со всем инструментарием, необходимым для генерации файла клиента
-   из *.proto файлов, загруженных отсюда https://github.com/Tinkoff/investAPI/tree/main/src/docs/contracts
+   из *.proto файлов, загруженных отсюда https://github.com/RussianInvestments/investAPI/tree/main/src/docs/contracts
 
-4. При запуске докер образа, контейнер клонирует код репозитория https://github.com/Tinkoff/investAPI/ и генерирует
+4. При запуске докер образа, контейнер клонирует код репозитория https://github.com/RussianInvestments/investAPI/ и генерирует
    файлы для Go модуля используя `protoc` и прочие инструменты - см `entrypoint.sh` как это происходит.
 
 5. Как результат выполнения предыдущей команды, в поддиректории `investapi/` появятся файлы

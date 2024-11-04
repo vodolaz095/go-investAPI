@@ -37,7 +37,7 @@ func main() {
 			ServerName: "invest-public-api.tinkoff.ru",
 		})), // по умолчанию проверяет сертификат
 		grpc.WithPerRPCCredentials(tokenAuth{
-			Token: "тутДолженБытьТокен", // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+			Token: "тутДолженБытьТокен", // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 		}),
 	)
 	if err != nil {

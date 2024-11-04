@@ -15,7 +15,7 @@ import (
  * НЕ ЯВЛЯЕТСЯ ИНВЕСТИЦИОННОЙ РЕКОМЕНДАЦИЕЙ
  */
 
-const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+const token = "тутДолженБытьТокен" // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 const accountID = ""               // аккаунт, на который мы покупаем бумагу
 var figi = "BBG004730RP0"          // https://www.tinkoff.ru/invest/stocks/GAZP
 const minimumPrice = 209.50        // цена, при которой мы ставим лимитную заявку
