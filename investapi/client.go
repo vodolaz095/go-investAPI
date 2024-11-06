@@ -48,6 +48,7 @@ type Client struct {
 	OperationsServiceClient  OperationsServiceClient
 	OrdersServiceClient      OrdersServiceClient
 	StopOrdersServiceClient  StopOrdersServiceClient
+	SignalServiceClient      SignalServiceClient
 }
 
 // Ping проверяет работоспособность соединения на основе получения состояния пула соединений
@@ -63,18 +64,23 @@ func (c *Client) Ping(_ context.Context) (err error) {
 	}
 }
 
-// New создаёт новый клиент для доступа к API, используя Ключ доступа как аргумент
+// New создаёт новый клиент для доступа к API по адресу продового окружения, используя Ключ доступа и
+// вариадическую переменную opts с параметрами вида grpc.DialOption для настройки соединения
+// как аргументы
 func New(token string, opts ...grpc.DialOption) (client *Client, err error) {
 	return NewWithCustomEndpoint(token, DefaultEndpoint, opts...)
 }
 
-// NewWithCustomEndpoint создаёт новый клиент для доступа к API, используя Ключ доступа и д оменное имя адреса API как аргументы
+// NewWithCustomEndpoint создаёт новый клиент для доступа к API, используя Ключ доступа, адрес API и
+// вариадическую переменную opts с параметрами вида grpc.DialOption для настройки соединения
+// как аргументы
 func NewWithCustomEndpoint(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error) {
 	return NewWithOpts(token, endpoint, opts...)
 }
 
-// NewWithOpts создаёт новый клиент для доступа к API, используя Ключ доступа как аргумент, доменное имя и вариадическую
-// переменную opts с параметрами вида grpc.DialOption для настройки соединения
+// NewWithOpts создаёт новый клиент для доступа к API, используя Ключ доступа, адрес API и
+// вариадическую переменную opts с параметрами вида grpc.DialOption для настройки соединения
+// как аргументы
 func NewWithOpts(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error) {
 	opts = append(opts,
 		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
@@ -114,5 +120,6 @@ func makeClient(endpoint string, opts ...grpc.DialOption) (client *Client, err e
 	client.OperationsServiceClient = NewOperationsServiceClient(conn)
 	client.OrdersServiceClient = NewOrdersServiceClient(conn)
 	client.StopOrdersServiceClient = NewStopOrdersServiceClient(conn)
+	client.SignalServiceClient = NewSignalServiceClient(conn)
 	return
 }

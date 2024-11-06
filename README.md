@@ -139,6 +139,35 @@ users_grpc.pb.go
 
 - https://github.com/vodolaz095/stocks_broadcaster - утилита, которая ретранслирует кодировки в redis
 
+Интеграция с OpenTelemetry
+================
+
+Основано на примере https://github.com/uptrace/opentelemetry-go-extra/blob/main/example/grpc/client/client.go
+
+```golang
+package main
+
+import (
+  "google.golang.org/grpc"
+  "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+  "github.com/vodolaz095/go-investAPI/investapi"  
+)
+
+const token = "тутДолженБытьТокен" // https://tinkoff.github.io/investAPI/grpc/#tinkoff-invest-api_1
+
+func main() {
+   // other code
+	client, err := investapi.New(token,
+      grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+      grpc.WithStreamInterceptor(otelgrpc.StreamClientInterceptor()),
+   )
+   // other code
+}
+
+
+```
+
+
 
 Лицензия
 ===============
