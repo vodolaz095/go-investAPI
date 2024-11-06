@@ -89,6 +89,19 @@ func main() {
 3. В директории [example](https://github.com/vodolaz095/go-investAPI/tree/master/example) лежат примеры использования
 
 
+Необратимые изменения начиная с версии 1.8.x
+===============================
+1. Функции `New(token string, opts ...grpc.DialOption) (client *Client, err error)` и `NewWithCustomEndpoint(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error)`
+   теперь включают крайний вариадический аргумент с опциями grpc соединения
+2. В функциях `NewWithCustomEndpoint(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error)` 
+   и `NewWithOpts(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error)` строка соединения
+   теперь включает номер порта - раньше было `"invest-public-api.tinkoff.ru` и порт 443 подразумевался, а теперь 
+   `invest-public-api.tinkoff.ru:443`- этот шаг позволит легче тестировать библиотеку с mock серверами, которые могут 
+   работать на нестандартных портах
+3. Добавлена функция `NewInsecure(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error)` которую как 
+   раз можно использовать для соединения с mock серверами, работающими без шифрования
+
+
 Как сгенерировать код клиента из proto файлов?
 ===============================
 Официальное описание протокола взаимодействия опубликовано тут [https://github.com/RussianInvestments/investAPI/tree/main/src/docs/contracts](https://github.com/RussianInvestments/investAPI/tree/main/src/docs/contracts).
