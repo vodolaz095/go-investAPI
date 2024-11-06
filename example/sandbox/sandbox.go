@@ -14,7 +14,7 @@ import (
 const token = "тутДолженБытьТокен" // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 
 func main() {
-	client, err := investapi.New(token)
+	client, err := investapi.NewWithCustomEndpoint(token, investapi.SandboxEndpoint)
 	if err != nil {
 		log.Fatalf("%s : при соединении с investAPI", err)
 	}

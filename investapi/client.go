@@ -3,32 +3,40 @@ package investapi
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"fmt"
+	"strings"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
-// DefaultEndpoint - это доменное имя по умолчанию, на котором работает InvestAPI
-const DefaultEndpoint = "invest-public-api.tinkoff.ru"
+// DefaultEndpoint - это адрес, на котором работает продукционное окружение InvestAPI
+const DefaultEndpoint = "invest-public-api.tinkoff.ru:443"
+
+// SandboxEndpoint - это адрес, на котором работает тестовое окружение
+const SandboxEndpoint = "sandbox-invest-public-api.tinkoff.ru:443"
 
 // tokenAuth используется для описания стратегии авторизации GRPC клиента
 type tokenAuth struct {
 	// Token - это ключ доступа, который можно получить отсюда - // https://russianinvestments.github.io/investAPI/grpc/#tinkoff-invest-api_2
 	Token string
+	// Secure - флаг, включающий требование шифрования соединения
+	Secure bool
 }
 
 // GetRequestMetadata используется для авторизации с помощью Bearer стратегии
-func (t tokenAuth) GetRequestMetadata(ctx context.Context, in ...string) (map[string]string, error) {
+func (ta tokenAuth) GetRequestMetadata(ctx context.Context, in ...string) (map[string]string, error) {
 	return map[string]string{
-		"Authorization": "Bearer " + t.Token,
+		"Authorization": "Bearer " + ta.Token,
 	}, nil
 }
 
 // RequireTransportSecurity требует, чтобы транспорт был защищённым
-func (tokenAuth) RequireTransportSecurity() bool {
-	return true
+func (ta tokenAuth) RequireTransportSecurity() bool {
+	return ta.Secure
 }
 
 // Client - это структура для доступа к API, в которой есть соединение и сгенерированные клиенты для всех сервисов
@@ -56,25 +64,45 @@ func (c *Client) Ping(_ context.Context) (err error) {
 }
 
 // New создаёт новый клиент для доступа к API, используя Ключ доступа как аргумент
-func New(token string) (client *Client, err error) {
-	return NewWithCustomEndpoint(token, "invest-public-api.tinkoff.ru")
+func New(token string, opts ...grpc.DialOption) (client *Client, err error) {
+	return NewWithCustomEndpoint(token, DefaultEndpoint, opts...)
 }
 
-// NewWithCustomEndpoint создаёт новый клиент для доступа к API, используя Ключ доступа и доменное имя адреса API как аргументы
-func NewWithCustomEndpoint(token, endpoint string) (client *Client, err error) {
-	return NewWithOpts(token, endpoint, make([]grpc.DialOption, 0)...)
+// NewWithCustomEndpoint создаёт новый клиент для доступа к API, используя Ключ доступа и д оменное имя адреса API как аргументы
+func NewWithCustomEndpoint(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error) {
+	return NewWithOpts(token, endpoint, opts...)
 }
 
-// NewWithOpts создаёт новый клиент для доступа к API, используя Ключ доступа как аргумент, доменное имя и вариадическую переменную opts с параметрами вида grpc.DialOption для настройки соединения
+// NewWithOpts создаёт новый клиент для доступа к API, используя Ключ доступа как аргумент, доменное имя и вариадическую
+// переменную opts с параметрами вида grpc.DialOption для настройки соединения
 func NewWithOpts(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error) {
-	opts = append(opts, grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
-		ServerName: endpoint,
-	})))
-	opts = append(opts, grpc.WithPerRPCCredentials(tokenAuth{
-		Token: token,
-	}))
-	opts = append(opts, grpc.WithUserAgent("https://github.com/vodolaz095/go-investAPI"))
-	conn, err := grpc.Dial(fmt.Sprintf("%s:443", endpoint), opts...)
+	opts = append(opts,
+		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
+			ServerName: strings.Split(endpoint, ":")[0],
+		})),
+		grpc.WithPerRPCCredentials(tokenAuth{Token: token, Secure: true}),
+		grpc.WithUserAgent("https://github.com/vodolaz095/go-investAPI"),
+	)
+	return makeClient(endpoint, opts...)
+}
+
+// NewInsecure создаёт новый клиент с ВЫКЛЮЧЕНЫМ TLS шифрованием для доступа к API, используя
+// Ключ доступа как аргумент, доменное имя и вариадическую переменную opts с параметрами вида grpc.DialOption для настройки соединения
+// Этот клиент лучше не использовать за пределами тестовых окружений! Рекомендуется использовать с mock API инвестиций в тестовых сценариях
+func NewInsecure(token, endpoint string, opts ...grpc.DialOption) (client *Client, err error) {
+	if endpoint == DefaultEndpoint {
+		return nil, errors.New("non encrypted connection to production endpoint is not allowed")
+	}
+	opts = append(opts,
+		grpc.WithTransportCredentials(insecure.NewCredentials()), // никогда так не делайте!
+		grpc.WithPerRPCCredentials(tokenAuth{Token: token, Secure: false}),
+		grpc.WithUserAgent("https://github.com/vodolaz095/go-investAPI"),
+	)
+	return makeClient(endpoint, opts...)
+}
+
+func makeClient(endpoint string, opts ...grpc.DialOption) (client *Client, err error) {
+	conn, err := grpc.NewClient(endpoint, opts...)
 	if err != nil {
 		return
 	}
