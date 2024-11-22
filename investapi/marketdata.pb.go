@@ -332,24 +332,24 @@ func (TradeDirection) EnumDescriptor() ([]byte, []int) {
 	return file_marketdata_proto_rawDescGZIP(), []int{4}
 }
 
-// Интервал свечей.
+// Интервал свечей. Максимальное значение интервала приведено ориентировочно, может отличаться в большую сторону в зависимости от параметров запроса.
 type CandleInterval int32
 
 const (
 	CandleInterval_CANDLE_INTERVAL_UNSPECIFIED CandleInterval = 0  //Интервал не определён.
-	CandleInterval_CANDLE_INTERVAL_1_MIN       CandleInterval = 1  //От 1 минуты до 1 дня.
-	CandleInterval_CANDLE_INTERVAL_5_MIN       CandleInterval = 2  //От 5 минут до 1 дня.
-	CandleInterval_CANDLE_INTERVAL_15_MIN      CandleInterval = 3  //От 15 минут до 1 дня.
-	CandleInterval_CANDLE_INTERVAL_HOUR        CandleInterval = 4  //От 1 часа до 1 недели.
-	CandleInterval_CANDLE_INTERVAL_DAY         CandleInterval = 5  //От 1 дня до 1 года.
-	CandleInterval_CANDLE_INTERVAL_2_MIN       CandleInterval = 6  //От 2 минут до 1 дня.
-	CandleInterval_CANDLE_INTERVAL_3_MIN       CandleInterval = 7  //От 3 минут до 1 дня.
-	CandleInterval_CANDLE_INTERVAL_10_MIN      CandleInterval = 8  //От 10 минут до 1 дня.
-	CandleInterval_CANDLE_INTERVAL_30_MIN      CandleInterval = 9  //От 30 минут до 2 дней.
-	CandleInterval_CANDLE_INTERVAL_2_HOUR      CandleInterval = 10 //От 2 часов до 1 месяца.
-	CandleInterval_CANDLE_INTERVAL_4_HOUR      CandleInterval = 11 //От 4 часов до 1 месяца.
-	CandleInterval_CANDLE_INTERVAL_WEEK        CandleInterval = 12 //От 1 недели до 2 лет.
-	CandleInterval_CANDLE_INTERVAL_MONTH       CandleInterval = 13 //От 1 месяца до 10 лет.
+	CandleInterval_CANDLE_INTERVAL_1_MIN       CandleInterval = 1  //От 1 минуты до 1 дня (лимит 2400).
+	CandleInterval_CANDLE_INTERVAL_5_MIN       CandleInterval = 2  //От 5 минут до недели (лимит 2400).
+	CandleInterval_CANDLE_INTERVAL_15_MIN      CandleInterval = 3  //От 15 минут до 3 недель (лимит 2400).
+	CandleInterval_CANDLE_INTERVAL_HOUR        CandleInterval = 4  //От 1 часа до 3 месяцев (лимит 2400).
+	CandleInterval_CANDLE_INTERVAL_DAY         CandleInterval = 5  //От 1 дня до 6 лет (лимит 2400).
+	CandleInterval_CANDLE_INTERVAL_2_MIN       CandleInterval = 6  //От 2 минут до 1 дня (лимит 1200).
+	CandleInterval_CANDLE_INTERVAL_3_MIN       CandleInterval = 7  //От 3 минут до 1 дня (лимит 750).
+	CandleInterval_CANDLE_INTERVAL_10_MIN      CandleInterval = 8  //От 10 минут до недели (лимит 1200).
+	CandleInterval_CANDLE_INTERVAL_30_MIN      CandleInterval = 9  //От 30 минут до 3 недель (лимит 1200).
+	CandleInterval_CANDLE_INTERVAL_2_HOUR      CandleInterval = 10 //От 2 часов до 3 месяцев (лимит 2400).
+	CandleInterval_CANDLE_INTERVAL_4_HOUR      CandleInterval = 11 //От 4 часов до 3 месяцев (лимит 700).
+	CandleInterval_CANDLE_INTERVAL_WEEK        CandleInterval = 12 //От 1 недели до 5 лет (лимит 300).
+	CandleInterval_CANDLE_INTERVAL_MONTH       CandleInterval = 13 //От 1 месяца до 10 лет (лимит 120).
 )
 
 // Enum value maps for CandleInterval.
