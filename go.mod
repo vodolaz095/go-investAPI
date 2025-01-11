@@ -1,6 +1,6 @@
 module github.com/vodolaz095/go-investAPI
 
-go 1.21
+go 1.23.2
 
 require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20241021214115-324edc3d5d38
