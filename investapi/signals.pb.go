@@ -181,7 +181,7 @@ type GetStrategiesRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	StrategyId *string `protobuf:"bytes,1,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"` //Идентификатор стратегии
+	StrategyId *string `protobuf:"bytes,1,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"` //Идентификатор стратегии.
 }
 
 func (x *GetStrategiesRequest) Reset() {
@@ -410,9 +410,9 @@ type GetSignalsRequest struct {
 	SignalId      *string                `protobuf:"bytes,1,opt,name=signal_id,json=signalId,proto3,oneof" json:"signal_id,omitempty"`                                                                      //Идентификатор сигнала.
 	StrategyId    *string                `protobuf:"bytes,2,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"`                                                                //Идентификатор стратегии.
 	StrategyType  *StrategyType          `protobuf:"varint,3,opt,name=strategy_type,json=strategyType,proto3,enum=tinkoff.public.invest.api.contract.v1.StrategyType,oneof" json:"strategy_type,omitempty"` //Тип стратегии.
-	InstrumentUid *string                `protobuf:"bytes,4,opt,name=instrument_uid,json=instrumentUid,proto3,oneof" json:"instrument_uid,omitempty"`                                                       //	Идентификатор бумаги
-	From          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=from,proto3,oneof" json:"from,omitempty"`                                                                                              //	Дата начала запрашиваемого интервала в часовом поясе UTC.
-	To            *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=to,proto3,oneof" json:"to,omitempty"`                                                                                                  //	Дата конца запрашиваемого интервала  в часовом поясе UTC.
+	InstrumentUid *string                `protobuf:"bytes,4,opt,name=instrument_uid,json=instrumentUid,proto3,oneof" json:"instrument_uid,omitempty"`                                                       //	Идентификатор бумаги.
+	From          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=from,proto3,oneof" json:"from,omitempty"`                                                                                              //	Дата начала запрашиваемого интервала по UTC.
+	To            *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=to,proto3,oneof" json:"to,omitempty"`                                                                                                  //	Дата конца запрашиваемого интервала по UTC.
 	Direction     *SignalDirection       `protobuf:"varint,7,opt,name=direction,proto3,enum=tinkoff.public.invest.api.contract.v1.SignalDirection,oneof" json:"direction,omitempty"`                        //	Направление сигнала.
 	Active        *SignalState           `protobuf:"varint,8,opt,name=active,proto3,enum=tinkoff.public.invest.api.contract.v1.SignalState,oneof" json:"active,omitempty"`                                  //Состояние сигнала.
 	Paging        *Page                  `protobuf:"bytes,9,opt,name=paging,proto3,oneof" json:"paging,omitempty"`                                                                                          //Настройки пагинации.
@@ -575,17 +575,17 @@ type Signal struct {
 	StrategyId    string                 `protobuf:"bytes,2,opt,name=strategy_id,json=strategyId,proto3" json:"strategy_id,omitempty"`                                         //Идентификатор стратегии.
 	StrategyName  string                 `protobuf:"bytes,3,opt,name=strategy_name,json=strategyName,proto3" json:"strategy_name,omitempty"`                                   //Название стратегии.
 	InstrumentUid string                 `protobuf:"bytes,4,opt,name=instrument_uid,json=instrumentUid,proto3" json:"instrument_uid,omitempty"`                                //Идентификатор бумаги.
-	CreateDt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=create_dt,json=createDt,proto3" json:"create_dt,omitempty"`                                               //Дата и время создания сигнала  в часовом поясе UTC.
-	Direction     SignalDirection        `protobuf:"varint,6,opt,name=direction,proto3,enum=tinkoff.public.invest.api.contract.v1.SignalDirection" json:"direction,omitempty"` //Направление сигнала
-	InitialPrice  *Quotation             `protobuf:"bytes,7,opt,name=initial_price,json=initialPrice,proto3" json:"initial_price,omitempty"`                                   //Цена бумаги на момент формирования сигнала
+	CreateDt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=create_dt,json=createDt,proto3" json:"create_dt,omitempty"`                                               //Дата и время создания сигнала по UTC.
+	Direction     SignalDirection        `protobuf:"varint,6,opt,name=direction,proto3,enum=tinkoff.public.invest.api.contract.v1.SignalDirection" json:"direction,omitempty"` //Направление сигнала.
+	InitialPrice  *Quotation             `protobuf:"bytes,7,opt,name=initial_price,json=initialPrice,proto3" json:"initial_price,omitempty"`                                   //Цена бумаги на момент формирования сигнала.
 	Info          *string                `protobuf:"bytes,8,opt,name=info,proto3,oneof" json:"info,omitempty"`                                                                 //Дополнительная информация о сигнале.
 	Name          string                 `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`                                                                       //Название сигнала.
 	TargetPrice   *Quotation             `protobuf:"bytes,10,opt,name=target_price,json=targetPrice,proto3" json:"target_price,omitempty"`                                     //Целевая цена.
-	EndDt         *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=end_dt,json=endDt,proto3" json:"end_dt,omitempty"`                                                       //Дата и время дедлайна сигнала в часовом поясе UTC.
+	EndDt         *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=end_dt,json=endDt,proto3" json:"end_dt,omitempty"`                                                       //Дата и время дедлайна сигнала по UTC.
 	Probability   *int32                 `protobuf:"varint,12,opt,name=probability,proto3,oneof" json:"probability,omitempty"`                                                 //Вероятность сигнала.
 	Stoploss      *Quotation             `protobuf:"bytes,13,opt,name=stoploss,proto3,oneof" json:"stoploss,omitempty"`                                                        //Порог закрытия сигнала по стоплосс.
 	ClosePrice    *Quotation             `protobuf:"bytes,14,opt,name=close_price,json=closePrice,proto3,oneof" json:"close_price,omitempty"`                                  //Цена закрытия сигнала.
-	CloseDt       *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=close_dt,json=closeDt,proto3,oneof" json:"close_dt,omitempty"`                                           //Дата и время закрытия сигнала в часовом поясе UTC.
+	CloseDt       *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=close_dt,json=closeDt,proto3,oneof" json:"close_dt,omitempty"`                                           //Дата и время закрытия сигнала по UTC.
 }
 
 func (x *Signal) Reset() {

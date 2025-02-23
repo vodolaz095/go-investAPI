@@ -100,7 +100,7 @@ type InstrumentStatus int32
 
 const (
 	InstrumentStatus_INSTRUMENT_STATUS_UNSPECIFIED InstrumentStatus = 0 //Значение не определено.
-	InstrumentStatus_INSTRUMENT_STATUS_BASE        InstrumentStatus = 1 //Базовый список инструментов (по умолчанию). Инструменты, доступные для торговли через T-Invest API. Cейчас списки бумаг, которые доступны из API и других интерфейсах совпадают — кроме внебиржевых бумаг. Но в будущем возможны ситуации, когда списки инструментов будут отличаться.
+	InstrumentStatus_INSTRUMENT_STATUS_BASE        InstrumentStatus = 1 //По умолчанию — базовый список инструментов, которыми можно торговать через T-Invest API. Сейчас списки доступных бумаг в API и других интерфейсах совпадают — кроме внебиржевых бумаг, но в будущем списки могут различаться.
 	InstrumentStatus_INSTRUMENT_STATUS_ALL         InstrumentStatus = 2 //Список всех инструментов.
 )
 
@@ -149,7 +149,7 @@ func (InstrumentStatus) EnumDescriptor() ([]byte, []int) {
 type SecurityTradingStatus int32
 
 const (
-	SecurityTradingStatus_SECURITY_TRADING_STATUS_UNSPECIFIED                      SecurityTradingStatus = 0  //Торговый статус не определён.
+	SecurityTradingStatus_SECURITY_TRADING_STATUS_UNSPECIFIED                      SecurityTradingStatus = 0  //Торговый статус не определен.
 	SecurityTradingStatus_SECURITY_TRADING_STATUS_NOT_AVAILABLE_FOR_TRADING        SecurityTradingStatus = 1  //Недоступен для торгов.
 	SecurityTradingStatus_SECURITY_TRADING_STATUS_OPENING_PERIOD                   SecurityTradingStatus = 2  //Период открытия торгов.
 	SecurityTradingStatus_SECURITY_TRADING_STATUS_CLOSING_PERIOD                   SecurityTradingStatus = 3  //Период закрытия торгов.
@@ -243,7 +243,7 @@ type PriceType int32
 const (
 	PriceType_PRICE_TYPE_UNSPECIFIED PriceType = 0 //Значение не определено.
 	PriceType_PRICE_TYPE_POINT       PriceType = 1 //Цена в пунктах (только для фьючерсов и облигаций).
-	PriceType_PRICE_TYPE_CURRENCY    PriceType = 2 //Цена в валюте расчётов по инструменту.
+	PriceType_PRICE_TYPE_CURRENCY    PriceType = 2 //Цена в валюте расчетов по инструменту.
 )
 
 // Enum value maps for PriceType.
@@ -336,7 +336,7 @@ func (ResultSubscriptionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_common_proto_rawDescGZIP(), []int{4}
 }
 
-// Денежная сумма в определённой валюте.
+// Денежная сумма в определенной валюте.
 type MoneyValue struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -462,7 +462,7 @@ type PingRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Time *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=time,proto3,oneof" json:"time,omitempty"` //Время формирования запроса
+	Time *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=time,proto3,oneof" json:"time,omitempty"` //Время формирования запроса.
 }
 
 func (x *PingRequest) Reset() {
@@ -507,7 +507,7 @@ type PingDelaySettings struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PingDelayMs *int32 `protobuf:"varint,15,opt,name=ping_delay_ms,json=pingDelayMs,proto3,oneof" json:"ping_delay_ms,omitempty"` //Задержка пинг сообщений milliseconds 5000-180000, default 120000
+	PingDelayMs *int32 `protobuf:"varint,15,opt,name=ping_delay_ms,json=pingDelayMs,proto3,oneof" json:"ping_delay_ms,omitempty"` //Задержка (пинг) сообщений:  5000–180 000 миллисекунд. Значение по умолчанию — 120 000.
 }
 
 func (x *PingDelaySettings) Reset() {
@@ -555,7 +555,7 @@ type Ping struct {
 
 	Time            *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=time,proto3" json:"time,omitempty"`                                                      //Время проверки.
 	StreamId        string                 `protobuf:"bytes,2,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`                              //Идентификатор соединения.
-	PingRequestTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=ping_request_time,json=pingRequestTime,proto3,oneof" json:"ping_request_time,omitempty"` //Время формирования запроса
+	PingRequestTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=ping_request_time,json=pingRequestTime,proto3,oneof" json:"ping_request_time,omitempty"` //Время формирования запроса.
 }
 
 func (x *Ping) Reset() {

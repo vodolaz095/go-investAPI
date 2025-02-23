@@ -1,5 +1,5 @@
 package investapi
 
 // Version содержит хэш коммита, из которого был сгенерирован код клиента.
-// В данном случае это - https://github.com/RussianInvestments/investAPI/commit/0fa7cafc0cce135f623c3acc8397b45130a7f446
-const Version = "0fa7cafc0cce135f623c3acc8397b45130a7f446"
+// В данном случае это - https://github.com/RussianInvestments/investAPI/commit/124813610a9dbb0d8c91067a67d9c26a02c8c713
+const Version = "124813610a9dbb0d8c91067a67d9c26a02c8c713"

@@ -27,9 +27,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrdersStreamServiceClient interface {
-	// Stream сделок пользователя
+	// Stream сделок пользователя.
 	TradesStream(ctx context.Context, in *TradesStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[TradesStreamResponse], error)
-	// Stream поручений пользователя. Перед работой прочитайте [статью](https://russianinvestments.github.io/investAPI/orders_state_stream/).
+	// Stream поручений пользователя.
+	// Перед работой прочитайте [статью](/invest/services/orders/orders_state_stream).
 	OrderStateStream(ctx context.Context, in *OrderStateStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[OrderStateStreamResponse], error)
 }
 
@@ -83,9 +84,10 @@ type OrdersStreamService_OrderStateStreamClient = grpc.ServerStreamingClient[Ord
 // All implementations must embed UnimplementedOrdersStreamServiceServer
 // for forward compatibility.
 type OrdersStreamServiceServer interface {
-	// Stream сделок пользователя
+	// Stream сделок пользователя.
 	TradesStream(*TradesStreamRequest, grpc.ServerStreamingServer[TradesStreamResponse]) error
-	// Stream поручений пользователя. Перед работой прочитайте [статью](https://russianinvestments.github.io/investAPI/orders_state_stream/).
+	// Stream поручений пользователя.
+	// Перед работой прочитайте [статью](/invest/services/orders/orders_state_stream).
 	OrderStateStream(*OrderStateStreamRequest, grpc.ServerStreamingServer[OrderStateStreamResponse]) error
 	mustEmbedUnimplementedOrdersStreamServiceServer()
 }
@@ -191,13 +193,13 @@ type OrdersServiceClient interface {
 	CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error)
 	// Метод получения статуса торгового поручения.
 	GetOrderState(ctx context.Context, in *GetOrderStateRequest, opts ...grpc.CallOption) (*OrderState, error)
-	// Метод получения списка активных заявок по счёту.
+	// Метод получения списка активных заявок по счету.
 	GetOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
 	// Метод изменения выставленной заявки.
 	ReplaceOrder(ctx context.Context, in *ReplaceOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
-	// расчет количества доступных для покупки/продажи лотов
+	// Расчет количества доступных для покупки/продажи лотов.
 	GetMaxLots(ctx context.Context, in *GetMaxLotsRequest, opts ...grpc.CallOption) (*GetMaxLotsResponse, error)
-	// Метод получения предварительной стоимости для лимитной заявки
+	// Метод получения предварительной стоимости для лимитной заявки.
 	GetOrderPrice(ctx context.Context, in *GetOrderPriceRequest, opts ...grpc.CallOption) (*GetOrderPriceResponse, error)
 }
 
@@ -301,13 +303,13 @@ type OrdersServiceServer interface {
 	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error)
 	// Метод получения статуса торгового поручения.
 	GetOrderState(context.Context, *GetOrderStateRequest) (*OrderState, error)
-	// Метод получения списка активных заявок по счёту.
+	// Метод получения списка активных заявок по счету.
 	GetOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
 	// Метод изменения выставленной заявки.
 	ReplaceOrder(context.Context, *ReplaceOrderRequest) (*PostOrderResponse, error)
-	// расчет количества доступных для покупки/продажи лотов
+	// Расчет количества доступных для покупки/продажи лотов.
 	GetMaxLots(context.Context, *GetMaxLotsRequest) (*GetMaxLotsResponse, error)
-	// Метод получения предварительной стоимости для лимитной заявки
+	// Метод получения предварительной стоимости для лимитной заявки.
 	GetOrderPrice(context.Context, *GetOrderPriceRequest) (*GetOrderPriceResponse, error)
 	mustEmbedUnimplementedOrdersServiceServer()
 }
