@@ -33,21 +33,22 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MarketDataServiceClient interface {
-	// Запросить исторические свечи по инструменту.
+	// GetCandles — исторические свечи по инструменту
 	GetCandles(ctx context.Context, in *GetCandlesRequest, opts ...grpc.CallOption) (*GetCandlesResponse, error)
-	// Запросить цены последних сделок по инструментам.
+	// GetLastPrices — цены последних сделок по инструментам
 	GetLastPrices(ctx context.Context, in *GetLastPricesRequest, opts ...grpc.CallOption) (*GetLastPricesResponse, error)
-	// Получить стакан по инструменту.
+	// GetOrderBook — стакан по инструменту
 	GetOrderBook(ctx context.Context, in *GetOrderBookRequest, opts ...grpc.CallOption) (*GetOrderBookResponse, error)
-	// Запросить статус торгов по инструментам.
+	// GetTradingStatus — статус торгов по инструменту
 	GetTradingStatus(ctx context.Context, in *GetTradingStatusRequest, opts ...grpc.CallOption) (*GetTradingStatusResponse, error)
-	// Запросить статус торгов по инструментам.
+	// GetTradingStatuses — статус торгов по инструментам
 	GetTradingStatuses(ctx context.Context, in *GetTradingStatusesRequest, opts ...grpc.CallOption) (*GetTradingStatusesResponse, error)
-	// Запросить обезличенные сделки за последний час.
+	// GetLastTrades — обезличенные сделки
+	// Обезличенные сделки по инструменту. Метод гарантирует получение информации за последний час.
 	GetLastTrades(ctx context.Context, in *GetLastTradesRequest, opts ...grpc.CallOption) (*GetLastTradesResponse, error)
-	// Запросить цены закрытия торговой сессии по инструментам.
+	// GetClosePrices — цены закрытия торговой сессии по инструментам
 	GetClosePrices(ctx context.Context, in *GetClosePricesRequest, opts ...grpc.CallOption) (*GetClosePricesResponse, error)
-	// Получить технические индикаторы по инструменту.
+	// GetTechAnalysis — технические индикаторы по инструменту
 	GetTechAnalysis(ctx context.Context, in *GetTechAnalysisRequest, opts ...grpc.CallOption) (*GetTechAnalysisResponse, error)
 }
 
@@ -143,21 +144,22 @@ func (c *marketDataServiceClient) GetTechAnalysis(ctx context.Context, in *GetTe
 // All implementations must embed UnimplementedMarketDataServiceServer
 // for forward compatibility.
 type MarketDataServiceServer interface {
-	// Запросить исторические свечи по инструменту.
+	// GetCandles — исторические свечи по инструменту
 	GetCandles(context.Context, *GetCandlesRequest) (*GetCandlesResponse, error)
-	// Запросить цены последних сделок по инструментам.
+	// GetLastPrices — цены последних сделок по инструментам
 	GetLastPrices(context.Context, *GetLastPricesRequest) (*GetLastPricesResponse, error)
-	// Получить стакан по инструменту.
+	// GetOrderBook — стакан по инструменту
 	GetOrderBook(context.Context, *GetOrderBookRequest) (*GetOrderBookResponse, error)
-	// Запросить статус торгов по инструментам.
+	// GetTradingStatus — статус торгов по инструменту
 	GetTradingStatus(context.Context, *GetTradingStatusRequest) (*GetTradingStatusResponse, error)
-	// Запросить статус торгов по инструментам.
+	// GetTradingStatuses — статус торгов по инструментам
 	GetTradingStatuses(context.Context, *GetTradingStatusesRequest) (*GetTradingStatusesResponse, error)
-	// Запросить обезличенные сделки за последний час.
+	// GetLastTrades — обезличенные сделки
+	// Обезличенные сделки по инструменту. Метод гарантирует получение информации за последний час.
 	GetLastTrades(context.Context, *GetLastTradesRequest) (*GetLastTradesResponse, error)
-	// Запросить цены закрытия торговой сессии по инструментам.
+	// GetClosePrices — цены закрытия торговой сессии по инструментам
 	GetClosePrices(context.Context, *GetClosePricesRequest) (*GetClosePricesResponse, error)
-	// Получить технические индикаторы по инструменту.
+	// GetTechAnalysis — технические индикаторы по инструменту
 	GetTechAnalysis(context.Context, *GetTechAnalysisRequest) (*GetTechAnalysisResponse, error)
 	mustEmbedUnimplementedMarketDataServiceServer()
 }
@@ -411,9 +413,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MarketDataStreamServiceClient interface {
-	// Bidirectional-стрим предоставления биржевой информации.
+	// MarketDataStream — bidirectional стрим предоставления биржевой информации
 	MarketDataStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[MarketDataRequest, MarketDataResponse], error)
-	// Server-side стрим предоставления биржевой информации.
+	// MarketDataServerSideStream — server-side стрим предоставления биржевой информации
 	MarketDataServerSideStream(ctx context.Context, in *MarketDataServerSideStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[MarketDataResponse], error)
 }
 
@@ -461,9 +463,9 @@ type MarketDataStreamService_MarketDataServerSideStreamClient = grpc.ServerStrea
 // All implementations must embed UnimplementedMarketDataStreamServiceServer
 // for forward compatibility.
 type MarketDataStreamServiceServer interface {
-	// Bidirectional-стрим предоставления биржевой информации.
+	// MarketDataStream — bidirectional стрим предоставления биржевой информации
 	MarketDataStream(grpc.BidiStreamingServer[MarketDataRequest, MarketDataResponse]) error
-	// Server-side стрим предоставления биржевой информации.
+	// MarketDataServerSideStream — server-side стрим предоставления биржевой информации
 	MarketDataServerSideStream(*MarketDataServerSideStreamRequest, grpc.ServerStreamingServer[MarketDataResponse]) error
 	mustEmbedUnimplementedMarketDataStreamServiceServer()
 }

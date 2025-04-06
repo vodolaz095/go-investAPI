@@ -7986,6 +7986,7 @@ func (x *CreateFavoriteGroupResponse) GetGroupName() string {
 	return ""
 }
 
+// Запрос удаления избранной группы
 type DeleteFavoriteGroupRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -8067,6 +8068,7 @@ func (*DeleteFavoriteGroupResponse) Descriptor() ([]byte, []int) {
 	return file_instruments_proto_rawDescGZIP(), []int{65}
 }
 
+// Запрос получения списка избранных групп
 type GetFavoriteGroupsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -8120,6 +8122,7 @@ func (x *GetFavoriteGroupsRequest) GetExcludedGroupId() []string {
 	return nil
 }
 
+// Избранные группы
 type GetFavoriteGroupsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -9347,6 +9350,7 @@ func (x *GetForecastResponse) GetConsensus() *GetForecastResponse_ConsensusItem 
 	return nil
 }
 
+// Запрос ставок риска
 type RiskRatesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -9392,6 +9396,7 @@ func (x *RiskRatesRequest) GetInstrumentId() []string {
 	return nil
 }
 
+// Ставки риска
 type RiskRatesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -9695,6 +9700,7 @@ func (x *GetBondEventsResponse_BondEvent) GetCouponInterestRate() *Quotation {
 	return nil
 }
 
+// Избранная группа
 type GetFavoriteGroupsResponse_FavoriteGroup struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

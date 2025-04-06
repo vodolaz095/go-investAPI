@@ -22,12 +22,12 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Тип счёта.
+// Тип счeта.
 type AccountType int32
 
 const (
-	AccountType_ACCOUNT_TYPE_UNSPECIFIED AccountType = 0 //Тип аккаунта не определён.
-	AccountType_ACCOUNT_TYPE_TINKOFF     AccountType = 1 //Брокерский счёт Т-Инвестиций.
+	AccountType_ACCOUNT_TYPE_UNSPECIFIED AccountType = 0 //Тип аккаунта не определeн.
+	AccountType_ACCOUNT_TYPE_TINKOFF     AccountType = 1 //Брокерский счeт Т-Инвестиций.
 	AccountType_ACCOUNT_TYPE_TINKOFF_IIS AccountType = 2 //ИИС.
 	AccountType_ACCOUNT_TYPE_INVEST_BOX  AccountType = 3 //Инвесткопилка.
 	AccountType_ACCOUNT_TYPE_INVEST_FUND AccountType = 4 //Фонд денежного рынка.
@@ -78,14 +78,14 @@ func (AccountType) EnumDescriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{0}
 }
 
-// Статус счёта.
+// Статус счeта.
 type AccountStatus int32
 
 const (
-	AccountStatus_ACCOUNT_STATUS_UNSPECIFIED AccountStatus = 0 //Статус счёта не определён.
+	AccountStatus_ACCOUNT_STATUS_UNSPECIFIED AccountStatus = 0 //Статус счeта не определeн.
 	AccountStatus_ACCOUNT_STATUS_NEW         AccountStatus = 1 //Новый, в процессе открытия.
-	AccountStatus_ACCOUNT_STATUS_OPEN        AccountStatus = 2 //Открытый и активный счёт.
-	AccountStatus_ACCOUNT_STATUS_CLOSED      AccountStatus = 3 //Закрытый счёт.
+	AccountStatus_ACCOUNT_STATUS_OPEN        AccountStatus = 2 //Открытый и активный счeт.
+	AccountStatus_ACCOUNT_STATUS_CLOSED      AccountStatus = 3 //Закрытый счeт.
 	AccountStatus_ACCOUNT_STATUS_ALL         AccountStatus = 4 //Все счета.
 )
 
@@ -134,12 +134,12 @@ func (AccountStatus) EnumDescriptor() ([]byte, []int) {
 	return file_users_proto_rawDescGZIP(), []int{1}
 }
 
-// Уровень доступа к счёту.
+// Уровень доступа к счeту.
 type AccessLevel int32
 
 const (
-	AccessLevel_ACCOUNT_ACCESS_LEVEL_UNSPECIFIED AccessLevel = 0 //Уровень доступа не определён.
-	AccessLevel_ACCOUNT_ACCESS_LEVEL_FULL_ACCESS AccessLevel = 1 //Полный доступ к счёту.
+	AccessLevel_ACCOUNT_ACCESS_LEVEL_UNSPECIFIED AccessLevel = 0 //Уровень доступа не определeн.
+	AccessLevel_ACCOUNT_ACCESS_LEVEL_FULL_ACCESS AccessLevel = 1 //Полный доступ к счeту.
 	AccessLevel_ACCOUNT_ACCESS_LEVEL_READ_ONLY   AccessLevel = 2 //Доступ с уровнем прав «только чтение».
 	AccessLevel_ACCOUNT_ACCESS_LEVEL_NO_ACCESS   AccessLevel = 3 //Доступа нет.
 )
@@ -280,25 +280,25 @@ func (x *GetAccountsResponse) GetAccounts() []*Account {
 	return nil
 }
 
-// Информация о счёте.
+// Информация о счeте.
 type Account struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Идентификатор счёта.
+	// Идентификатор счeта.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Тип счёта.
+	// Тип счeта.
 	Type AccountType `protobuf:"varint,2,opt,name=type,proto3,enum=tinkoff.public.invest.api.contract.v1.AccountType" json:"type,omitempty"`
-	// Название счёта.
+	// Название счeта.
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	// Статус счёта.
+	// Статус счeта.
 	Status AccountStatus `protobuf:"varint,4,opt,name=status,proto3,enum=tinkoff.public.invest.api.contract.v1.AccountStatus" json:"status,omitempty"`
-	// Дата открытия счёта в часовом поясе UTC.
+	// Дата открытия счeта в часовом поясе UTC.
 	OpenedDate *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=opened_date,json=openedDate,proto3" json:"opened_date,omitempty"`
-	// Дата закрытия счёта в часовом поясе UTC.
+	// Дата закрытия счeта в часовом поясе UTC.
 	ClosedDate *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=closed_date,json=closedDate,proto3" json:"closed_date,omitempty"`
-	// Уровень доступа к текущему счёту (определяется токеном).
+	// Уровень доступа к текущему счeту (определяется токеном).
 	AccessLevel AccessLevel `protobuf:"varint,7,opt,name=access_level,json=accessLevel,proto3,enum=tinkoff.public.invest.api.contract.v1.AccessLevel" json:"access_level,omitempty"`
 }
 
@@ -381,13 +381,13 @@ func (x *Account) GetAccessLevel() AccessLevel {
 	return AccessLevel_ACCOUNT_ACCESS_LEVEL_UNSPECIFIED
 }
 
-// Запрос маржинальных показателей по счёту.
+// Запрос маржинальных показателей по счeту.
 type GetMarginAttributesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Идентификатор счёта пользователя.
+	// Идентификатор счeта пользователя.
 	AccountId string `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 }
 
@@ -428,7 +428,7 @@ func (x *GetMarginAttributesRequest) GetAccountId() string {
 	return ""
 }
 
-// Маржинальные показатели по счёту.
+// Маржинальные показатели по счeту.
 type GetMarginAttributesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -444,7 +444,7 @@ type GetMarginAttributesResponse struct {
 	FundsSufficiencyLevel *Quotation `protobuf:"bytes,4,opt,name=funds_sufficiency_level,json=fundsSufficiencyLevel,proto3" json:"funds_sufficiency_level,omitempty"`
 	// Объем недостающих средств. Разница между стартовой маржой и ликвидной стоимости портфеля.
 	AmountOfMissingFunds *MoneyValue `protobuf:"bytes,5,opt,name=amount_of_missing_funds,json=amountOfMissingFunds,proto3" json:"amount_of_missing_funds,omitempty"`
-	// Скорректированная маржа. Начальная маржа, в которой плановые позиции рассчитываются с учётом активных заявок на покупку позиций лонг или продажу позиций шорт.
+	// Скорректированная маржа. Начальная маржа, в которой плановые позиции рассчитываются с учeтом активных заявок на покупку позиций лонг или продажу позиций шорт.
 	CorrectedMargin *MoneyValue `protobuf:"bytes,6,opt,name=corrected_margin,json=correctedMargin,proto3" json:"corrected_margin,omitempty"`
 }
 
