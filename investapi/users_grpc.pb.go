@@ -23,6 +23,8 @@ const (
 	UsersService_GetMarginAttributes_FullMethodName = "/tinkoff.public.invest.api.contract.v1.UsersService/GetMarginAttributes"
 	UsersService_GetUserTariff_FullMethodName       = "/tinkoff.public.invest.api.contract.v1.UsersService/GetUserTariff"
 	UsersService_GetInfo_FullMethodName             = "/tinkoff.public.invest.api.contract.v1.UsersService/GetInfo"
+	UsersService_GetBankAccounts_FullMethodName     = "/tinkoff.public.invest.api.contract.v1.UsersService/GetBankAccounts"
+	UsersService_CurrencyTransfer_FullMethodName    = "/tinkoff.public.invest.api.contract.v1.UsersService/CurrencyTransfer"
 )
 
 // UsersServiceClient is the client API for UsersService service.
@@ -41,6 +43,12 @@ type UsersServiceClient interface {
 	// GetInfo — информация о пользователе
 	// Получить информацию о пользователе: тариф, признак квалификации, пройденные тесты и др.
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
+	// GetBankAccounts — банковские счета пользователя
+	// Получить список счетов пользователя, в том числе и банковских.
+	GetBankAccounts(ctx context.Context, in *GetBankAccountsRequest, opts ...grpc.CallOption) (*GetBankAccountsResponse, error)
+	// CurrencyTransfer — перевод денежных средств между счетами
+	// Перевести денежные средства между брокерскими счетами
+	CurrencyTransfer(ctx context.Context, in *CurrencyTransferRequest, opts ...grpc.CallOption) (*CurrencyTransferResponse, error)
 }
 
 type usersServiceClient struct {
@@ -91,6 +99,26 @@ func (c *usersServiceClient) GetInfo(ctx context.Context, in *GetInfoRequest, op
 	return out, nil
 }
 
+func (c *usersServiceClient) GetBankAccounts(ctx context.Context, in *GetBankAccountsRequest, opts ...grpc.CallOption) (*GetBankAccountsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBankAccountsResponse)
+	err := c.cc.Invoke(ctx, UsersService_GetBankAccounts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersServiceClient) CurrencyTransfer(ctx context.Context, in *CurrencyTransferRequest, opts ...grpc.CallOption) (*CurrencyTransferResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CurrencyTransferResponse)
+	err := c.cc.Invoke(ctx, UsersService_CurrencyTransfer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsersServiceServer is the server API for UsersService service.
 // All implementations must embed UnimplementedUsersServiceServer
 // for forward compatibility.
@@ -107,6 +135,12 @@ type UsersServiceServer interface {
 	// GetInfo — информация о пользователе
 	// Получить информацию о пользователе: тариф, признак квалификации, пройденные тесты и др.
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
+	// GetBankAccounts — банковские счета пользователя
+	// Получить список счетов пользователя, в том числе и банковских.
+	GetBankAccounts(context.Context, *GetBankAccountsRequest) (*GetBankAccountsResponse, error)
+	// CurrencyTransfer — перевод денежных средств между счетами
+	// Перевести денежные средства между брокерскими счетами
+	CurrencyTransfer(context.Context, *CurrencyTransferRequest) (*CurrencyTransferResponse, error)
 	mustEmbedUnimplementedUsersServiceServer()
 }
 
@@ -128,6 +162,12 @@ func (UnimplementedUsersServiceServer) GetUserTariff(context.Context, *GetUserTa
 }
 func (UnimplementedUsersServiceServer) GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInfo not implemented")
+}
+func (UnimplementedUsersServiceServer) GetBankAccounts(context.Context, *GetBankAccountsRequest) (*GetBankAccountsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBankAccounts not implemented")
+}
+func (UnimplementedUsersServiceServer) CurrencyTransfer(context.Context, *CurrencyTransferRequest) (*CurrencyTransferResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CurrencyTransfer not implemented")
 }
 func (UnimplementedUsersServiceServer) mustEmbedUnimplementedUsersServiceServer() {}
 func (UnimplementedUsersServiceServer) testEmbeddedByValue()                      {}
@@ -222,6 +262,42 @@ func _UsersService_GetInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UsersService_GetBankAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBankAccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).GetBankAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UsersService_GetBankAccounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).GetBankAccounts(ctx, req.(*GetBankAccountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UsersService_CurrencyTransfer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CurrencyTransferRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).CurrencyTransfer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UsersService_CurrencyTransfer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).CurrencyTransfer(ctx, req.(*CurrencyTransferRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UsersService_ServiceDesc is the grpc.ServiceDesc for UsersService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -244,6 +320,14 @@ var UsersService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInfo",
 			Handler:    _UsersService_GetInfo_Handler,
+		},
+		{
+			MethodName: "GetBankAccounts",
+			Handler:    _UsersService_GetBankAccounts_Handler,
+		},
+		{
+			MethodName: "CurrencyTransfer",
+			Handler:    _UsersService_CurrencyTransfer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
