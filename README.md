@@ -2,12 +2,12 @@ Go-InvestAPI
 =============================
 [![PkgGoDev](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi)](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi?tab=doc)
 
-Неофициальный минималистичный grpc клиент для работы с [investAPI](https://developer.tbank.ru/invest/sdk/faq_golang) платформы
+Неофициальный минималистичный grpc клиент для работы с [investAPI](https://developer.tbank.ru/invest/intro/intro) платформы
 [Т-Банк Инвестиции](https://www.tbank.ru/sl/AugaFvDlqEP)
 
 Предупреждение
 ===============================
-Это не официальная библиотека (хотя, она упомянута в документации к [API T-Банк Инвестиций](https://russianinvestments.github.io/investAPI/faq_golang/)), 
+Это не официальная библиотека (хотя, она упомянута в документации к [API T-Банк Инвестиций](https://developer.tbank.ru/invest/sdk/faq_golang)), 
 её работоспособность и безопасность не гарантирована автором! Несмотря на то, что большая часть кода библиотеки сгенерирована из официальных 
 [определений протокола взаимодействия investAPI в виде proto файлов](https://github.com/RussianInvestments/investAPI/tree/main/src/docs/contracts),
 код не проходил независимый аудит безопасности, и не был протестирован представителями банка.
