@@ -2,7 +2,7 @@ Go-InvestAPI
 =============================
 [![PkgGoDev](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi)](https://pkg.go.dev/github.com/vodolaz095/go-investAPI/investapi?tab=doc)
 
-Неофициальный минималистичный grpc клиент для работы с [investAPI](https://russianinvestments.github.io/investAPI/) платформы
+Неофициальный минималистичный grpc клиент для работы с [investAPI](https://developer.tbank.ru/invest/sdk/faq_golang) платформы
 [Т-Банк Инвестиции](https://www.tbank.ru/sl/AugaFvDlqEP)
 
 Предупреждение
