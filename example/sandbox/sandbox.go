@@ -30,8 +30,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("%s : while getting sandbox accounts", err)
 	}
-	var howMuch investapi.MoneyValue
-	howMuch = *investapi.MoneyValueFromFloat64(100)
+	howMuch := *investapi.MoneyValueFromFloat64(100)
 	howMuch.Currency = "RUB"
 	for _, account := range sandboxAccounts.GetAccounts() {
 		if resp.AccountId == account.Id {

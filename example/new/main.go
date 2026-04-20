@@ -78,7 +78,7 @@ func main() {
 	}
 	for _, price := range res.GetLastPrices() {
 		log.Printf("%s назад цена сделки была %.4f рублей",
-			time.Now().Sub(price.Time.AsTime()).String(), price.GetPrice().ToFloat64(),
+			time.Since(price.Time.AsTime()).String(), price.GetPrice().ToFloat64(),
 		)
 	}
 	// 2022/06/07 10:58:40 1m52.663352891s назад цена сделки была 95.5830 рублей
