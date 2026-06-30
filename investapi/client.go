@@ -14,10 +14,10 @@ import (
 )
 
 // DefaultEndpoint - это адрес, на котором работает продукционное окружение InvestAPI
-const DefaultEndpoint = "invest-public-api.tinkoff.ru:443"
+const DefaultEndpoint = "invest-public-api.tbank.ru:443"
 
 // SandboxEndpoint - это адрес, на котором работает тестовое окружение
-const SandboxEndpoint = "sandbox-invest-public-api.tinkoff.ru:443"
+const SandboxEndpoint = "sandbox-invest-public-api.tbank.ru:443"
 
 // tokenAuth используется для описания стратегии авторизации GRPC клиента
 type tokenAuth struct {
